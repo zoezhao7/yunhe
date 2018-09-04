@@ -17,3 +17,10 @@ Route::get('/', function () {
 
 Route::resource('products', 'ProductsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::resource('stores', 'StoresController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+
+Route::namespace('Admin')->middleware([])->group(function() {
+    Route::get('admin/welcome', 'WelcomeController@index')->name('admin.welcome');
+    Route::resource('admin/nodes', 'NodesController', ['as' => 'admin']);
+    // Route::resource('admin/roles', 'RolesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+    // Route::resource('admin/admins', 'AdminsController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+});

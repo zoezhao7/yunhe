@@ -17,7 +17,7 @@ class CreateAdminRolesTable extends Migration
             $table->increments('id');
             $table->string('name')->content('角色名');
             $table->tinyInteger('sort')->default(0);
-            $table->json('nodes');
+            $table->json('nodes')->content('权限节点Json');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

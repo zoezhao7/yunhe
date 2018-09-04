@@ -12,7 +12,7 @@ class CreateStoresTable extends Migration
             $table->string('name')->index();
             $table->string('phone')->default('');
             $table->string('address')->default('');
-            $table->tinyInteger('employees_count')->unsigned()->default(0);
+            $table->tinyInteger('staffs_count')->unsigned()->default(0);
             $table->tinyInteger('is_open')->unsigned()->default(1);
             $table->timestamps();
         });
