@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use function Couchbase\defaultDecoder;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NodeRequest extends FormRequest
@@ -23,14 +24,29 @@ class NodeRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->request()->route('id');
-        dd($id);
-        return [
-            'controller_name' => 'required',
-            'controller' => 'required|regex:/^[a-zA-Z0-9](,[a-zA-Z0-9]+)?/|unique:admin_nodes,controller,' . $id,
-            'action_name' => 'required',
-            'action' => 'required|unique:admin_nodes,action,' . $id,
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'controller_name' => 'required',
+                    'controller' => 'required|regex:/^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*?$/|unique:admin_nodes,controller',
+                    'action_name' => 'required',
+                    'action' => 'required|unique:admin_nodes,action',
+                ];
+                break;
+            case 'PUT':
+            case 'PATCH':
+                $id = $this->route('node')->id;
+                return [
+                    'controller_name' => 'required',
+                    'controller' => 'required|regex:/^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*?$/|unique:admin_nodes,controller,' . $id,
+                    'action_name' => 'required',
+                    'action' => 'required|unique:admin_nodes,action,' . $id,
+                ];
+                break;
+            default;
+                return [];
+                break;
+        }
     }
 
     public function messages()

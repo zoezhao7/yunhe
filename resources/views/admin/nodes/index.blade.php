@@ -32,12 +32,12 @@
                                 <table id="demo-foo-addrow" class="table table-bordered m-t-10 table-hover contact-list" data-paging="true" data-paging-size="7">
                                     <thead>
                                     <tr>
-                                        <th>序号</th>
+                                        <th width="5%">序号</th>
                                         <th>控制器名称</th>
                                         <th>控制器</th>
                                         <th>动作名称</th>
                                         <th>动作</th>
-                                        <th>操作</th>
+                                        <th width="15%">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -51,7 +51,13 @@
                                             <td>{{ $node->action }}</td>
                                             <td>
                                                 <a href="{{ route('admin.nodes.edit', $node->id) }}" class="btn btn-sm btn-outline btn-info m-r-10">编辑</a>
-                                                <a href="{{ route('admin.nodes.destroy', $node->id) }}" class="btn btn-sm btn-outline btn-danger">删除</a>
+
+                                                <form onsubmit="return confirm('确认删除吗？')" method="post" action="{{ route('admin.nodes.destroy', $node->id) }}" style="display: inline">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <button type="submit"  class="btn btn-sm btn-outline btn-danger">删除</button>
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @endforeach

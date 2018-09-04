@@ -130,8 +130,8 @@
                                 <span class="hide-menu">管理员</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0)">
+                        <li class="@if(request()->route()->named('admin.roles.index')) active @endif">
+                            <a href="{{ route('admin.roles.index') }}">
                                 <i class="icon-people"></i>
                                 <span class="hide-menu">角色</span>
                             </a>

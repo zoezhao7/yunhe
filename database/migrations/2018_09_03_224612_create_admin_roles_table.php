@@ -15,9 +15,10 @@ class CreateAdminRolesTable extends Migration
     {
         Schema::create('admin_roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->content('角色名');
+            $table->string('name', 100)->content('角色名');
+            $table->text('node_ids')->content('权限节点Json');
+            $table->text('node_names')->content('权限节点名称');
             $table->tinyInteger('sort')->default(0);
-            $table->json('nodes')->content('权限节点Json');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
