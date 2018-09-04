@@ -41,7 +41,9 @@ class RolesController extends Controller
     public function update(RoleRequest $request, Role $role)
     {
         // $this->authorize('update', $role);
-        $role->update($request->all());
+        $role->fill($request->all());
+        $role->node_ids = json_encode($request->node_ids);
+        $role->save();
 
         return redirect()->route('admin.roles.index')->with('success', '节点更新成功！');
     }

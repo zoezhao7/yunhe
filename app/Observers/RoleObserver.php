@@ -12,7 +12,7 @@ class RoleObserver
 {
     public function saving(Role $role)
     {
-        $node_ids = json_decode($role->node_ids);
+        $node_ids = is_array($role->node_ids) ? $role->node_ids : json_decode($role->node_ids);
         $nodes = Node::whereIn('id', $node_ids)->pluck('action_name')->toArray();
         $role->node_names = implode(',', $nodes);
     }
