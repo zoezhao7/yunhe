@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -11,7 +11,7 @@ class ProductsController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth.admin');
     }
 
 	public function index()

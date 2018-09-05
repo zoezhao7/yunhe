@@ -9,7 +9,19 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['user_name', 'password', 'mobile', 'email', 'real_name', 'role_ids', ];
+    protected $fillable = ['user_name', 'password', 'mobile', 'email', 'real_name', 'role_ids',];
+
+    // 获取用户的权限节点清单
+    public function getNodes()
+    {
+        $role = app(Role::class);
+        $nodes = [];
+
+        foreach ($this->role_ids as $role_id) {
+            $nodes = array_merge($nodes, $role->getRoleNodes($role_id));
+        }
+        return array_unique($nodes);
+    }
 
     public function getRoleIdsAttribute($value)
     {
