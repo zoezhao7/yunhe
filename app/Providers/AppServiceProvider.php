@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
 		\App\Models\Store::observe(\App\Observers\StoreObserver::class);
 		\App\Models\Product::observe(\App\Observers\ProductObserver::class);
 		\App\Models\Role::observe(\App\Observers\RoleObserver::class);
+		\App\Models\Admin::observe(\App\Observers\AdminObserver::class);
 
         //
     }

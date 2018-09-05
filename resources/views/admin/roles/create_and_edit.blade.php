@@ -51,7 +51,13 @@
                                                     <td>
                                                         @foreach ($node['actions'] as $key=>$action)
                                                         <div class="checkbox checkbox-primary ">
-                                                            <input id="checkbox{{ $node['name'] . $key }}" name="node_ids[]" value="{{ $action['id'] }}" type="checkbox" @if(in_array($action['id'], $role['node_ids'])) checked @endif>
+
+                                                            @if ($role->id)
+                                                                <input id="checkbox{{ $node['name'] . $key }}" name="node_ids[]" value="{{ $action['id'] }}" type="checkbox" @if(in_array($action['id'], $role['node_ids'])) checked @endif>
+                                                                @else
+                                                                <input id="checkbox{{ $node['name'] . $key }}" name="node_ids[]" value="{{ $action['id'] }}" type="checkbox">
+                                                                @endif
+
                                                             <label for="checkbox{{ $node['name'] . $key }}"> {{ $action['action_name'] }} </label>
                                                         </div>
                                                         @endforeach

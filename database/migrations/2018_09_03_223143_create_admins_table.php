@@ -20,7 +20,8 @@ class CreateAdminsTable extends Migration
             $table->string('real_name', 100)->default('');
             $table->string('mobile', 100)->default('');
             $table->string('email', 100)->default('');
-            $table->string('remember_token')->nullable();
+            $table->string('role_ids')->default('')->content('角色清单');
+            $table->string('remember_token', 100)->nullable();
             $table->tinyInteger('sort')->default(0);
             $table->timestamps();
         });

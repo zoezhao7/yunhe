@@ -18,9 +18,19 @@ Route::get('/', function () {
 Route::resource('products', 'ProductsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::resource('stores', 'StoresController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
 
-Route::namespace('Admin')->middleware([])->group(function () {
-    Route::get('admin/welcome', 'WelcomeController@index')->name('admin.welcome');
-    Route::resource('admin/nodes', 'NodesController', ['as' => 'admin']);
-    Route::resource('admin/roles', 'RolesController', ['as' => 'admin']);
-    // Route::resource('admin/admins', 'AdminsController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
+
+    // Auth
+    Route::get('admin/login', 'LoginController@showLoginForm')->name('admin.login');
+    Route::post('admin/login', 'LoginController@login')->name('admin.login.post');
+
+    Route::middleware(['auth.admin'])->group(function () {
+        Route::post('admin/logout', 'LoginController@logout')->name('admin.logout');
+
+        Route::get('admin/welcome', 'WelcomeController@index')->name('admin.welcome');
+        Route::resource('admin/nodes', 'NodesController', ['as' => 'admin']);
+        Route::resource('admin/roles', 'RolesController', ['as' => 'admin']);
+        Route::resource('admin/admins', 'AdminsController', ['as' => 'admin']);
+    });
+
 });

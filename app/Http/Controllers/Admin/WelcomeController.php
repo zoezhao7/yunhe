@@ -9,6 +9,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        return view(('admin.common.index'));
+
+        return view(('admin.common.welcome'));
     }
 }
