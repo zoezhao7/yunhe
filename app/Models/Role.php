@@ -10,6 +10,21 @@ class Role extends Model
 
     protected $fillable = ['name', 'node_ids', 'node_names'];
 
+    public $superAdminRoleId = 1;
+
+    public function isNotSuperAdmin()
+    {
+        if ($this->id === $this->superAdminRoleId) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 权限验证， 获取角色权限清单
+     * @param $role_id
+     * @return array|mixed
+     */
     public function getRoleNodes($role_id)
     {
         if (!$role_id) {
@@ -21,13 +36,13 @@ class Role extends Model
         Cache::forget($key);
 
         if (!Cache::has($key)) {
-            Cache::forever($key, $this->getNodeArray($role_id));
+            Cache::forever($key, $this->_getNodeArray($role_id));
         }
 
         return Cache::get($key);
     }
 
-    public function getNodeArray($role_id)
+    protected function _getNodeArray($role_id)
     {
         $role = Role::find($role_id);
 

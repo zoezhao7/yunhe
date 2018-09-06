@@ -14,7 +14,6 @@ class adminsController extends Controller
 {
     public function index(Request $request, Admin $admin)
     {
-
         $admins = $admin->recent()->paginate(20);
 
         $this->fillRoleNames($admins);

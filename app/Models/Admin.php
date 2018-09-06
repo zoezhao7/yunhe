@@ -11,6 +11,11 @@ class Admin extends Authenticatable
 
     protected $fillable = ['user_name', 'password', 'mobile', 'email', 'real_name', 'role_ids',];
 
+    public function isSuperAdmin()
+    {
+        return in_array(app(Role::class)->superAdminRoleId, $this->role_ids);
+    }
+
     // 获取用户的权限节点清单
     public function getNodes()
     {

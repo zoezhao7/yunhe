@@ -13,7 +13,6 @@ class RolesController extends Controller
     public function index(Request $request, Role $role)
     {
         $role = Role::first();
-        dd($role->getCacheNodes());
 
         $roles = $role->recent()->paginate(20);
         return view('admin.roles.index', compact('request', 'roles'));
@@ -36,14 +35,14 @@ class RolesController extends Controller
 
     public function edit(Role $role, Node $node)
     {
-        // $this->authorize('update', $role);
+        $this->authorize('update', $role);
         $nodes = $node->getTreeNodes();
         return view('admin.roles.create_and_edit', compact('role', 'nodes'));
     }
 
     public function update(RoleRequest $request, Role $role)
     {
-        // $this->authorize('update', $role);
+        $this->authorize('update', $role);
         $role->fill($request->all());
         $role->node_ids = json_encode($request->node_ids);
         $role->save();
@@ -53,7 +52,7 @@ class RolesController extends Controller
 
     public function destroy(Role $role)
     {
-        // $this->authorize('destroy', $role);
+        $this->authorize('destroy', $role);
         $role->delete();
 
         return redirect()->route('admin.roles.index')->with('success', '节点删除成功！');

@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'clean.form' => \App\Http\Middleware\CleanFormRequest::class,
         'auth.admin' => \App\Http\Middleware\AdminAuthMiddleware::class,
+        'admin.permission' => \App\Http\Middleware\CheckPermission::class,
     ];
 }

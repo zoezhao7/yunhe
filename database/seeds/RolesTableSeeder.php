@@ -33,16 +33,22 @@ class RolesTableSeeder extends Seeder
         // 角色
         $roles = [
             [
+                'name' => '超级管理员',
+                'node_ids' => json_encode([0]),
+                'node_names' => '全部权限',
+                'created_at' => $created_at,
+            ],
+            [
                 'name' => '门店管理员',
                 'node_ids' => json_encode($product_node_ids),
                 'node_names' => implode(',', $product_node_names),
-                'created_at' => $created_at
+                'created_at' => $created_at,
             ],
             [
                 'name' => '产品管理员',
                 'node_ids' => json_encode($store_node_ids),
                 'node_names' => implode(',', $store_node_names),
-                'created_at' => $created_at
+                'created_at' => $created_at,
             ],
         ];
 
