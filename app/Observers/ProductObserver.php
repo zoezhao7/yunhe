@@ -9,13 +9,8 @@ use App\Models\Product;
 
 class ProductObserver
 {
-    public function creating(Product $product)
+    public function saving(Product $product)
     {
-        //
-    }
-
-    public function updating(Product $product)
-    {
-        //
+        $product->content = clean($product->content, 'product_content');
     }
 }

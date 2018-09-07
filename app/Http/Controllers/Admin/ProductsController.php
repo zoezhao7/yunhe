@@ -39,7 +39,7 @@ class ProductsController extends Controller
 		$data = $request->all();
 
         if ($request->image) {
-            $result = $uploader->save($request->image, 'avatars');
+            $result = $uploader->save($request->image, 'products', 750);
             if ($result) {
                 $data['image'] = $result['path'];
             }
@@ -52,23 +52,33 @@ class ProductsController extends Controller
 
 	public function edit(Product $product)
 	{
+        //$this->authorize('update', $product);
         $categories = Category::all();
-        $this->authorize('update', $product);
 		return view('admin.products.create_and_edit', compact('product', 'categories'));
 	}
 
-	public function update(ProductRequest $request, Product $product)
+	public function update(ProductRequest $request, Product $product, ImageUploadHandler $uploader)
 	{
-		$this->authorize('update', $product);
-		$product->update($request->all());
+		//$this->authorize('update', $product);
+        $data = $request->all();
+
+        if ($request->image) {
+            $result = $uploader->save($request->image, 'products', $product->id,  750);
+            if ($result) {
+                $data['image'] = $result['path'];
+            }
+        }
+
+		$product->update($data);
 
 		return redirect()->route('admin.products.index', $product->id)->with('success', '产品编辑成功！');
 	}
 
 	public function destroy(Product $product)
 	{
-		$this->authorize('destroy', $product);
-		$product->delete();
+		//$this->authorize('destroy', $product);
+
+        $product->delete();
 
 		return redirect()->route('admin.products.index')->with('success', '产品删除成功！');
 	}

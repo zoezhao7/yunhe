@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin')
 
+@section('title', '产品管理')
+
 @section('content')
 
     <div class="row bg-title">
@@ -51,11 +53,14 @@
                         <td>{{ $product->sales }}</td>
                         <td>
                             <a href="{{ route('admin.products.edit', $product->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
-                            <a href="{{ route('admin.products.destroy', $product->id)  }}" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                            <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('admin.products.destroy', $product->id) }}" style="display: inline">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
-
                     </tbody>
                 </table>
 

@@ -10,21 +10,15 @@ class StoreRequest extends Request
         {
             // CREATE
             case 'POST':
-            {
-                return [
-                    // CREATE ROLES
-                ];
-            }
-            // UPDATE
             case 'PUT':
             case 'PATCH':
             {
                 return [
-                    // UPDATE ROLES
+                    'name' => 'required|string',
+                    'phone' => 'required|string',
+                    'address' => 'required|string',
                 ];
             }
-            case 'GET':
-            case 'DELETE':
             default:
             {
                 return [];
@@ -35,7 +29,9 @@ class StoreRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'name.required' => '门店名称不能为空',
+            'phone.required' => '联系电话不能为空',
+            'address.required' => '门店地址不能为空',
         ];
     }
 }

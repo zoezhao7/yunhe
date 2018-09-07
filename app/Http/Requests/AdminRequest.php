@@ -24,16 +24,38 @@ class AdminRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'user_name' => 'required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/|unique:users,name,' . Auth::id(),
-            'user_name' => 'required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/',
-            'password' => 'string|min:6|max:20',
-            'real_name' => 'max:100',
-            'mobile' => 'regex:/^1[0-9]{10}$/',
-            'email' => 'nullable|email',
-            'role_ids' => 'array'
-            //'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
-        ];
+        switch($this->method())
+        {
+            case 'POST':
+                {
+                    return [
+                        'user_name' => 'required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/|unique:admins,user_name',
+                        'password' => 'required|string|min:6|max:20',
+                        'real_name' => 'string|max:100',
+                        'mobile' => 'string|regex:/^1[0-9]{10}$/',
+                        'email' => 'nullable|email',
+                        'role_ids' => 'array',
+                        //'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
+                    ];
+                }
+            case 'PUT':
+            case 'PATCH':
+                $id = $this->route('admin')->id;
+                {
+                    return [
+                        'user_name' => 'required|between:3,25|regex:/^[A-Za-z0-9\-\_]+$/|unique:admins,user_name,' . $id,
+                        'password' => 'string|min:6|max:20',
+                        'real_name' => 'string|max:100',
+                        'mobile' => 'string|regex:/^1[0-9]{10}$/',
+                        'email' => 'nullable|email',
+                        'role_ids' => 'array',
+                    ];
+                }
+            default:
+                {
+                    return [];
+                };
+        }
     }
 
     public function message()

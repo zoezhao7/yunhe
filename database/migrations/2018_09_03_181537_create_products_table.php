@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
             $table->string('image')->default('')->content('产品图');
             $table->integer('sales')->unsigned()->default(0)->content('销量');
             $table->tinyInteger('is_sale')->unsigned()->default(0)->content('在售状态');
+            $table->float('discount')->default(0)->content('折扣');
             $table->timestamps();
         });
 	}

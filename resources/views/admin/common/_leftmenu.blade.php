@@ -10,21 +10,40 @@
         </div>
 
         <ul class="nav" id="side-menu">
-            <li>
-                <a href="javascript:void(0)" class="waves-effect">
-                    <i data-icon="7" class="linea-icon linea-basic fa-fw"></i>
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['products'])) active @endif" >
+                <a href="{{ route('admin.products.index') }}" class="waves-effect">
+                    <i class="mdi mdi-cart fa-fw" data-icon="v"></i>
                     <span class="hide-menu">产品管理</span></a>
             </li>
 
             <li>
-                <a href="javascript:void(0)" class="waves-effect">
-                    <i data-icon="7" class="linea-icon linea-basic fa-fw"></i>
-                    <span class="hide-menu">门店管理</span></a>
+                <a href="javascript:void(0)" class="waves-effect @if(str_contains(request()->route()->getName(), ['stores', 'employees'])) active @endif">
+                    <i data-icon="v" class="mdi mdi-home fa-fw"></i>
+                    <span class="hide-menu">门店管理
+                            <span class="fa arrow"></span>
+                            <span class="label label-rouded label-purple pull-right">3</span>
+                        </span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li class="@if(request()->route()->named('admin.stores.index')) active @endif">
+                        <a href="{{ route('admin.stores.index') }}">
+                            <i class="icon-home"></i>
+                            <span class="hide-menu">门店管理</span>
+                        </a>
+                    </li>
+                    <li class="@if(request()->route()->named('admin.employees.index')) active @endif">
+                        <a href="{{ route('admin.employees.index') }}">
+                            <i class="icon-people"></i>
+                            <span class="hide-menu">员工管理</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
 
             <li>
                 <a href="javascript:void(0)" class="waves-effect @if(str_contains(request()->route()->getName(), ['admins', 'roles', 'nodes'])) active @endif">
-                    <i class="mdi mdi-account fa-fw" data-icon="v"></i>
+                    <i class="mdi mdi-verified fa-fw" data-icon="v"></i>
                     <span class="hide-menu">权限管理
                             <span class="fa arrow"></span>
                             <span class="label label-rouded label-purple pull-right">3</span>

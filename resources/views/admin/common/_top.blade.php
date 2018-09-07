@@ -7,7 +7,6 @@
             <!-- Logo -->
             <a class="logo" href="index.html">
                     <span class="hidden-xs">
-                        <img src="../plugins/images/admin-text.png" alt="home" class="dark-logo" />
                      </span>
             </a>
         </div>

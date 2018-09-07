@@ -40,8 +40,16 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
         Route::resource('admin/products', 'ProductsController', ['as' => 'admin']);
 
         // 门店
+        Route::resource('admin/stores', 'StoresController', ['as' => 'admin']);
+        Route::resource('admin/employees', 'EmployeesController', ['as' => 'admin']);
+        Route::get('admin/stores/{store}/employees', 'EmployeesController@storeIndex')->name('admin.stores.employees');
 
     });
 
 
 });
+Route::resource('employees', 'EmployeesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('members', 'MembersController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('cars', 'CarsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('specs', 'SpecsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('orders', 'OrdersController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

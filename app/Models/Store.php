@@ -4,5 +4,10 @@ namespace App\Models;
 
 class Store extends Model
 {
-    protected $fillable = ['name', 'phone', 'address', 'employees_count', 'is_open'];
+    protected $fillable = ['name', 'phone', 'address', 'is_open', 'remark'];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

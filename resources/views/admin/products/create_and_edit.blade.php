@@ -5,7 +5,7 @@
 @section('title', $page_name)
 
 @section('style')
-    <link rel="stylesheet" href="/admin/plugins/bower_components/html5-editor/bootstrap-wysihtml5.css" />
+    <link rel="stylesheet" href="/admin/simditor/css/simditor.css" />
 @endsection
 
 @section('content')
@@ -63,7 +63,8 @@
                                         <div class="form-group">
                                             <input type="file" name="image" />
                                             <br>
-                                            @if ($product->id)
+                                            @if ($product->image
+                                            )
                                             <img src="{{ $product->image }}" width="200" class="thumbnail img-responsive">
                                             @endif
                                         </div>
@@ -71,13 +72,14 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品详情</label>
                                         <div class="form-group">
-                                            <textarea class="textarea_editor form-control" rows="15" placeholder="Enter text ..."></textarea>
+                                            <textarea name="content" id="editor" rows="15" placeholder="Enter text ...">{!! $product->content !!}</textarea>
                                         </div>
                                     </div>
 
                                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">提交
                                     </button>
                                 </form>
+
                 </div>
             </div>
         </div>
@@ -86,13 +88,16 @@
 @endsection
 
 @section('script')
-    <!-- wysuhtml5 Plugin JavaScript -->
-    <script src="/admin/plugins/bower_components/html5-editor/wysihtml5-0.3.0.js"></script>
-    <script src="/admin/plugins/bower_components/html5-editor/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript"  src="{{ asset('admin/simditor/js/module.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('admin/simditor/js/hotkeys.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('admin/simditor/js/uploader.js') }}"></script>
+    <script type="text/javascript"  src="{{ asset('admin/simditor/js/simditor.js') }}"></script>
+
     <script>
-        $(document).ready(function() {
-            $('.textarea_editor').wysihtml5();
+        $(document).ready(function(){
+            var editor = new Simditor({
+                textarea: $('#editor'),
+            });
         });
     </script>
-    <!--Style Switcher -->
 @endsection
