@@ -16,7 +16,9 @@ class MembersController extends Controller
 
 	public function index()
 	{
-		$members = Member::paginate();
+
+		$members = Member::with('employee.store')->withCount('cars')->recent()->paginate();
+
 		return view('admin.members.index', compact('members'));
 	}
 

@@ -47,7 +47,7 @@
                             <td>{{ $store->name }}</td>
                             <td>{{ $store->phone }}</td>
                             <td>{{ $store->address }}</td>
-                            <td>{{ $store->staffs_count }}</td>
+                            <td>{{ $store->employee_count }}</td>
                             <td>
                                 @if ($store->is_open===1)
                                     <span class="label label-success font-weight-100">营业</span>

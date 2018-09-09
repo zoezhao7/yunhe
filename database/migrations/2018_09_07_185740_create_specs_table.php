@@ -11,8 +11,9 @@ class CreateSpecsTable extends Migration
             $table->increments('id');
             $table->string('number')->unique()->index();
             $table->integer('product_id')->index();
-            $table->float('price', 4, 2);
-            $table->float('discount', 2, 2);
+            $table->string('size')->default('')->content('尺寸');
+            $table->float('price', 10, 2)->default(0);
+            $table->float('discount', 5, 2)->default(0);
             $table->text('content')->nullable();
             $table->timestamps();
         });

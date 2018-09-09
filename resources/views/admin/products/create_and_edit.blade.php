@@ -1,11 +1,11 @@
 @extends('admin.layouts.admin')
 
-{{ $page_name = $product->id ? '编辑产品' : '添加产品'  }}
+<?php $page_name = $product->id ? '编辑产品' : '添加产品'; ?>
 
 @section('title', $page_name)
 
 @section('style')
-    <link rel="stylesheet" href="/admin/simditor/css/simditor.css" />
+    <link rel="stylesheet" href="/admin/simditor/css/simditor.css"/>
 @endsection
 
 @section('content')
@@ -33,7 +33,8 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     @if ($product->id)
-                        <form method="POST" action="{{ route('admin.products.update', $product->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.products.update', $product->id) }}"
+                              enctype="multipart/form-data">
                             {{ method_field('PUT') }}
                             @else
                                 <form method="POST" action="{{ route('admin.products.store') }}">
@@ -47,34 +48,68 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品分类</label>
                                         <select class="form-control" name="category_id" required>
-                                            <option value="" hidden disabled {{ $product->id ? '' : 'selected' }}>请选择分类</option>
+                                            <option value="" hidden disabled {{ $product->id ? '' : 'selected' }}>
+                                                请选择分类
+                                            </option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">产品折扣</label>
+                                        <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                            <input type="text" value="{{ old('discount', $product->discount) }}" name="discount" class="form-control">
+                                            <span class="input-group-addon bootstrap-touchspin-postfix input-group-append">
+                                                <span class="input-group-text">%</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">产品简介</label>
-                                        <input type="text" class="form-control" name="intro" value="{{ old('intro', $product->intro) }}"
-                                               placeholder="">
+                                        <textarea name="intro" class="form-control" rows="5">{{ old('intro', $product->intro) }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品图片</label>
                                         <div class="form-group">
-                                            <input type="file" name="image" />
+                                            <input type="file" name="image"/>
                                             <br>
                                             @if ($product->image
                                             )
-                                            <img src="{{ $product->image }}" width="200" class="thumbnail img-responsive">
+                                                <img src="{{ $product->image }}" width="200"
+                                                     class="thumbnail img-responsive">
                                             @endif
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">色彩</label>
+                                        <div class="form-group">
+                                            @if($product->id)
+                                            @foreach ($product->colors as $key => $color)
+                                                    <input type="file" name="edit_colors[{{ $key }}][path]"/>
+                                                    <input type="text" value="{{ $color['title'] }}" name="edit_colors[{{ $key }}][title]" placeholder="色彩名称"/>
+                                                    <img src="{{ $color['path'] }}" class="thumbnail img-responsive" width="200">
+
+                                            @endforeach
+                                            @endif
+                                            @for ($i=1; $i<4; $i++)
+                                                <input type="file" name="colors[{{ $i }}][path]" />
+                                                <input type="text" name="colors[{{ $i }}][title]" placeholder="色彩名称" />
+                                            @endfor
+                                        </div>
+
+
+                                    </div>
+
+
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品详情</label>
                                         <div class="form-group">
                                             <textarea name="content" id="editor" rows="15" placeholder="Enter text ...">{!! $product->content !!}</textarea>
                                         </div>
                                     </div>
+
 
                                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">提交
                                     </button>
@@ -88,13 +123,13 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript"  src="{{ asset('admin/simditor/js/module.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('admin/simditor/js/hotkeys.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('admin/simditor/js/uploader.js') }}"></script>
-    <script type="text/javascript"  src="{{ asset('admin/simditor/js/simditor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/simditor/js/module.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/simditor/js/hotkeys.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/simditor/js/uploader.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/simditor/js/simditor.js') }}"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             var editor = new Simditor({
                 textarea: $('#editor'),
             });

@@ -11,6 +11,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('member_id')->index();
             $table->integer('car_id')->index();
+            $table->integer('product_id')->index();
             $table->integer('spec_id')->index();
             $table->text('parameters')->nullable();
             $table->float('price', 4, 2)->default(0);

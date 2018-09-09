@@ -10,32 +10,37 @@ class ProductRequest extends Request
         {
             // CREATE
             case 'POST':
-            {
-                return [
-                    // CREATE ROLES
-                ];
-            }
-            // UPDATE
+                {
+                    return [
+                        'name' => 'required|string',
+                        'category_id' => 'required|integer|exists:categories,id',
+                        'discount' => 'numeric|max:100',
+                        'intro' => 'string',
+                    ];
+                }
             case 'PUT':
             case 'PATCH':
-            {
-                return [
-                    // UPDATE ROLES
-                ];
-            }
-            case 'GET':
-            case 'DELETE':
+                {
+                    return [
+                        'name' => 'required|string',
+                        'category_id' => 'required|integer|exists:categories,id',
+                        'discount' => 'numeric|max:100',
+                        'intro' => 'string',
+                    ];
+                }
             default:
-            {
-                return [];
-            };
+                {
+                    return [];
+                };
         }
     }
 
     public function messages()
     {
         return [
-            // Validation messages
+            'name.required' => '产品名称不能为空',
+            'discount.max' => '折扣不能大于100',
+            'category_id.exists' => '产品分类不存在',
         ];
     }
 }

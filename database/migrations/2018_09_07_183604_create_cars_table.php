@@ -14,9 +14,9 @@ class CreateCarsTable extends Migration
             $table->string('vehicles')->default('')->content('车型');
             $table->string('specs')->default('')->content('规格');
             $table->string('color')->default('')->content('色彩');
+            $table->string('image')->default('')->content('照片');
             $table->date('production_date')->nullable()->content('出厂日期');
             $table->date('buy_date')->nullable()->content('购买日期');
-            $table->string('image')->deafult('')->content('照片');
             $table->string('plate_number')->default('')->content('车牌号');
             $table->timestamps();
         });

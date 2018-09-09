@@ -10,6 +10,13 @@
         </div>
 
         <ul class="nav" id="side-menu">
+
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['members'])) active @endif" >
+                <a href="{{ route('admin.members.index') }}" class="waves-effect">
+                    <i class="mdi mdi-account fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">客户管理</span></a>
+            </li>
+
             <li  class="nav @if(str_contains(request()->route()->getName(), ['products'])) active @endif" >
                 <a href="{{ route('admin.products.index') }}" class="waves-effect">
                     <i class="mdi mdi-cart fa-fw" data-icon="v"></i>

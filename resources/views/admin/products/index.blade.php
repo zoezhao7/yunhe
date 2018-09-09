@@ -34,6 +34,7 @@
                         <th>图片</th>
                         <th>系列</th>
                         <th>名称</th>
+                        <th>规格尺寸</th>
                         <th width="30%">简介</th>
                         <th>上架时间</th>
                         <th>销量</th>
@@ -47,7 +48,13 @@
                         <td>{{ $key+1 }}</td>
                         <td> @if ($product->image) <img src="{{ $product->image }}" alt="iMac" width="50"> @endif </td>
                         <td> <span class="label label-success font-weight-100">{{ $product->category->name }}</span> </td>
-                        <td>{{ $product->name }}</td>
+                        <td><a href="{{ route('admin.products.specs', $product->id) }}">{{ $product->name }}</a></td>
+                        <td>
+                            @foreach ($product->specs as $key=>$spec)
+                                @if ($key>0) <br> @endif
+                                {{ $spec->size }}
+                            @endforeach
+                        </td>
                         <td>{{ $product->intro }}</td>
                         <td>{{ $product->created_at }}</td>
                         <td>{{ $product->sales }}</td>

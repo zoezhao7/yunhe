@@ -20,10 +20,22 @@ class ProductsTableSeeder extends Seeder
             'http://yunhe.test/images/products/demo/6.png',
         ];
 
-        $products = factory(Product::class)->times(50)->make()->each(function ($product, $index) use ($faker, $images, $category_ids) {
+        $colors = [
+            ['title' => '黑宝石色', 'path' => 'http://yunhe.test/images/products/demo/1.png'],
+            ['title' => '月光蓝', 'path' => 'http://yunhe.test/images/products/demo/2.png'],
+            ['title' => '极地白', 'path' => 'http://yunhe.test/images/products/demo/3.png'],
+            ['title' => '珍珠白', 'path' => 'http://yunhe.test/images/products/demo/4.png'],
+            ['title' => '红酒色', 'path' => 'http://yunhe.test/images/products/demo/5.png'],
+        ];
+
+        $products = factory(Product::class)->times(50)->make()->each(function ($product, $index) use ($faker, $images, $category_ids, $colors) {
             $product->category_id = $faker->randomElement($category_ids);
             $product->image = $faker->randomElement($images);
+            $color_arr[] = $faker->randomElement($colors);
+            $color_arr[] = $faker->randomElement($colors);
+            $product->colors = json_encode($color_arr);
         });
+
 
         Product::insert($products->toArray());
     }

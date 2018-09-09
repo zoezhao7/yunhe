@@ -9,13 +9,11 @@ use App\Models\Store;
 
 class StoreObserver
 {
-    public function creating(Store $store)
+    public function deleting(Store $store)
     {
-        //
-    }
-
-    public function updating(Store $store)
-    {
-        //
+        if($store->hasEmployee())
+        {
+            denied('门店下存在员工，禁止删除！');
+        }
     }
 }

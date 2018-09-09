@@ -15,6 +15,7 @@ class CreateEmployeesTable extends Migration
             $table->tinyInteger('type')->unsigned()->default(2)->content('1店长2员工3渠道');
             $table->string('password');
             $table->string('idnumber')->default('');
+            $table->string('intro')->default('')->content('个人介绍');
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->timestamps();
         });

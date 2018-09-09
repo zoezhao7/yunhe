@@ -17,4 +17,14 @@ class Employee extends Model
         return $this->belongsTo(Store::class);
     }
 
+    public function members()
+    {
+        return $this->hasMany(Member::class);
+    }
+
+    public function hasMember()
+    {
+        return !empty($this->members());
+    }
+
 }

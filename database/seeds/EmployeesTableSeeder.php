@@ -9,7 +9,7 @@ class EmployeesTableSeeder extends Seeder
 {
     public function run()
     {
-        $store_ids = Store::query()->orderBy('id', 'desc')->limit(10)->pluck('id');
+        $store_ids = Store::query()->limit(10)->pluck('id');
         $faker = app(Faker::class);
 
         $employees = factory(Employee::class)
