@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorizationRequest;
+use App\Http\Requests\Api\AuthorizationRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
@@ -18,40 +17,42 @@ class AuthorizationsController extends Controller
         $this->hasher = $hasher;
     }
 
+    // 登陆
     public function store(AuthorizationRequest $request)
     {
+
         $username = $request->user_name;
         $credentials['phone'] = $username;
         $credentials['password'] = $request->password;
 
         if (!$employee = Employee::where('phone', $username)->first())
         {
-            return $this->response()->errorUnauthorized('用户名不存在');
+            return $this->response->errorUnauthorized('用户名不存在');
         }
 
         if(!$this->hasher->check($request->password, $employee->getAuthPassword())) {
-            return $this->response()->errorUnauthorized('用户名或密码错误');
+            return $this->response->errorUnauthorized('用户名或密码错误');
         }
 
-        $token = $this->getToken();
+        $employee->api_token = $employee->getToken();
+        $employee->save();
 
-        return $this->reponse->array([
-            'api_token' => $token,
+        return $this->response->array([
+            'api_token' => $employee->api_token,
             'token_type' => 'Bearer',
-            'expires_in' =>  \Auth::guard('api')->factory()->getTTL() * 60,
-        ])->setStatus(201);
+            'expires_in' =>  24 * 60
+        ])->setStatusCode(200);
 
-        return response('this is v1 login');
     }
 
-    protected function getToken()
-    {
-        return md5('this is a demo string.');
-    }
-
+    // 推出登陆
     public function destroy()
     {
-        return response('this is v1 logout');
+        $user = Auth::guard('api')->user();
+        $user->api_token = '';
+        $user->save();
+
+        return $this->response->noContent();
     }
 
     public function refreshToken()

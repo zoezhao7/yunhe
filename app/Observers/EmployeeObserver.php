@@ -11,6 +11,11 @@ use Monolog\Formatter\ElasticaFormatter;
 
 class EmployeeObserver
 {
+    public function saving(Employee $employee)
+    {
+        $employee->letter = substr(pinyin_abbr($employee->name), 0, 1);
+    }
+
     public function saved(Employee $employee)
     {
         Store::find($employee->store_id)->increment('employee_count');

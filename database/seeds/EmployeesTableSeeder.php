@@ -28,12 +28,19 @@ class EmployeesTableSeeder extends Seeder
             }
         }
 
+
         foreach($stores as $store)
         {
             Store::find($store['id'])->update($store);
         }
 
         Employee::insert($employees->toArray());
+
+        $employee = Employee::orderBy('id', 'desc')->first();
+        $employee->name = '赵庆昌';
+        $employee->type = 1;
+        $employee->phone = '18638501517';
+        $employee->save();
     }
 
 }

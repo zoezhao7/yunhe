@@ -9,7 +9,9 @@ class Employee extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'status'];
+    protected $tokenSalt = 'yhyunhe#_lsf';
+
+    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token'];
 
     public static $types = [
         ['id' => 1, 'name' => '店长'],
@@ -22,6 +24,11 @@ class Employee extends Authenticatable
         return $this->belongsTo(Store::class);
     }
 
+    public function getToken()
+    {
+        return md5(md5($this->id . '|' . $this->tokenSalt . '|' . time()));
+    }
+
     public function members()
     {
         return $this->hasMany(Member::class);
@@ -31,5 +38,17 @@ class Employee extends Authenticatable
     {
         return !empty($this->members());
     }
+
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('id', 'desc');
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order', 'desc');
+    }
+
 
 }

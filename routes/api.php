@@ -22,10 +22,22 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api\v1'], function($api) {
 
-        #用户
+        #登陆
         $api->post('login', 'AuthorizationsController@store');
-        $api->post('logout', 'AuthorizationsController@destroy');
-        $api->post('token/refresh', 'AuthorizationsController@refreshToken');
+
+        $api->group(['middleware' => ['auth:api']], function ($api) {
+            $api->post('logout', 'AuthorizationsController@destroy');
+            #$api->post('token/refresh', 'AuthorizationsController@refreshToken');
+
+            #客户
+
+            #产品
+
+            #订单
+
+            #佣金
+
+        });
 
 
 
