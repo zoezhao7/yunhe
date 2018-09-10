@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Models;
+use App\Http\Requests\AuthorizationRequest;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
+    use Notifiable;
+
     protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'status'];
 
     public static $types = [

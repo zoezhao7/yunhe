@@ -15,6 +15,7 @@ class CreateMembersTable extends Migration
             $table->integer('store_id')->index()->unsigned()->default(0);
             $table->string('idnumber');
             $table->string('address')->default('');
+            $table->string('api_token', 100)->index()->default('');
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->timestamps();
         });
