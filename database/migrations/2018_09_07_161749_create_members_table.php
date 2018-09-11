@@ -10,6 +10,7 @@ class CreateMembersTable extends Migration
 		Schema::create('members', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
+            $table->string('letter')->index()->default('');
             $table->string('phone')->index()->default('');
             $table->integer('employee_id')->index()->unsigned();
             $table->integer('store_id')->index()->unsigned()->default(0);

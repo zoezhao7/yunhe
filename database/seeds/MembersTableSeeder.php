@@ -9,7 +9,7 @@ class MembersTableSeeder extends Seeder
 {
     public function run()
     {
-        $employee_ids = Employee::all()->pluck('id');
+        $employee_ids = Employee::orderBy('id', 'desc')->limit('20')->pluck('id');
         $faker = app(Faker::class);
 
         $members = factory(Member::class)
@@ -17,6 +17,7 @@ class MembersTableSeeder extends Seeder
             ->make()
             ->each(function ($member, $index) use ($faker, $employee_ids) {
                 $member->employee_id = $faker->randomElement($employee_ids);
+                $member->letter = strtoupper(substr(pinyin_abbr($member->name), 0, 1));
             });
 
         Member::insert($members->toArray());

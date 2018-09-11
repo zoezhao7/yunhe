@@ -13,7 +13,7 @@ class EmployeeObserver
 {
     public function saving(Employee $employee)
     {
-        $employee->letter = substr(pinyin_abbr($employee->name), 0, 1);
+        $employee->letter = strtoupper(substr(pinyin_abbr($employee->name), 0, 1));
     }
 
     public function saved(Employee $employee)

@@ -30,8 +30,13 @@ $api->version('v1', function($api) {
             #$api->post('token/refresh', 'AuthorizationsController@refreshToken');
 
             #客户
+            $api->get('members/{member}/orders', 'OrdersController@memberIndex');
+            $api->get('members', 'MembersController@index');
 
             #产品
+            $api->get('products', 'ProductsController@index');
+            $api->get('categories/{category}/}products', 'ProductsController@categoryIndex');
+            $api->get('products/{product}', 'ProductsController@show');
 
             #订单
 
