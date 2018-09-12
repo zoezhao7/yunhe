@@ -11,14 +11,25 @@ class ProductsController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::recent()->paginate();
+        $query = Product::query();
 
-        return $this->response->paginator($products, new ProductTransformer())->addMeta('123', '123');
+        if($request->has('key_word') && $request->key_word) {
+            $query->where('name', 'like', '%' . $request->key_word . '%');
+        }
+
+        $products = $query->recent()->paginate();
+
+        return $this->response->paginator($products, new ProductTransformer());
     }
 
     public function categoryIndex(Request $request, Category $category)
     {
-        $products = $category->products()->paginate();
+        $query = $category->products();
+
+        if($request->has('key_word') && $request->key_word) {
+            $query->where('name', 'like', '%' . $request->key_word . '%');
+        }
+        $products = $query->paginate();
 
         return $this->response->paginator($products, new ProductTransformer());
     }

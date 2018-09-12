@@ -19,13 +19,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', function($api) {
-    $api->group(['namespace' => 'App\Http\Controllers\Api\v1'], function($api) {
+$api->version('v1', [
+    'namespace' => 'App\Http\Controllers\Api\v1',
+    // 'middleware' => ['serializer:array', 'bindings', 'change-locale'],
+    'middleware' => ['serializer:array', 'bindings'],
+], function($api) {
+
+    $api->group([
+        'middleware' => 'api.throttle',
+        'limit' => config('api.rate_limits.sign.limit'),
+        'expires' => config('api.rate_limits.sign.expires'),
+    ], function($api) {
 
         #登陆
         $api->post('login', 'AuthorizationsController@store');
 
         $api->group(['middleware' => ['auth:api']], function ($api) {
+
+            #登出
             $api->post('logout', 'AuthorizationsController@destroy');
             #$api->post('token/refresh', 'AuthorizationsController@refreshToken');
 
@@ -34,8 +45,8 @@ $api->version('v1', function($api) {
             $api->get('members', 'MembersController@index');
 
             #产品
+            $api->get('categories/{category}/products', 'ProductsController@categoryIndex');
             $api->get('products', 'ProductsController@index');
-            $api->get('categories/{category}/}products', 'ProductsController@categoryIndex');
             $api->get('products/{product}', 'ProductsController@show');
 
             #订单

@@ -20,5 +20,14 @@ class Spec extends Model
     {
         return !empty($this->orders());
     }
+    protected function getContentAttribute($value)
+    {
+        if(is_array($value)) {
+            return $value;
+        }
+
+        return json_decode($value, true);
+    }
+
 
 }
