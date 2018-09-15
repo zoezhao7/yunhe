@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
 	{
 		\App\Models\User::observe(\App\Observers\UserObserver::class);
+		\App\Models\Commission::observe(\App\Observers\CommissionObserver::class);
+		\App\Models\CarBrand::observe(\App\Observers\CarBrandObserver::class);
 		\App\Models\Order::observe(\App\Observers\OrderObserver::class);
 		\App\Models\Spec::observe(\App\Observers\SpecObserver::class);
 		\App\Models\Car::observe(\App\Observers\CarObserver::class);

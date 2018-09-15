@@ -20,7 +20,6 @@ class AuthorizationsController extends Controller
     // 登陆
     public function store(AuthorizationRequest $request)
     {
-
         $username = $request->user_name;
         $credentials['phone'] = $username;
         $credentials['password'] = $request->password;
@@ -45,7 +44,7 @@ class AuthorizationsController extends Controller
 
     }
 
-    // 推出登陆
+    // 退出
     public function destroy()
     {
         $user = Auth::guard('api')->user();

@@ -12,6 +12,7 @@ class CreateProductsTable extends Migration
             $table->integer('category_id')->index()->unsigned();
             $table->string('name')->index();
             $table->string('intro')->index();
+            $table->text('fit_brands')->nullable()->content('适配的品牌，json');
             $table->text('colors')->nullable()->content('色彩图,名称 json');
             $table->text('content')->nullable()->content('产品详情');
             $table->string('image')->default('')->content('产品图');

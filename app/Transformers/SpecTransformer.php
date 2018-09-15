@@ -25,6 +25,6 @@ class SpecTransformer extends TransformerAbstract
 
     public function includeProduct(Spec $spec)
     {
-        return $this->item($spec->product(), new PassthroughFormatter());
+        return $this->item($spec->product, new ProductTransformer());
     }
 }

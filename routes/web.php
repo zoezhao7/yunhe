@@ -59,3 +59,6 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
 
 
 });
+
+Route::resource('car_brands', 'CarBrandsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('commissions', 'CommissionsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

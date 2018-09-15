@@ -11,13 +11,31 @@ class Employee extends Authenticatable
 
     protected $tokenSalt = 'yhyunhe#_lsf';
 
-    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token'];
+    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id'];
 
     public static $types = [
         ['id' => 1, 'name' => '店长'],
         ['id' => 2, 'name' => '销售'],
         ['id' => 3, 'name' => '渠道'],
     ];
+
+    // 下级
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'superior_id', 'id');
+    }
+
+    // 上级
+    public function superior()
+    {
+        return $this->belongsTo(Employee::class, id, 'superior_id');
+    }
+
+    // 订单
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class, Member::class);
+    }
 
     public function store()
     {

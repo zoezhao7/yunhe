@@ -34,7 +34,7 @@ $api->version('v1', [
         #登陆
         $api->post('login', 'AuthorizationsController@store');
 
-        $api->group(['middleware' => ['auth:api']], function ($api) {
+        $api->group(['middleware' => ['auth:api', 'clean.form']], function ($api) {
 
             #登出
             $api->post('logout', 'AuthorizationsController@destroy');
@@ -43,6 +43,15 @@ $api->version('v1', [
             #客户
             $api->get('members/{member}/orders', 'OrdersController@memberIndex');
             $api->get('members', 'MembersController@index');
+            $api->get('members/{member}', 'MembersController@show');
+
+            $api->post('cars', 'CarsController@store');
+            $api->get('cars/{car}', 'CarsController@show');
+            $api->put('cars/{car}', 'CarsController@update');
+
+            #下线
+            $api->get('subordinates', 'EmployeesController@subordinatesIndex');
+            $api->get('subordinates/{employee}', 'EmployeesController@subordinatesShow');
 
             #产品
             $api->get('categories/{category}/products', 'ProductsController@categoryIndex');
@@ -50,8 +59,21 @@ $api->version('v1', [
             $api->get('products/{product}', 'ProductsController@show');
 
             #订单
+            $api->get('orders', 'OrdersController@index');
+            $api->get('members/{member}/orders', 'OrdersController@memberIndex');
+            $api->get('employees/{employee}/orders', 'OrdersController@employeeIndex');
+            $api->get('orders/{order}', 'OrdersController@show');
+            $api->post('orders', 'OrdersController@store');
+            $api->put('orders/{order}', 'OrdersController@update');
+            $api->delete('orders/{order}', 'OrdersController@destroy');
+
 
             #佣金
+
+            #我的
+            $api->get('employees/center', 'EmployeesController@center');
+            $api->put('employees/intro', 'EmployeesController@updateIntro');
+            $api->put('employees/reset_password', 'EmployeesController@resetPassword');
 
         });
 

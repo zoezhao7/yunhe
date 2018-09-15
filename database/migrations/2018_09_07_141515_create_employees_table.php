@@ -9,6 +9,7 @@ class CreateEmployeesTable extends Migration
 	{
 		Schema::create('employees', function(Blueprint $table) {
             $table->increments('id');
+            $table->integer('superior_id')->index()->default(0)->content('上级id');
             $table->string('name')->index();
             $table->string('letter')->index()->default('');
             $table->string('phone')->index();

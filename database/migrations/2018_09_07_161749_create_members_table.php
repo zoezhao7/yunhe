@@ -14,8 +14,8 @@ class CreateMembersTable extends Migration
             $table->string('phone')->index()->default('');
             $table->integer('employee_id')->index()->unsigned();
             $table->integer('store_id')->index()->unsigned()->default(0);
-            $table->string('idnumber');
-            $table->string('address')->default('');
+            $table->string('idnumber')->default(0)->content('身份账号');
+            $table->string('address')->default('')->content('客户住址');
             $table->string('api_token', 100)->index()->default('');
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->timestamps();

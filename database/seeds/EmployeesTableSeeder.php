@@ -40,7 +40,16 @@ class EmployeesTableSeeder extends Seeder
         $employee->name = '赵庆昌';
         $employee->type = 1;
         $employee->phone = '18638501517';
+        $employee->superior_id = 99;
         $employee->save();
+
+        $demoEmployeeId = $employee->id;
+
+        $employees = Employee::limit(10)->get();
+        foreach($employees as $employee) {
+            $employee->superior_id = $demoEmployeeId;
+            $employee->save();
+        }
     }
 
 }

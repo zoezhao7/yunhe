@@ -35,4 +35,13 @@ class Product extends Model
         return json_decode($value, true);
     }
 
+    protected function getFitBrandsAttribute($value)
+    {
+        if(is_array($value)) {
+            return $value;
+        }
+
+        return json_decode($value, true);
+    }
+
 }

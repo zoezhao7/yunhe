@@ -19,6 +19,7 @@ class ProductTransformer extends TransformerAbstract
             'discount' => $product->discount ? $product->discount . '%' : '无',
             'intro' => $product->intro,
             'colors' => $product->colors,
+            'fit_brands' => $product->fit_brands,
 
         ];
     }

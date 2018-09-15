@@ -14,7 +14,9 @@ class CreateStoresTable extends Migration
             $table->string('address')->default('');
             $table->tinyInteger('employee_count')->unsigned()->default(0);
             $table->tinyInteger('is_open')->unsigned()->default(1);
-            $table->string('remark')->default('');
+            $table->text('sale_rate')->content('佣金规则');
+            $table->float('subordinate_rate')->default(0)->content('下线提成');
+            $table->text('remark')->nullable()->content('备注');
             $table->timestamps();
         });
 	}

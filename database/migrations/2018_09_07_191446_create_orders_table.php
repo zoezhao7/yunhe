@@ -13,12 +13,14 @@ class CreateOrdersTable extends Migration
             $table->integer('car_id')->index();
             $table->integer('product_id')->index();
             $table->integer('spec_id')->index();
-            $table->text('parameters')->nullable();
-            $table->float('price', 4, 2)->default(0);
-            $table->float('discount', 2, 2)->default(0);
-            $table->float('money', 4, 2);
-            $table->datetime('dealt_at')->nullable();
-            $table->integer('status')->default(0);
+            $table->text('parameters')->nullable()->content('交易参数（颜色 json）');
+            $table->float('price', 10, 2)->default(0)->content('市场价格');
+            $table->float('discount', 3, 2)->default(0)->content('交易折扣');
+            $table->float('money', 10, 2)->content('交易金额');
+            $table->datetime('dealt_at')->nullable()->content('交易时间');
+            $table->integer('number')->default(1)->content('商品数量（套）');
+            $table->text('remark')->nullable()->content('备注');
+            $table->integer('status')->default(0)->content('0待审核1审核通过2审核失败');
             $table->timestamps();
         });
 	}
