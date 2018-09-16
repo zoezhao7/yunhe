@@ -14,9 +14,9 @@ class Employee extends Authenticatable
     protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id'];
 
     public static $types = [
-        ['id' => 1, 'name' => '店长'],
         ['id' => 2, 'name' => '销售'],
         ['id' => 3, 'name' => '渠道'],
+        ['id' => 1, 'name' => '店长'],
     ];
 
     // 下级

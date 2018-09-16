@@ -14,6 +14,11 @@ return [
             'provider' => 'admins',
         ],
 
+        'store' => [
+            'driver' => 'session',
+            'provider' => 'employees'
+        ],
+
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
