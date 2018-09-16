@@ -10,8 +10,8 @@ class CreateCommissionsTable extends Migration
 		Schema::create('commissions', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned()->index();
-            $table->tinyInteger('type')->default(1)->content('1销售佣金2下线提成');
-            $table->integer('suboardinate_id')->default(0)->content('提成下线id');
+            $table->string('type')->default('')->content('order, subrodinate');
+            $table->integer('subordinate_id')->default(0)->content('提成下线id');
             $table->integer('order_id')->default(0)->content('佣金订单id');
             $table->float('money', 10, 2)->default(0)->conteng('金额');
             $table->timestamps();

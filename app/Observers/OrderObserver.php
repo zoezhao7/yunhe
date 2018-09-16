@@ -24,7 +24,7 @@ class OrderObserver
 
         // 如果传入车辆的车主与传入的客户信息有出入， 删除车辆信息
         $car = Car::find($order->car_id);
-        if(!$car || $car->member_id !== $order->member_id) {
+        if(!$car || $car->member_id != $order->member_id) {
             $order->car_id = 0;
         }
     }

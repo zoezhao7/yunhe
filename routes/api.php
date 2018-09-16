@@ -41,6 +41,8 @@ $api->version('v1', [
             #$api->post('token/refresh', 'AuthorizationsController@refreshToken');
 
             #客户
+            $api->post('members', 'MembersController@store');
+            $api->put('members/{member}', 'MembersController@update');
             $api->get('members/{member}/orders', 'OrdersController@memberIndex');
             $api->get('members', 'MembersController@index');
             $api->get('members/{member}', 'MembersController@show');
@@ -48,6 +50,7 @@ $api->version('v1', [
             $api->post('cars', 'CarsController@store');
             $api->get('cars/{car}', 'CarsController@show');
             $api->put('cars/{car}', 'CarsController@update');
+            $api->delete('cars/{car}', 'CarsController@destroy');
 
             #下线
             $api->get('subordinates', 'EmployeesController@subordinatesIndex');
@@ -69,6 +72,8 @@ $api->version('v1', [
 
 
             #佣金
+            $api->get('commissions/calculate', 'CommissionsController@calculate');
+            $api->get('commissions', 'CommissionsController@index');
 
             #我的
             $api->get('employees/center', 'EmployeesController@center');

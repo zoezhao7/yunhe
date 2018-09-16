@@ -48,4 +48,11 @@ class CarsController extends Controller
 
         return $this->response->created();
     }
+
+    public function destroy(Car $car)
+    {
+        $car->delete();
+
+        return $this->response->noContent();
+    }
 }

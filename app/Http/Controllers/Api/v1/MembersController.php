@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Http\Requests\Api\MemberRequest;
 use App\Http\Resources\MemberResource;
+use App\Models\Car;
 use App\Transformers\MemberTransformer;
 use Illuminate\Http\Request;
 use App\Models\Member;
@@ -33,5 +35,31 @@ class MembersController extends Controller
         }
 
         return $this->response->item($member, new MemberTransformer());
+    }
+
+    public function store(MemberRequest $request, Member $member)
+    {
+        $employee = \Auth::guard('api')->user();
+        $member->fill($request->all());
+        $member->employee_id = $employee->id;
+        $member->save();
+
+        if($car_ids = json_decode($request->car_ids, true)) {
+            \DB::table('cars')->whereIn('id', $car_ids)->where('member_id', 0)->update(['member_id' => $member->id]);
+        }
+
+        return $this->response->created();
+    }
+
+    public function update(MemberRequest $request, Member $member)
+    {
+        $member->fill($request->all());
+        $member->save();
+
+        if($car_ids = json_decode($request->car_ids, true)) {
+            \DB::table('cars')->whereIn('id', $car_ids)->where('member_id', 0)->update(['member_id' => $member->id]);
+        }
+
+        return $this->response->noContent();
     }
 }

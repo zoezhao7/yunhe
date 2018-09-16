@@ -37,6 +37,18 @@ class Employee extends Authenticatable
         return $this->hasManyThrough(Order::class, Member::class);
     }
 
+    // 下级订单
+    public function subordinateOrders()
+    {
+        return $this->hasManyThrough();
+    }
+
+    // 佣金
+    public function commissions()
+    {
+        return $this->hasMany(Commission::class);
+    }
+
     public function store()
     {
         return $this->belongsTo(Store::class);
