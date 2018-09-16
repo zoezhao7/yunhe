@@ -8,7 +8,6 @@
 
 namespace App\Transformers;
 
-use App\Models\Car;
 use App\Models\Commission;
 use League\Fractal\TransformerAbstract;
 
@@ -16,14 +15,14 @@ class CommissionTransformer extends TransformerAbstract
 {
     protected $availableIncludes = ['order', 'employee', 'subordinate'];
 
-    public function transform(Car $car)
+    public function transform(Commission $commission)
     {
         return [
-            'id' => $car->id,
-            'type' => $car->brand,
-            'order_id' => $car->vehicles,
-            'subordinate_id' => $car->specs,
-            'money' => (string) $car->production_date,
+            'id' => $commission->id,
+            'type' => $commission->type,
+            'order_id' => $commission->order_id,
+            'subordinate_id' => $commission->subordinate_id,
+            'money' => $commission->money,
         ];
     }
 
@@ -39,6 +38,8 @@ class CommissionTransformer extends TransformerAbstract
 
     public function includeSubordinate(Commission $commission)
     {
-        return $this->item($commission->subordinate, new EmployeeTransformer());
+        if($commission->subordinate_id) {
+            return $this->item($commission->subordinate, new EmployeeTransformer());
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Commission;
+use App\Transformers\CommissionTransformer;
 use Illuminate\Http\Request;
 
 class CommissionsController extends Controller
@@ -16,12 +17,18 @@ class CommissionsController extends Controller
         return $this->response->noContent();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $employee = \Auth::guard('api')->user();
 
-        $commissions = $employee->commissions()->get();
+        $query = $employee->commissions();
 
-        return $this->response->collection($commissions, new Commission());
+        if($request->has('month')) {
+            $query->where('month', '=', (string) $request->month);
+        }
+        
+        $commissions = $query->get();
+
+        return $this->response->collection($commissions, new CommissionTransformer());
     }
 }

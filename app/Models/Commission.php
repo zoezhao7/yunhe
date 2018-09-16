@@ -8,8 +8,6 @@ class Commission extends Model
 
     public static function calculate($month, Employee $employee)
     {
-        $month = '2018-09';
-
         $start = $month . '-01';
         $end = date( 'Y-m-01', (strtotime('+1 month', strtotime($start))) );
 
@@ -29,6 +27,7 @@ class Commission extends Model
         // 订单佣金
         foreach($orders as $order) {
             $commission = [
+                'month' => $month,
                 'employee_id' => $employee->id,
                 'type' => 'order',
                 'order_id' => $order->id,
@@ -51,6 +50,7 @@ class Commission extends Model
         foreach($subordinate_orders as $order)
         {
             $commission = [
+                'month' => $month,
                 'employee_id' => $employee->id,
                 'type' => 'subordinate',
                 'subordinate_id' => $order->employee_id,
@@ -72,12 +72,12 @@ class Commission extends Model
     // 订单
     public function order()
     {
-        return $this->hasOne(Order::class);
+        return $this->belongsTo(Order::class);
     }
 
     // 下线
     public function subordinate()
     {
-        return $this->hasOne(Employee::class, 'id', 'subordinate_id');
+        return $this->belongsTo(Employee::class, 'subordinate_id', 'id');
     }
 }
