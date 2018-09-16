@@ -17,7 +17,8 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         #客户管理
         Route::resource('store/members', 'MembersController', ['as' => 'store']);
         #订单管理
-        Route::post('store/orders/{order}/check', 'OrdersController@check')->name('store.orders.check');
+        Route::put('store/orders/{order}/check_success', 'OrdersController@checkSuccess')->name('store.orders.check_success');
+        Route::put('store/orders/{order}/check_fail', 'OrdersController@checkFail')->name('store.orders.check_fail');
         Route::get('store/orders', 'OrdersController@index')->name('store.orders.index');
         Route::get('store/orders/{order}', 'OrdersController@show')->name('store.orders.show');
     });

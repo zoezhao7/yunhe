@@ -22,8 +22,15 @@
 
             <li  class="nav @if(str_contains(request()->route()->getName(), ['products'])) active @endif" >
                 <a href="{{ route('store.products.index') }}" class="waves-effect">
-                    <i class="mdi mdi-cart fa-fw" data-icon="v"></i>
+                    <i class="mdi mdi-airballoon fa-fw" data-icon="v"></i>
                     <span class="hide-menu">产品管理</span>
+                </a>
+            </li>
+
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['orders'])) active @endif" >
+                <a href="{{ route('store.orders.index') }}" class="waves-effect">
+                    <i class="mdi mdi-cart fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">订单管理</span>
                 </a>
             </li>
 

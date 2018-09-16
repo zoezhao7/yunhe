@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::options('/{all}',function(){
+    return response('ok')
+        ->header('Access-Control-Allow-Methods','POST, GET, OPTIONS, PUT, DELETE')
+        ->header('Access-Control-Allow-Headers','Content-Type, X-Auth-Token, Origin');
+})->where(['all' => '([a-zA-Z0-9-]|/)+']);
+
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
@@ -24,7 +30,6 @@ $api->version('v1', [
     // 'middleware' => ['serializer:array', 'bindings', 'change-locale'],
     'middleware' => ['serializer:array', 'bindings'],
 ], function($api) {
-
     $api->group([
         'middleware' => 'api.throttle',
         'limit' => config('api.rate_limits.sign.limit'),
@@ -39,10 +44,8 @@ $api->version('v1', [
             #登出
             $api->post('logout', 'AuthorizationsController@destroy');
             #$api->post('token/refresh', 'AuthorizationsController@refreshToken');
-
             #工作台
             $api->get('workbench', 'WorkbenchController@index');
-
             #客户
             $api->post('members', 'MembersController@store');
             $api->put('members/{member}', 'MembersController@update');
@@ -54,16 +57,13 @@ $api->version('v1', [
             $api->get('cars/{car}', 'CarsController@show');
             $api->put('cars/{car}', 'CarsController@update');
             $api->delete('cars/{car}', 'CarsController@destroy');
-
             #下线
             $api->get('subordinates', 'EmployeesController@subordinatesIndex');
             $api->get('subordinates/{employee}', 'EmployeesController@subordinatesShow');
-
             #产品
             $api->get('categories/{category}/products', 'ProductsController@categoryIndex');
             $api->get('products', 'ProductsController@index');
             $api->get('products/{product}', 'ProductsController@show');
-
             #订单
             $api->get('orders', 'OrdersController@index');
             $api->get('members/{member}/orders', 'OrdersController@memberIndex');
@@ -72,17 +72,13 @@ $api->version('v1', [
             $api->post('orders', 'OrdersController@store');
             $api->put('orders/{order}', 'OrdersController@update');
             $api->delete('orders/{order}', 'OrdersController@destroy');
-
-
             #佣金
             $api->get('commissions/calculate', 'CommissionsController@calculate');
             $api->get('commissions', 'CommissionsController@index');
-
             #我的
             $api->get('employees/center', 'EmployeesController@center');
             $api->put('employees/intro', 'EmployeesController@updateIntro');
             $api->put('employees/reset_password', 'EmployeesController@resetPassword');
-
         });
 
 

@@ -48,7 +48,7 @@
                                     <td align="center" class="font-500">￥{{ $spec->price }}</td>
                                     <td>
                                         <p>
-                                            @foreach (json_decode($spec->content, true) as $key=>$value)
+                                            @foreach ($spec->content as $key=>$value)
                                                 {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
                                             @endforeach
 

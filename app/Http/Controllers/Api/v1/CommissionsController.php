@@ -26,7 +26,7 @@ class CommissionsController extends Controller
         if($request->has('month')) {
             $query->where('month', '=', (string) $request->month);
         }
-        
+
         $commissions = $query->get();
 
         return $this->response->collection($commissions, new CommissionTransformer());

@@ -20,4 +20,21 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getParametersAttribute($value)
+    {
+        if (!is_array($value)) {
+            $value = json_decode($value, true);
+        }
+
+        return implode('，', $value);
+    }
+
+    public function getDiscountAttribute($value)
+    {
+        if($value == 0) {
+            return '无';
+        }
+        return $value * 100 . '%';
+    }
 }
