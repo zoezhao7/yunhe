@@ -18,4 +18,12 @@ class NotificationsController extends Controller
         return $this->response->paginator($notifications, new NotificationTransformer());
     }
 
+    public function workbenchIndex()
+    {
+        $employee = \Auth::guard('api')->user();
+        $notifications = $employee->notifications()->paginate(10);
+
+        return $this->response->paginator($notifications, new NotificationTransformer());
+    }
+
 }
