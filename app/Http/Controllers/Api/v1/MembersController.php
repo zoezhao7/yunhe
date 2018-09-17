@@ -23,6 +23,8 @@ class MembersController extends Controller
             $member_arr[$member['letter']][] = $member;
         }
 
+        ksort($member_arr);
+
         return $this->response->array([
             'members' => $member_arr,
         ]);
@@ -44,8 +46,11 @@ class MembersController extends Controller
         $member->employee_id = $employee->id;
         $member->save();
 
-        if($car_ids = json_decode($request->car_ids, true)) {
-            \DB::table('cars')->whereIn('id', $car_ids)->where('member_id', 0)->update(['member_id' => $member->id]);
+        if($request->has('car_ids') && !empty($request->car_ids)) {
+            \DB::table('cars')
+                ->whereIn('id', $request->car_ids)
+                ->where('member_id', 0)
+                ->update(['member_id' => $member->id]);
         }
 
         return $this->response->created();

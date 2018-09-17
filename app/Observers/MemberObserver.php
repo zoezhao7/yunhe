@@ -9,13 +9,8 @@ use App\Models\Member;
 
 class MemberObserver
 {
-    public function creating(Member $member)
+    public function saving(Member $member)
     {
-        //
-    }
-
-    public function updating(Member $member)
-    {
-        //
+        $member->letter = strtoupper(substr(pinyin_abbr($member->name), 0, 1));
     }
 }

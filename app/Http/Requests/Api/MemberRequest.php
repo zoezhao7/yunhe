@@ -28,7 +28,7 @@ class MemberRequest extends FormRequest
             'phone' => 'required|string',
             'address' => 'nullable|string',
             'idnumber' => 'nullable|string',
-            'car_ids' => 'nullable|string',
+            'car_ids' => 'nullable|array',
         ];
     }
 
