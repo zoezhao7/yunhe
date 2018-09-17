@@ -21,9 +21,9 @@ class NotificationsController extends Controller
     public function workbenchIndex()
     {
         $employee = \Auth::guard('api')->user();
-        $notifications = $employee->notifications()->paginate(10);
+        $notifications = $employee->notifications()->orderBy('id', 'desc')->limit(10)->get();
 
-        return $this->response->paginator($notifications, new NotificationTransformer());
+        return $this->response->collection($notifications, new NotificationTransformer());
     }
 
 }
