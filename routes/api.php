@@ -46,6 +46,7 @@ $api->version('v1', [
             #$api->post('token/refresh', 'AuthorizationsController@refreshToken');
             #工作台
             $api->get('workbench', 'WorkbenchController@index');
+            $api->get('notifications', 'NotificationsController@index');
             #客户
             $api->post('members', 'MembersController@store');
             $api->put('members/{member}', 'MembersController@update');

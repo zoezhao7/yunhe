@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\Spec;
+use App\Notifications\OrderChecked;
 use Dingo\Api\Routing\Helpers;
 
 // creating, created, updating, updated, saving,
@@ -26,6 +27,18 @@ class OrderObserver
         $car = Car::find($order->car_id);
         if(!$car || $car->member_id != $order->member_id) {
             $order->car_id = 0;
+        }
+
+        $order->idnumber = $order->getIdnumber();
+    }
+
+    public function updated(Order $order)
+    {
+        // 订单状态变动时添加消息
+        if($order->isDirty('status')) {
+            $employee = $order->member->employee;
+            $employee->notify(new OrderChecked($order));
+            $employee->increment('notification_count');
         }
     }
 

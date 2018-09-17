@@ -21,6 +21,8 @@ class EmployeeTransformer extends TransformerAbstract
             'intro' => $employee->intro,
             'status' => $employee->status == 1 ? '在职' : '失效',
             'idnumber' => $employee->idnumber,
+            'order_count' => $employee->orders()->count(),
+            'nofitication_count' => $employee->notification_count,
         ];
     }
 

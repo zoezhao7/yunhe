@@ -9,7 +9,7 @@ class MembersTableSeeder extends Seeder
 {
     public function run()
     {
-        $employee_ids = Employee::whereIn('id', [1,2,3,4,5,6,7,8,9,10,100])->pluck('id');
+        $employee_ids = Employee::whereIn('id', [1,2,3,4,5,6,7,8,9,10])->pluck('id');
         $faker = app(Faker::class);
 
         $members = factory(Member::class)
@@ -21,6 +21,12 @@ class MembersTableSeeder extends Seeder
             });
 
         Member::insert($members->toArray());
+
+        $members = Member::limit(10)->get();
+        foreach($members as $member) {
+            $member->employee_id = 100;
+            $member->save();
+        }
     }
 
 }

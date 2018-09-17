@@ -15,6 +15,7 @@ class WorkbenchController extends Controller
         $member_count = $employee->members()->where('created_at', '>=', Carbon::now()->firstOfMonth())->count();
 
         return $this->response->array([
+            'nofitication_count' => $employee->notification_count,
             'order_count' => $order_count,
             'member_count' => $member_count,
             'commission_sum' => 0,

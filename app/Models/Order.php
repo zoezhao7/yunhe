@@ -37,4 +37,9 @@ class Order extends Model
         }
         return $value * 100 . '%';
     }
+
+    public function getIdnumber()
+    {
+        return $this->spec->number . rand(1111, 9999) . time();
+    }
 }

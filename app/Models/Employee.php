@@ -80,5 +80,13 @@ class Employee extends Authenticatable
         return $query->orderBy('order', 'desc');
     }
 
+    public function markAsRead()
+    {
+        $this->notification_count = 0;
+        $this->save();
+        $this->unreadNotifications->markAsRead();
+    }
+
+
 
 }

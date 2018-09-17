@@ -5,7 +5,7 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
     Route::get('store/login', 'LoginController@showLoginForm')->name('store.login');
     Route::post('store/login', 'LoginController@login')->name('store.login.post');
 
-    Route::middleware(['auth:store'])->group(function () {
+    Route::middleware(['auth.store'])->group(function () {
         #欢迎页
         Route::get('store/welcome', 'WelcomeController@index')->name('store.welcome');
         #产品管理

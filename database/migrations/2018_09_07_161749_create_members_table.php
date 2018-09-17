@@ -17,6 +17,7 @@ class CreateMembersTable extends Migration
             $table->string('idnumber')->default(0)->content('身份账号');
             $table->string('address')->default('')->content('客户住址');
             $table->string('api_token', 100)->index()->default('');
+            $table->integer('notification_count')->unsigned()->default(0)->content('通知消息数');
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->timestamps();
         });
