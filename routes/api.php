@@ -59,6 +59,11 @@ $api->version('v1', [
             $api->get('cars/{car}', 'CarsController@show');
             $api->put('cars/{car}', 'CarsController@update');
             $api->delete('cars/{car}', 'CarsController@destroy');
+
+            $api->get('car_brands/{car_brand}/vehicles', 'CarBrandsController@vehicleIndex');
+            $api->get('car_brands', 'CarBrandsController@index');
+
+
             #下线
             $api->get('subordinates', 'EmployeesController@subordinatesIndex');
             $api->get('subordinates/{employee}', 'EmployeesController@subordinatesShow');
