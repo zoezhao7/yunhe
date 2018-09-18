@@ -23,7 +23,7 @@ class CarsController extends Controller
     public function update(CarRequest $request, Car $car)
     {
         if(!$car->belongsToAuthorizer()) {
-            return $this->response->errorMethodNotAllowed('该车辆不属于您的客户，禁止操作！');
+            return $this->response->errorForbidden('该车辆不属于您的客户，禁止操作！');
         }
 
         // 禁止变更车辆主人
@@ -38,15 +38,20 @@ class CarsController extends Controller
 
     public function store(CarRequest $request, Car $car)
     {
-        $member = Member::find($request->member_id);
-        if(!$member->belongsToAuthorizer()) {
-            return $this->response->errorMethodNotAllowed('车辆主人不是您的客户，请重新操作！');
+        if($request->has('member_id') && $request->member_id) {
+            if( $member = Member::find($request->member_id) ) {
+                if(!$member->belongsToAuthorizer()) {
+                    return $this->response->errorForbidden('车辆主人不是您的客户，请重新操作！');
+                }
+            } else {
+                return $this->response->errorNotFound('客户id不存在！');
+            }
         }
 
         $car->fill($request->all());
         $car->save();
 
-        return $this->response->created();
+        return $this->response->item($car, new CarTransformer());
     }
 
     public function destroy(Car $car)

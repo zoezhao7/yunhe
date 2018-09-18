@@ -13,7 +13,7 @@ class CreateMemosTable extends Migration
             $table->integer('member_id')->default(0)->index()->unsigned();
             $table->tinyInteger('type')->default(0);
             $table->text('content')->nullable();
-            $table->tinyInteger('status')->deafult(1)->index();
+            $table->tinyInteger('status')->default(1)->index();
             $table->datetime('handled_at')->nullable();
             $table->timestamps();
         });

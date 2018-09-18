@@ -16,8 +16,10 @@ class MemberTransformer extends TransformerAbstract
         return [
             'id' => $member->id,
             'name' => $member->name,
+            'phone' => $member->phone,
             'idnumber' => $member->idnumber,
             'address' => $member->address,
+            'remark' => $member->remark,
         ];
     }
 

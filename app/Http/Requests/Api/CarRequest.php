@@ -26,7 +26,7 @@ class CarRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'member_id' => 'required|integer|exists:members,id',
+                    'member_id' => 'nullable|integer|exists:members,id',
                     'brand' => 'required|string',
                     'vehicles' => 'required|string',
                     'specs' => 'nullable|string',

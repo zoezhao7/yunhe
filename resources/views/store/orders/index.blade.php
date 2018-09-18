@@ -46,7 +46,7 @@
                 @foreach ($orders as $key => $order)
                 <tr>
                     <td>{{ $key+1 }}</td>
-                    <td> -- </td>
+                    <td>{{ $order->idnumber }}</td>
                     <td>{{ $order->member_name }}</td>
                     <td>{{ $order->employee_name }}</td>
                     <td>{{ $order->product_name }} - {{ $order->spec_size }}</td>

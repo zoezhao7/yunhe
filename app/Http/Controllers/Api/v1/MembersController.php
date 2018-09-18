@@ -61,8 +61,8 @@ class MembersController extends Controller
         $member->fill($request->all());
         $member->save();
 
-        if($car_ids = json_decode($request->car_ids, true)) {
-            \DB::table('cars')->whereIn('id', $car_ids)->where('member_id', 0)->update(['member_id' => $member->id]);
+        if(!empty($request->car_ids)) {
+            \DB::table('cars')->whereIn('id', $request->car_ids)->where('member_id', 0)->update(['member_id' => $member->id]);
         }
 
         return $this->response->noContent();

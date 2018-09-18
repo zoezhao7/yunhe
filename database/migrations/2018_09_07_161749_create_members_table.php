@@ -19,6 +19,7 @@ class CreateMembersTable extends Migration
             $table->string('api_token', 100)->index()->default('');
             $table->integer('notification_count')->unsigned()->default(0)->content('通知消息数');
             $table->tinyInteger('status')->unsigned()->default(1);
+            $table->text('remark')->nullable();
             $table->timestamps();
         });
 	}

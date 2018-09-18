@@ -12,7 +12,10 @@ class Car extends Model
      */
     public function belongsToAuthorizer()
     {
-        return $this->member->employee_id === \Auth::guard('api')->user()->id;
+        if(!empty($this->member)) {
+            return $this->member->employee_id === \Auth::guard('api')->user()->id;
+        }
+        return true;
     }
 
     public function member()

@@ -21,6 +21,9 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         Route::put('store/orders/{order}/check_fail', 'OrdersController@checkFail')->name('store.orders.check_fail');
         Route::get('store/orders', 'OrdersController@index')->name('store.orders.index');
         Route::get('store/orders/{order}', 'OrdersController@show')->name('store.orders.show');
+        #备货订单
+        Route::get('store/products/{product}/stock_orders/create', 'StockOrdersController@create');
+        Route::resource('store/stock_orders', 'StockOrdersController', ['as' => 'store', 'only' => ['index', 'show', 'store']]);
     });
 });
 
@@ -56,4 +59,3 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
     });
 
 });
-Route::resource('memos', 'MemosController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

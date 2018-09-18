@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Member extends Model
 {
-    protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status'];
+    protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status', 'remark'];
 
     /**
      * 客户是否属于登录当前登录用户
