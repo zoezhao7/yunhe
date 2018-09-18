@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AuthApiMiddleware;
 use App\Http\Middleware\EnableCrossRequestMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'auth.admin' => \App\Http\Middleware\AuthAdminMiddleware::class,
         'admin.permission' => \App\Http\Middleware\CheckPermission::class,
         'auth.store' => \App\Http\Middleware\AuthStoreMiddleware::class,
+        'auth.api' => \App\Http\Middleware\AuthApiMiddleware::class,
     ];
 }

@@ -35,8 +35,10 @@ class CarBrandsController extends Controller
     public function vehicleIndex(Request $request, CarBrand $brand)
     {
         $brand = CarBrand::find($request->brand_id);
-        $vehicles = $brand->carVehicles()->get()->toArray();
-        return $this->response->array(['data' => $vehicles]);
+
+        $data['brand'] = $brand->toArray();
+        $data['vehicles'] = $brand->carVehicles()->get()->toArray();
+        return $this->response->array(['data' => $data]);
     }
 
 }

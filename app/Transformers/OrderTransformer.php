@@ -27,6 +27,7 @@ class OrderTransformer extends TransformerAbstract
             'discount' => $order->discount == 0 ? '无' : $order->discount * 100 . '%',
             'money' => $order->money,
             'dealt_at' => $order->dealt_at,
+            'status' => $order->status,
         ];
     }
 

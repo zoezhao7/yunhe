@@ -56,3 +56,4 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
     });
 
 });
+Route::resource('memos', 'MemosController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

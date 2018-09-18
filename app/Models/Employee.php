@@ -64,6 +64,11 @@ class Employee extends Authenticatable
         return $this->hasMany(Member::class);
     }
 
+    public function memos()
+    {
+        return $this->hasMany(Memo::class);
+    }
+
     public function hasMember()
     {
         return !empty($this->members());

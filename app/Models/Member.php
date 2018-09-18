@@ -29,4 +29,9 @@ class Member extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function memos()
+    {
+        return $this->hasMany(Memo::class);
+    }
 }

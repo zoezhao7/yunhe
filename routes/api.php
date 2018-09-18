@@ -39,7 +39,7 @@ $api->version('v1', [
         #登陆
         $api->post('login', 'AuthorizationsController@store');
 
-        $api->group(['middleware' => ['auth:api', 'clean.form']], function ($api) {
+        $api->group(['middleware' => ['auth.api', 'clean.form']], function ($api) {
 
             #登出
             $api->post('logout', 'AuthorizationsController@destroy');
@@ -54,16 +54,19 @@ $api->version('v1', [
             $api->get('members/{member}/orders', 'OrdersController@memberIndex');
             $api->get('members', 'MembersController@index');
             $api->get('members/{member}', 'MembersController@show');
-
+            #车辆
             $api->post('cars', 'CarsController@store');
             $api->get('cars/{car}', 'CarsController@show');
             $api->put('cars/{car}', 'CarsController@update');
             $api->delete('cars/{car}', 'CarsController@destroy');
-
+            #车辆品牌
             $api->get('car_brands/{car_brand}/vehicles', 'CarBrandsController@vehicleIndex');
             $api->get('car_brands', 'CarBrandsController@index');
-
-
+            #服务记录
+            $api->get('members/{member}/memos', 'MemosController@memberIndex');
+            $api->post('memos', 'MemosController@store');
+            $api->put('memos/{memo}', 'MemosController@update');
+            $api->delete('memos/{memo}', 'MemosController@destroy');
             #下线
             $api->get('subordinates', 'EmployeesController@subordinatesIndex');
             $api->get('subordinates/{employee}', 'EmployeesController@subordinatesShow');
@@ -87,10 +90,6 @@ $api->version('v1', [
             $api->put('employees/intro', 'EmployeesController@updateIntro');
             $api->put('employees/reset_password', 'EmployeesController@resetPassword');
         });
-
-
-
-
     });
 });
 
