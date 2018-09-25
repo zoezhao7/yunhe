@@ -19,7 +19,9 @@ class CarTransformer extends TransformerAbstract
     {
         return [
             'id' => $car->id,
-            'brand' => $car->brand,
+            'brand_id' => $car->brand->id,
+            'brand_name' => $car->brand->name,
+            'brand_image' => $car->brand->image,
             'vehicles' => $car->vehicles,
             'specs' => $car->specs,
             'production_date' => (string) $car->production_date,

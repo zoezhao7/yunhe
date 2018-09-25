@@ -10,13 +10,14 @@ class CreateMembersTable extends Migration
 		Schema::create('members', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
-            $table->string('letter')->index()->default('');
+            $table->string('letter')->index()->default('姓名拼音首字母');
             $table->string('phone')->index()->default('');
             $table->integer('employee_id')->index()->unsigned();
             $table->integer('store_id')->index()->unsigned()->default(0);
-            $table->string('idnumber')->default(0)->content('身份账号');
+            $table->string('idnumber')->default('')->content('身份账号');
             $table->string('address')->default('')->content('客户住址');
             $table->string('api_token', 100)->index()->default('');
+            $table->integer('coin_count')->default(0)->content('积分总数');
             $table->integer('notification_count')->unsigned()->default(0)->content('通知消息数');
             $table->tinyInteger('status')->unsigned()->default(1);
             $table->text('remark')->nullable();

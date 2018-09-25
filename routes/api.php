@@ -85,6 +85,7 @@ $api->version('v1', [
             #佣金
             $api->get('commissions/calculate', 'CommissionsController@calculate');
             $api->get('commissions', 'CommissionsController@index');
+            $api->get('commissions/rules', 'CommissionsController@rules');
             #我的
             $api->get('employees/center', 'EmployeesController@center');
             $api->put('employees/intro', 'EmployeesController@updateIntro');

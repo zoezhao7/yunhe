@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\Order;
 use App\Models\Employee;
+use App\Models\Product;
 
 class OrdersController extends Controller
 {
@@ -23,7 +24,24 @@ class OrdersController extends Controller
 
     public function index(Request $request)
     {
-        $orders = Order::paginate();
+        $query = Order::query();
+
+        if($request->has('key_word') && $request->key_word) {
+            $keyWord = (string) $request->key_word;
+            $product_ids = Product::where('name', 'like', '%' . $keyWord . '%')->pluck('id')->toArray();
+
+            if(!empty($product_ids)) {
+                $query->whereIn('product_id', $product_ids);
+            } else {
+                $member_ids = Member::where('name', 'like', '%' . $keyWord . '%')->pluck('id')->toArray();
+                if(!empty($member_ids)) {
+                    $query->whereIn('member_id', $member_ids);
+                } else {
+                    return $this->response->array(['data'=>[]]);
+                }
+            }
+        }
+        $orders = $query->paginate();
 
         return $this->response->paginator($orders, new OrderTransformer());
     }

@@ -35,6 +35,7 @@
                     <th>姓名</th>
                     <th>手机号</th>
                     <th>车辆数</th>
+                    <th>账户积分</th>
                     <th>添加时间</th>
                     <th>操作</th>
                 </tr>
@@ -48,13 +49,15 @@
                     <td>{{ $member->name }}</td>
                     <td>{{ $member->phone }}</td>
                     <td>{{ $member->cars_count }}</td>
+                    <td>{{ $member->coin_count }}</td>
                     <td>{{ $member->created_at }}</td>
                     <td>
-                        <a href="{{ route('store.members.edit', $member->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
+                        <a href="{{ route('store.members.coins.create', $member->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="积分操作"><i class="ti-server"></i></a>
+                        <a href="{{ route('store.members.edit', $member->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑"><i class="ti-marker-alt"></i></a>
                         <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('store.members.destroy', $member->id) }}" style="display: inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="删除" data-toggle="tooltip"><i class="ti-trash"></i></a>
                         </form>
                     </td>
                 </tr>

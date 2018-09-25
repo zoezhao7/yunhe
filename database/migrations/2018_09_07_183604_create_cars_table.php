@@ -10,7 +10,7 @@ class CreateCarsTable extends Migration
 		Schema::create('cars', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('member_id')->index()->default(0);
-            $table->string('brand')->default('')->content('品牌');
+            $table->integer('brand_id')->default(0)->content('品牌id');
             $table->string('vehicles')->default('')->content('车型');
             $table->string('specs')->default('')->content('规格');
             $table->string('color')->default('')->content('色彩');

@@ -31,4 +31,17 @@ class CommissionsController extends Controller
 
         return $this->response->collection($commissions, new CommissionTransformer());
     }
+
+    public function rules()
+    {
+        $employee = \Auth::guard('api')->user();
+        $store = $employee->store;
+        $data['sale_rate'] = is_array($store->subordinate_rate) ? $store->subordinate_rate : json_decode($store->sale_rate, true);
+        $data['subordinate_rate'] = getPercent($store->subordinate_rate);
+        foreach($data['sale_rate'] as $key => $value) {
+            $data['sale_rate'][$key]['rate'] = getPercent($value['rate']);
+        }
+
+        return $this->response->array($data);
+    }
 }

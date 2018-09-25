@@ -39,6 +39,10 @@ class OrderObserver
             $employee = $order->member->employee;
             $employee->notify(new OrderChecked($order));
             $employee->increment('notification_count');
+
+            if($order->status == 1) {
+                $order->gainCoins();
+            }
         }
     }
 

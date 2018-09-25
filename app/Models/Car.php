@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Car extends Model
 {
-    protected $fillable = ['member_id', 'brand', 'vehicles', 'specs', 'color', 'production_date', 'buy_date', 'image', 'plate_number'];
+    protected $fillable = ['member_id', 'brand_id', 'vehicles', 'specs', 'color', 'production_date', 'buy_date', 'image', 'plate_number'];
 
     /**
      * 判断车辆归属的客户，是否属于登录用户
@@ -21,5 +21,10 @@ class Car extends Model
     public function member()
     {
         return $this->belongsTo(Member::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(CarBrand::class);
     }
 }

@@ -14,6 +14,10 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         Route::get('store/products/{product}', 'ProductsController@show')->name('store.products.show');
         #员工管理
         Route::resource('store/employees', 'EmployeesController', ['as' => 'store']);
+        #积分
+        Route::get('store/members/{member}/coins/create', 'CoinsController@memberCreate')->name('store.members.coins.create');
+        Route::post('store/members/{member}/coins', 'CoinsController@memberStore')->name('store.members.coins.store');
+        Route::resource('store/coins', 'CoinsController', ['only' => ['index'], 'as' => 'store']);
         #客户管理
         Route::resource('store/members', 'MembersController', ['as' => 'store']);
         #订单管理

@@ -16,13 +16,13 @@ class CarsTableSeeder extends Seeder
         $production_date = $faker->Date('Y-m-d', $buy_date);
 
         $car_arr = [
-            ['brand' => '大众', 'vehicles' => '捷达', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
-            ['brand' => '奥迪', 'vehicles' => 'Q5', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
-            ['brand' => '奔驰', 'vehicles' => 'S系', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
-            ['brand' => '捷豹', 'vehicles' => 'X7', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
-            ['brand' => '凯迪拉克', 'vehicles' => 'S8', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
-            ['brand' => '玛莎拉蒂', 'vehicles' => 'F系列', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
-            ['brand' => '英菲尼迪', 'vehicles' => 'M3', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '168', 'vehicles' => 'X9', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '182', 'vehicles' => 'Q5', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '185', 'vehicles' => 'S系', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '169', 'vehicles' => 'X7', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '185', 'vehicles' => 'S8', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '169', 'vehicles' => 'F系列', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
+            ['brand_id' => '168', 'vehicles' => 'M3', 'specs' => '高配', 'production_date' => $production_date, 'buy_date' => $buy_date],
         ];
 
 
@@ -33,7 +33,7 @@ class CarsTableSeeder extends Seeder
                 $car->member_id = $faker->randomElement($member_ids);
 
                 $car_cur = $faker->randomElement($car_arr);
-                $car->brand = $car_cur['brand'];
+                $car->brand_id = $car_cur['brand_id'];
                 $car->vehicles = $car_cur['vehicles'];
                 $car->specs = $car_cur['specs'];
                 $car->production_date = $car_cur['production_date'];

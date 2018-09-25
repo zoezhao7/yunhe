@@ -26,39 +26,39 @@ class MembersController extends Controller
 
     public function show(Member $member)
     {
-        return view('admin.members.show', compact('member'));
+        return view('store.members.show', compact('member'));
     }
 
 	public function create(Member $member)
 	{
-		return view('admin.members.create_and_edit', compact('member'));
+		return view('store.members.create_and_edit', compact('member'));
 	}
 
 	public function store(MemberRequest $request)
 	{
 		$member = Member::create($request->all());
-		return redirect()->route('admin.members.index')->with('message', 'Created successfully.');
+		return redirect()->route('store.members.index')->with('message', 'Created successfully.');
 	}
 
 	public function edit(Member $member)
 	{
-        $this->authorize('update', $member);
-		return view('admin.members.create_and_edit', compact('member'));
+        // $this->authorize('update', $member);
+		return view('store.members.create_and_edit', compact('member'));
 	}
 
 	public function update(MemberRequest $request, Member $member)
 	{
-		$this->authorize('update', $member);
+		// $this->authorize('update', $member);
 		$member->update($request->all());
 
-		return redirect()->route('admin.members.indx')->with('message', 'Updated successfully.');
+		return redirect()->route('store.members.indx')->with('message', 'Updated successfully.');
 	}
 
 	public function destroy(Member $member)
 	{
-		$this->authorize('destroy', $member);
+		// $this->authorize('destroy', $member);
 		$member->delete();
 
-		return redirect()->route('admin.members.index')->with('message', 'Deleted successfully.');
+		return redirect()->route('store.members.index')->with('message', 'Deleted successfully.');
 	}
 }

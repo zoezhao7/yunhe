@@ -41,6 +41,13 @@
                 </a>
             </li>
 
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['coins'])) active @endif" >
+                <a href="{{ route('store.coins.index') }}" class="waves-effect">
+                    <i class="mdi mdi-account fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">积分记录</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 </div>

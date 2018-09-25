@@ -20,3 +20,8 @@ function filterNull($data)
     }
     return true;
 }
+
+function getPercent($data)
+{
+    return (float) $data * 100 . '%';
+}

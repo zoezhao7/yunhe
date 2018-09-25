@@ -27,7 +27,7 @@ class CarRequest extends FormRequest
             case 'POST':
                 return [
                     'member_id' => 'nullable|integer|exists:members,id',
-                    'brand' => 'required|string',
+                    'brand_id' => 'required|integer',
                     'vehicles' => 'required|string',
                     'specs' => 'nullable|string',
                     'color' => 'nullable|string',
@@ -40,7 +40,7 @@ class CarRequest extends FormRequest
             case 'PUT':
             case 'PATCH':
                 return [
-                    'brand' => 'required|string',
+                    'brand_id' => 'required|integer',
                     'vehicles' => 'required|string',
                     'specs' => 'string',
                     'color' => 'nullable|string',

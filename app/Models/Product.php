@@ -26,7 +26,7 @@ class Product extends Model
         return !empty($this->orders());
     }
 
-/*    protected function getColorsAttribute($value)
+    protected function getColorsAttribute($value)
     {
         if(is_array($value)) {
             return $value;
@@ -42,6 +42,6 @@ class Product extends Model
         }
 
         return json_decode($value, true);
-    }*/
+    }
 
 }
