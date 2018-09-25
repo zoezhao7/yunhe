@@ -10,6 +10,7 @@ class CreateOrdersTable extends Migration
 		Schema::create('orders', function(Blueprint $table) {
             $table->increments('id');
             $table->string('idnumber')->index()->unqiue()->content('订单编号');
+            $table->integer('employee_id')->index();
             $table->integer('member_id')->index();
             $table->integer('car_id')->index();
             $table->integer('product_id')->index();

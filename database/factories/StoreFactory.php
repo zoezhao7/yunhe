@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $sale_arr = [
     ['min' => 1, 'max' => 4, 'rate' => 0.1],
     ['min' => 5, 'max' => 9, 'rate' => 0.15],
-    ['max' => 10, 'max' => 0, 'rate' => 0.2],
+    ['min' => 10, 'max' => 0, 'rate' => 0.2],
 ];
 
 $saleRate = json_encode($sale_arr);

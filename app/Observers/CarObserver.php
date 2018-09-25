@@ -25,9 +25,18 @@ class CarObserver
 
     public function deleting(Car $car)
     {
+        if ($car->member->employee_id !== \Auth::guard('api')->user()->id)
+        {
+            return $this->response->errorForbidden('车辆主人不是您的客户，禁止删除！');
+        }
+
         if (Order::where('car_id', $car->id)->first() )
         {
-            return $this->response->errorForbidden('车辆已绑定订单，禁止删除！')->addMeta(['c'=>'1']);
+            return $this->response->errorForbidden('车辆已绑定订单，禁止删除！');
         }
+    }
+
+    public function deleted(Car $car)
+    {
     }
 }

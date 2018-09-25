@@ -23,7 +23,7 @@ class SpecsTableSeeder extends Seeder
         ];
 
         $specs = factory(Spec::class)
-            ->times(20)
+            ->times(100)
             ->make()
             ->each(function ($spec, $index) use ($faker, $product_ids, $sizes, $contents) {
                 $spec->product_id = $faker->randomElement($product_ids);
