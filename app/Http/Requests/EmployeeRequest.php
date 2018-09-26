@@ -16,7 +16,8 @@ class EmployeeRequest extends Request
                         'password' => 'required|string|min:6|max:20',
                         'store_id' => 'required|integer|exists:stores,id',
                         'phone' => 'required|string|regex:/^1[0-9]{10}$/|unique:employees,phone',
-                        'type' => 'required|integer',
+                        'type' => 'required|in:1,2,3',
+                        'status' => 'required|in:1,2',
                     ];
                 }
             case 'PUT':
@@ -28,7 +29,8 @@ class EmployeeRequest extends Request
                         'password' => 'string|min:6|max:20',
                         'store_id' => 'required|integer|exists:stores,id',
                         'phone' => 'required|string|regex:/^1[0-9]{10}$/|unique:employees,phone,' . $id,
-                        'type' => 'required|integer',
+                        'type' => 'required|in:1,2,3',
+                        'status' => 'required|in:1,2',
                     ];
                 }
             default:

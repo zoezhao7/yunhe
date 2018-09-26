@@ -41,6 +41,6 @@ class Order extends Model
 
     public function getIdnumber()
     {
-        return $this->spec->number . rand(1111, 9999) . time();
+        return $this->spec->id . rand(1111, 9999) . time();
     }
 }

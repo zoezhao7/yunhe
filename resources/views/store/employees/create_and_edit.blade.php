@@ -71,6 +71,25 @@
                                         </select>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">上级（渠道归属的销售）：</label>
+                                        <select class="form-control" name="superior_id" required>
+                                            <option value="0">无</option>
+                                            @foreach ($employees as $item)
+                                                <option value="{{ $item['id'] }}" {{ $employee->superior_id == $item['id'] ? 'selected' : '' }}>{{ $item['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">状态</label>
+                                        <select class="form-control" name="status" required>
+                                            @foreach ($employee->statusMsg as $status)
+                                                <option value="{{ $status['id'] }}" {{ $employee->status == $status['id'] ? 'selected' : '' }}>{{ $status['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">提交
                                     </button>
                                 </form>

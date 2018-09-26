@@ -10,17 +10,12 @@ class CoinRequest extends Request
         {
             // CREATE
             case 'POST':
-            {
-                return [
-                    // CREATE ROLES
-                ];
-            }
-            // UPDATE
             case 'PUT':
             case 'PATCH':
             {
                 return [
-                    // UPDATE ROLES
+                    'number' => 'required|numeric',
+                    'remark' => 'required|string',
                 ];
             }
             case 'GET':
@@ -35,7 +30,7 @@ class CoinRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'remark:required' => '备注信息不能为空',
         ];
     }
 }

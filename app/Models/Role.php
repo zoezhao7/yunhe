@@ -10,6 +10,7 @@ class Role extends Model
 
     protected $fillable = ['name', 'node_ids', 'node_names'];
 
+    // 超级管理员ID
     public $superAdminRoleId = 1;
 
     public function isNotSuperAdmin()

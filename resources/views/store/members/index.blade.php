@@ -54,10 +54,10 @@
                     <td>
                         <a href="{{ route('store.members.coins.create', $member->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="积分操作"><i class="ti-server"></i></a>
                         <a href="{{ route('store.members.edit', $member->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑"><i class="ti-marker-alt"></i></a>
-                        <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('store.members.destroy', $member->id) }}" style="display: inline">
+                        <form onsubmit="return confirm('确认删除吗？');" id="delete_form_{{ $member->id }}" method="post" action="{{ route('store.members.destroy', $member->id) }}" style="display: inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="删除" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form_{{ $member->id }}').submit();" class="text-inverse" title="删除" data-toggle="tooltip"><i class="ti-trash"></i></a>
                         </form>
                     </td>
                 </tr>

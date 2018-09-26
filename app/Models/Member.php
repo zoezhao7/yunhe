@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Member extends Model
 {
-    protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status', 'remark'];
+    protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status', 'remark', 'employee_id'];
 
     /**
      * 客户是否属于登录当前登录用户
@@ -36,6 +36,17 @@ class Member extends Model
         Coin::insert($data);
     }
 
+    // 客户名下有待审核和审核通过的订单
+    public function hasOrder()
+    {
+        return $this->orders()->whereIn('status', [0,1])->count() > 0;
+    }
+
+    public function coins()
+    {
+        return $this->hasMany(Coin::class);
+    }
+
     public function employee()
     {
         return $this->belongsTo(Employee::class);
@@ -54,5 +65,10 @@ class Member extends Model
     public function memos()
     {
         return $this->hasMany(Memo::class);
+    }
+
+    public function isSuperAdmin()
+    {
+        return false;
     }
 }

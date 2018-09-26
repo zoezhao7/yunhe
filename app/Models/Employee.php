@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Http\Requests\AuthorizationRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,12 @@ class Employee extends Authenticatable
 
     protected $tokenSalt = 'yhyunhe#_lsf';
 
-    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id'];
+    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id', 'status'];
+
+    public $statusMsg = [
+        '1' => ['id' => 1, 'name' => '在职', 'label_string' => '<span class="label label-success ">在职</span>'],
+        '2' => ['id' => 2, 'name' => '离职', 'label_string' => '<span class="label label-danger ">离职</span>'],
+    ];
 
     public static $types = [
         ['id' => 2, 'name' => '销售'],
@@ -28,7 +34,7 @@ class Employee extends Authenticatable
     // 上级
     public function superior()
     {
-        return $this->belongsTo(Employee::class, id, 'superior_id');
+        return $this->belongsTo(Employee::class, 'superior_id', 'id');
     }
 
     // 订单
@@ -92,6 +98,13 @@ class Employee extends Authenticatable
         $this->unreadNotifications->markAsRead();
     }
 
+    public function getStatusStringAttribute()
+    {
+        return $this->statusMsg[$this->status]['label_string'];
+    }
 
-
+    public function isSuperAdmin()
+    {
+        return false;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Store;
 
 use App\Models\Member;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MemberRequest;
@@ -31,34 +32,44 @@ class MembersController extends Controller
 
 	public function create(Member $member)
 	{
-		return view('store.members.create_and_edit', compact('member'));
+        $manager = \Auth::guard('store')->user();
+        $employees = Employee::select('id', 'name')->where('store_id', $manager->store_id)->where('status', 1)->get()->toArray();
+
+		return view('store.members.create_and_edit', compact('member', 'employees'));
 	}
 
 	public function store(MemberRequest $request)
 	{
-		$member = Member::create($request->all());
-		return redirect()->route('store.members.index')->with('message', 'Created successfully.');
+		Member::create($request->all());
+
+		return redirect()->route('store.members.index')->with('success', '客户资料创建成功');
 	}
 
 	public function edit(Member $member)
 	{
-        // $this->authorize('update', $member);
-		return view('store.members.create_and_edit', compact('member'));
+        $this->authorizeForUser(auth('store')->user(), 'storeUpdate', $member);
+
+        $manager = \Auth::guard('store')->user();
+        $employees = Employee::select('id', 'name')->where('store_id', $manager->store_id)->where('status', 1)->get()->toArray();
+
+		return view('store.members.create_and_edit', compact('member', 'employees'));
 	}
 
 	public function update(MemberRequest $request, Member $member)
 	{
-		// $this->authorize('update', $member);
+        $this->authorizeForUser(auth('store')->user(), 'storeUpdate', $member);
+
 		$member->update($request->all());
 
-		return redirect()->route('store.members.indx')->with('message', 'Updated successfully.');
+		return redirect()->back()->with('success', '客户资料编辑成功');
 	}
 
 	public function destroy(Member $member)
 	{
-		// $this->authorize('destroy', $member);
+        $this->authorizeForUser(auth('store')->user(), 'storeDestroy', $member);
+
 		$member->delete();
 
-		return redirect()->route('store.members.index')->with('message', 'Deleted successfully.');
+		return redirect()->route('store.members.index')->with('success', '客户资料删除成功');
 	}
 }

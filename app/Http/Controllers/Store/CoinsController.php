@@ -10,11 +10,29 @@ use App\Http\Controllers\Controller;
 
 class CoinsController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
-		$coins = Coin::paginate();
+        $query = Coin::query()->has('member');
+
+        if($keyWord = $request->input('search_key')) {
+            $member_ids = Member::where('name', 'like', "%{$keyWord}%")->pluck('id');
+            if(!empty($member_ids)) {
+                $query->whereIn('member_id', $member_ids);
+            }else{
+                $coins = [];
+                return view('store.coins.index', compact('coins'));
+            }
+        }
+
+		$coins = $query->with(['employee', 'order', 'member'])->paginate();
 		return view('store.coins.index', compact('coins'));
 	}
+
+    public function memberIndex(Member $member)
+    {
+        $coins = $member->coins()->with(['employee', 'order', 'member'])->paginate();
+        return view('store.coins.index', compact('member', 'coins'));
+    }
 
 	public function memberCreate(Member $member, Coin $coin)
 	{
@@ -23,8 +41,17 @@ class CoinsController extends Controller
 
 	public function memberStore(Member $member, CoinRequest $request)
 	{
-		$coin = Coin::create($request->all());
-		return redirect()->route('store.coins.index')->with('success', '积分操作成功');
+	    $data = $request->all();
+	    $data['member_id'] = $member->id;
+	    $data['type'] = 2; // 人工操作
+        $data['account_number'] = $member->coin_count + ceil($data['number']);
+        $data['employee_id'] = \Auth::guard('store')->user()->id;
+		$coin = Coin::create($data);
+
+		$member->coin_count = $member->coin_count + ceil($data['number']);
+		$member->save();
+
+		return redirect()->back()->with('success', '积分操作成功');
 	}
 
 }

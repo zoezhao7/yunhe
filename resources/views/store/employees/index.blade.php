@@ -24,7 +24,7 @@
             <div>
                 <form method="get" action="{{ url()->full() }}" >
                     {{ csrf_field() }}
-                    <input type="text" name="search_key" value="{{ request()->input('search_key') }}" id="demo-input-search2" placeholder="输入姓名..." class="form-control">
+                    <input type="text" name="search_key" value="{{ request()->input('search_key') }}" id="demo-input-search2" placeholder="输入员工姓名..." class="form-control">
                 </form>
             </div>
 
@@ -35,8 +35,10 @@
                         <th>序号</th>
                         <th>姓名</th>
                         <th>身份</th>
+                        <th>上级</th>
                         <th>电话</th>
                         <th>证件号码</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -56,10 +58,13 @@
                                     <span class="label label-warning">渠道</span>
                                 @endif
                             </td>
+                            <td>@if($employee->superior_id) {{ $employee->superior->name }} @else -- @endif</td>
                             <td>{{ $employee->phone }}</td>
                             <td>{{ $employee->idnumber }}</td>
+                            {{--<td>{{ $employee->statusMsg[1]['name'] }} {{ $employee->status }}</td>--}}
+                            <td>{!! $employee->statusString !!}</td>
                             <td>
-                                <a href="{{ route('store.employees.edit', $employee->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
+                                <a href="{{ route('store.employees.edit', $employee->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑"><i class="ti-marker-alt"></i></a>
 
                                 <!--
                                 <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('store.employees.destroy', $employee->id) }}" style="display: inline">

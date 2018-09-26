@@ -16,6 +16,8 @@ class EmployeesController extends Controller
         $manager = \Auth::guard('store')->user();
 
 	    $query = Employee::query();
+
+	    // 搜索
 	    if($keyWord = $request->input('search_key')) {
 	        $query->where('name', 'like', '%' . $keyWord . '%');
         }
@@ -34,7 +36,9 @@ class EmployeesController extends Controller
         $manager = \Auth::guard('store')->user();
         $store_id = $manager->store_id;
 
-		return view('store.employees.create_and_edit', compact('employee', 'store_id'));
+        $employees = Employee::select('id', 'name')->whereIn('type', [1, 2])->where('store_id', $manager->store_id)->get()->toArray();
+
+		return view('store.employees.create_and_edit', compact('employee', 'store_id', 'employees'));
 	}
 
 	public function store(EmployeeRequest $request)
@@ -57,7 +61,9 @@ class EmployeesController extends Controller
         $manager = \Auth::guard('store')->user();
         $store_id = $manager->store_id;
 
-		return view('store.employees.create_and_edit', compact('employee', 'store_id'));
+        $employees = Employee::select('id', 'name')->whereIn('type', [1, 2])->where('store_id', $manager->store_id)->get()->toArray();
+
+		return view('store.employees.create_and_edit', compact('employee', 'store_id', 'employees'));
 	}
 
 	public function update(EmployeeRequest $request, Employee $employee)

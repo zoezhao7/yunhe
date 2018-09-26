@@ -17,14 +17,19 @@ class AuthorizationsController extends Controller
         $this->hasher = $hasher;
     }
 
-    // 登陆
+    /**
+     * 登录
+     * @param AuthorizationRequest $request
+     * @throws \ErrorException
+     */
     public function store(AuthorizationRequest $request)
     {
         $username = $request->user_name;
         $credentials['phone'] = $username;
         $credentials['password'] = $request->password;
 
-        if (!$employee = Employee::where('phone', $username)->first())
+        // 离职员工不允许登录
+        if (!$employee = Employee::where('phone', $username)->where('status', 1)->first())
         {
             return $this->response->errorUnauthorized('用户名不存在');
         }
@@ -44,7 +49,10 @@ class AuthorizationsController extends Controller
 
     }
 
-    // 退出
+    /**
+     * 登出
+     * @return \Dingo\Api\Http\Response
+     */
     public function destroy()
     {
         $user = Auth::guard('api')->user();

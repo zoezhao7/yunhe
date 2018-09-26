@@ -17,6 +17,7 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         #积分
         Route::get('store/members/{member}/coins/create', 'CoinsController@memberCreate')->name('store.members.coins.create');
         Route::post('store/members/{member}/coins', 'CoinsController@memberStore')->name('store.members.coins.store');
+        Route::get('store/members/{member}/coins', 'CoinsController@memberIndex')->name('store.members.coins');
         Route::resource('store/coins', 'CoinsController', ['only' => ['index'], 'as' => 'store']);
         #客户管理
         Route::resource('store/members', 'MembersController', ['as' => 'store']);
@@ -28,6 +29,8 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         #备货订单
         Route::get('store/products/{product}/stock_orders/create', 'StockOrdersController@create');
         Route::resource('store/stock_orders', 'StockOrdersController', ['as' => 'store', 'only' => ['index', 'show', 'store']]);
+        #账务记录
+        Route::resource('store/accounts', 'AccountsController', ['only' => ['index', 'create', 'store', 'destroy'], 'as' => 'store']);
     });
 });
 

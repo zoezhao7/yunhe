@@ -24,7 +24,7 @@ class OrderObserver
         $order->product_id = $spec->product_id;
 
         //签单销售的id
-        $order->employee_id = \Auth::guard('api')->id;
+        $order->employee_id = \Auth::guard('api')->user()->id;
 
         // 如果传入车辆的车主与传入的客户信息有出入， 删除车辆信息
         $car = Car::find($order->car_id);
@@ -37,8 +37,8 @@ class OrderObserver
 
     public function updated(Order $order)
     {
-        if($order->employee_id !== \Auth::guard('api')->id) {
-            return $this->response->errorForbidden('不是你的订单， 禁止删除！');
+        if($order->employee_id !== \Auth::guard('store')->user()->id) {
+            return $this->response->errorForbidden('不是你的订单， 禁止操作！');
         }
 
         // 订单状态变动时添加消息
@@ -47,8 +47,9 @@ class OrderObserver
             $employee->notify(new OrderChecked($order));
             $employee->increment('notification_count');
 
+            // 操作客户积分
             if($order->status == 1) {
-                $order->gainCoins();
+                $order->member->gainCoinsByOrder($order);
             }
         }
     }
