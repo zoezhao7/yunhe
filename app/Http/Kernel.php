@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'admin.permission' => \App\Http\Middleware\CheckPermission::class,
         'auth.store' => \App\Http\Middleware\AuthStoreMiddleware::class,
         'auth.api' => \App\Http\Middleware\AuthApiMiddleware::class,
+        'auth.member' => \App\Http\Middleware\AuthMemberMiddleware::class,
     ];
 }

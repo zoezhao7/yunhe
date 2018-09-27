@@ -19,14 +19,19 @@ return [
             'provider' => 'employees'
         ],
 
-        'web' => [
+        'member' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'members',
         ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'employees',
+        ],
+
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
         ],
     ],
 
@@ -39,6 +44,11 @@ return [
         'employees' => [
             'driver' => 'eloquent',
             'model' => App\Models\Employee::class,
+        ],
+
+        'members' => [
+            'driver' => 'eloquent',
+            'model' =>App\Models\Member::class,
         ],
 
         'users' => [

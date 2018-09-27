@@ -9,12 +9,9 @@ class MembersController extends Controller
 {
     public function center()
     {
-        if (!\Auth::guard('member')->check()) {
-            return redirect()->to(route('weixin.login'));
-        }
-
-        dd('this is member center');
+        return view('member.members.center');
     }
+
 
     public function demo()
     {

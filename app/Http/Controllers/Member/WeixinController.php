@@ -15,7 +15,6 @@ use GuzzleHttp\Client;
 class WeixinController
 {
     protected $guzzleOptions = [];
-    protected $redirectUrl = '';
     protected $appId = '';
     protected $secret = '';
 
@@ -34,15 +33,12 @@ class WeixinController
         $tokenResult = $this->getToken($request->code);
         $userInfo = $this->getUserInfo($tokenResult['access_token'], $tokenResult['open_id']);
 
-        // 客户登录
-        $member = Member::where('weixin_unionid', $userInfo['unionid'])->first();
-        if($member) {
-            #login流程
+
+        // 登陆
+        if(\Auth::guard('member')->attempt(['weixin_unionid'=>$userInfo['unionid']])) {
             return redirect()->route('member.center');
         } else {
-            #添加微信用户信息
-            #登录流程
-            #跳转到绑定销售顾问手机号界面
+            return redirect()->route();
         }
     }
 

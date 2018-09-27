@@ -67,6 +67,11 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
 
 });
 Route::namespace('Member')->middleware(['clean.form'])->group(function () {
-    Route::get('member/center', 'MembersController@center')->name('member.center');
+    Route::get('member/login', 'LoginController@login')->name('member.login');
+    Route::post('member/members', 'MembersController@store')->name('member.members.store');
+
+    Route::middleware(['auth.member'])->group(function () {
+        Route::get('member/center', 'MembersController@center')->name('member.center');
+    });
 });
 

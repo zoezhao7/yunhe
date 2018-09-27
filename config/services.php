@@ -35,4 +35,9 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'weixin' =>[
+      'app_id' => env('WEIXIN_API_ID'),
+      'secret' => env('WEIXIN_SECRET'),
+    ],
+
 ];
