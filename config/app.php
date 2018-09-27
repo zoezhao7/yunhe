@@ -160,6 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Overtrue\LaravelPinyin\ServiceProvider::class,
+        App\Providers\EasySmsServiceProvider::class,
 
     ],
 
