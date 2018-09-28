@@ -1,0 +1,174 @@
+// @rem:75rem;
+@rem:2px;
+.bor-t(@borderTop:#eee){
+	position: relative;
+	&:after{
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		top: 0;
+		border-bottom: 1px solid @borderTop;
+		-webkit-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scaleY(.5);
+		transform: scaleY(.5)
+	}
+}
+.bor-b(@borderBottom:#eee){
+	position: relative;
+	&:after{
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		bottom: 0;
+		border-bottom: 1px solid @borderBottom;
+		-webkit-transform-origin: 0 100%;
+		transform-origin: 0 100%;
+		-webkit-transform: scaleY(.5);
+		transform: scaleY(.5);
+	}
+}
+
+.lyup-m-layer{
+	position: relative;
+	z-index: 9999999;
+	*{
+		-webkit-box-sizing: border-box;
+	    box-sizing: border-box;
+	    -webkit-overflow-scrolling: touch;
+	    -webkit-tap-highlight-color: transparent;
+	}
+	.lyup-shade,.lyup-container{
+		position: fixed;
+		top:0;
+		left:0;
+		width: 100%;
+		height: 100%;
+	}
+	.lyup-shade{
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.lyup-container{
+		display: table;
+	    font-family: Helvetica,arial,sans-serif;
+	    pointer-events: none;
+	}
+	.lyup-section{
+		display: table-cell;
+	    vertical-align: middle;
+	    text-align: center;
+	}
+	.lyup-main{
+		width: 560/@rem;
+    	position: relative;
+	    display: inline-block;
+	    text-align: left;
+	    background-color: #fff;
+	    font-size: 28/@rem;
+	    border-radius: 5px;
+	    overflow: hidden;
+	    box-shadow: 0 0 8px rgba(0,0,0,.1);
+	    pointer-events: auto;
+	    -webkit-overflow-scrolling: touch;
+	    -webkit-animation-fill-mode: both;
+	    animation-fill-mode: both;
+	    -webkit-animation-duration: .2s;
+	    animation-duration: .2s;
+	}
+	.lyup-title{
+		padding: 0 10px;
+	    height: 60px;
+	    line-height: 60px;
+	    font-size: 16px;
+	    font-weight: 400;
+	    border-radius: 5px 5px 0 0;
+	    text-align: center;
+	    background-color: #ff8b03;
+	    color: #fff;
+	}
+	.lyup-content{
+		padding: 40/@rem 30/@rem;
+	    line-height: 22px;
+	    text-align: center;
+	}
+	.lyup-btnbox{
+		display: box;
+	    display: -moz-box;
+	    display: -webkit-box;
+	    width: 100%;
+	    height: 50px;
+	    line-height: 50px;
+	    font-size: 0;
+	    border-top: 1px solid #eee;
+	    background-color: #fff;
+	    border-radius: 0 0 5px 5px;
+	    color: #666;
+	    span{
+	    	position: relative;
+		    text-align: center;
+		    border-radius: 0 0 5px 5px;
+	    	display: block;
+		    -moz-box-flex: 1;
+		    box-flex: 1;
+		    -webkit-box-flex: 1;
+		    font-size: 14px;
+		    cursor: pointer;
+		    &.lyup-no{
+	    	    border-right: 1px solid #eee;
+			    border-radius: 0 0 0 5px;
+		    }
+		    &.lyup-yes{
+	    	    // color: #51a938;
+		    }
+	    }
+	}
+
+	@-webkit-keyframes lyup-ani-scale {
+		0% {
+			opacity: 0;
+			-webkit-transform: scale(.5);
+			transform: scale(.5)
+		}
+
+		100% {
+			opacity: 1;
+			-webkit-transform: scale(1);
+			transform: scale(1)
+		}
+	}
+
+	@keyframes lyup-ani-scale {
+		0% {
+			opacity: 0;
+			-webkit-transform: scale(.5);
+			transform: scale(.5)
+		}
+
+		100% {
+			opacity: 1;
+			-webkit-transform: scale(1);
+			transform: scale(1)
+		}
+	}
+
+	.lyup-ani-scale {
+		animation-name: lyup-ani-scale;
+		-webkit-animation-name: lyup-ani-scale
+	}
+
+	.lyup-main-msg {
+		width: auto;
+		max-width: 90%;
+		margin: 0 auto;
+		background-color: rgba(0,0,0,.7);
+		color: #fff
+	}
+
+	.lyup-main-msg .lyup-content {
+		padding: 10px 20px
+	}
+}

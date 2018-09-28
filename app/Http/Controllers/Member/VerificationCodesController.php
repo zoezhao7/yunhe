@@ -4,23 +4,25 @@ namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Member\VerficationCodeRequest;
+use Overtrue\EasySms\EasySms;
 use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 
 class VerificationCodesController extends Controller
 {
-    public function store(VerficationCodeRequest $request)
+    public function store(VerficationCodeRequest $request, EasySms $easySms)
     {
         $phone = $request->phone;
 
         $code = random_int(1111, 9999);
+        // $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
 
         try {
-            $result = $easy->send($phone, [
-                'content' => '【赵庆昌】您的验证码是{$code}。如非本人操作，请忽略本短信',
+            $result = $easySms->send($phone, [
+                'content' => "【赵庆昌】您的验证码是{$code}。如非本人操作，请忽略本短信",
             ]);
         } catch (NoGatewayAvailableException $exception) {
             $message = $exception->getException('yunpian')->getMessage();
-            return response(['status' => 'error', 'message' => $message]);
+            return response(['status' => 'error', 'message' => $message ?? '短信发送异常']);
         }
 
         // 短信验证码缓存十分钟

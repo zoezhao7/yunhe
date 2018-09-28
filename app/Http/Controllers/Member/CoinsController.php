@@ -8,5 +8,8 @@ use App\Http\Controllers\Controller;
 
 class CoinsController extends Controller
 {
-
+    public function index(Request $request)
+    {
+        dd('this is coins index page');
+    }
 }

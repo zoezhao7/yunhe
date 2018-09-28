@@ -66,12 +66,26 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
     });
 
 });
+
 Route::namespace('Member')->middleware(['clean.form'])->group(function () {
     Route::get('member/login', 'LoginController@login')->name('member.login');
-    Route::post('member/members', 'MembersController@store')->name('member.members.store');
+    Route::get('member/weixin_users/{weixin_user}/members', 'MembersController@create')->name('member.members.create');
+    Route::post('member/weixin_users/{weixin_user}/members', 'MembersController@store')->name('member.members.store');
+    # 发送短信验证码
+    Route::post('member/verification_codes', 'VerificationCodesController@store')->name('member.send_code');
 
     Route::middleware(['auth.member'])->group(function () {
         Route::get('member/center', 'MembersController@center')->name('member.center');
+        # 绑定销售顾问
+        Route::get('member/edit_employee', 'MembersController@editEmployee')->name('member.members.editEmployee');
+        Route::post('member/update_employee', 'MembersController@updateEmployee')->name('member.members.updateEmployee');
+        #订单
+        Route::get('member/orders', 'OrdersController@index')->name('member.orders');
+        Route::get('member/orders/{order}', 'OrdersController@show')->name('member.orders.show');
+        #消息
+        Route::get('member/notifications', 'NotificationsController@index')->name('member.notifications');
+        #积分
+        Route::get('member/coins', 'CoinsController@index')->name('member.coins');
     });
 });
 

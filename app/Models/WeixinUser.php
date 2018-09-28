@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Traits\WeixinAuthHelper;
-use Illuminate\Database\Eloquent\Model;
 
-class WeixinUser extends Model
+class WeixinUser extends Authenticatable
 {
+    use Notifiable;
     use WeixinAuthHelper;
+    protected $fillable = ['nickname', 'openid', 'unionid', 'sex', 'province', 'city', 'country', 'headimgurl', 'privilege'];
 
-    protected $fillable = ['openid', 'unionid', 'nickname', 'sex', 'province', 'city', 'country', 'headimgurl', 'privilege'];
+
 }

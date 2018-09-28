@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Models\Member;
 use App\Models\WeixinUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,8 @@ class LoginController extends Controller
 
     public function login(Request $request, WeixinUser $weixinUser)
     {
+        $weixinUser->setAuthConfig();
+
         // 获取微信用户信息
         if (!$request->has('code') || !$request->code) {
             return redirect()->to($weixinUser->authorizeUrl(route('member.login')));
@@ -24,8 +27,24 @@ class LoginController extends Controller
             return redirect()->route('member.center');
         }
 
-        // 无账户时，加载账户创建页面
-        return view('member.members.create');
+        // 保存微信用户数据
+        $weixinUser = WeixinUser::firstOrCreate(
+            ['openid' => $userInfo['openid']],
+            [
+                'openid' => $userInfo['openid'],
+                'nickname' => $userInfo['nickname'],
+                'sex' => $userInfo['sex'],
+                'province' => $userInfo['province'],
+                'city' => $userInfo['city'],
+                'country' => $userInfo['country'],
+                'headimgurl' => $userInfo['headimgurl'],
+                'privilege' => empty($userInfo['privilege']) ? '' : json_encode($userInfo['privilege']),
+                'unionid' => isset($userInfo['unionid\'']) ? $userInfo['unionid\''] : '',
+            ]
+        );
+
+        // 跳转到创建用户页面（手机号）
+        return redirect()->route('member.members.create', $weixinUser);
 
     }
 

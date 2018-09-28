@@ -13,7 +13,7 @@ class CreateMembersTable extends Migration
             $table->string('letter')->index()->default('姓名拼音首字母');
             $table->string('avatar')->default('')->content('头像url');
             $table->string('phone')->index()->default('');
-            $table->integer('employee_id')->index()->unsigned();
+            $table->integer('employee_id')->index()->unsigned()->default(0);
             $table->integer('store_id')->index()->unsigned()->default(0);
             $table->string('idnumber')->default('')->content('身份账号');
             $table->string('address')->default('')->content('客户住址');

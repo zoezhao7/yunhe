@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Http\Requests\Member\MemberRequest;
+use App\Models\WeixinUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 
 class MembersController extends Controller
 {
@@ -12,15 +15,22 @@ class MembersController extends Controller
         return view('member.members.center');
     }
 
-
-    public function demo()
+    public function editEmployee(Request $request)
     {
-        #获取微信用户信息
-        #已绑定-》登录-》进入Center
-        #未绑定-》保存微信用户信息-》跳转到绑定页面-》完成/跳过绑定-》进入Center
+
     }
 
-    public function store(MemberRequest $request)
+    public function updateEmployee(Request $request)
+    {
+
+    }
+    
+    public function create(Request $request, WeixinUser $weixinUser)
+    {
+        return view('member.members.create', compact('weixinUser'));
+    }
+
+    public function store(MemberRequest $request, WeixinUser $weixinUser)
     {
         $phone = $request->phone;
         $code = $request->code;
@@ -33,24 +43,32 @@ class MembersController extends Controller
 
         // 验证码错误
         $verifyData = session($verificationKey);
-        if (!hash_equals($verifyData['code'], $code)) {
+        if (!hash_equals((string)$verifyData, (string)$code)) {
             return response(['status' => 'error', 'message' => '验证码错误']);
         }
 
         $member = Member::where('phone', $phone)->first();
 
-        if (!$member) {
-            $member = Member::create([
-                'employee_id' => 0,
-                'name' => '',
-                'phone' => $phone,
-                'weixin_openid' => '',
-                'weixin_unionid' => '',
-            ]);
+        if ($member) {
+            $member->avatar = $weixinUser->headimgurl;
+            $member->weixin_openid = $weixinUser->openid;
+            $member->weixin_unionid = $weixinUser->unionid;
+            $member->save();
+        } else {
+            $member = Member::create(
+                [
+                    'phone' => $phone,
+                    'name' => $weixinUser->nickname,
+                    'avatar' => $weixinUser->headimgurl,
+                    'weixin_openid' => $weixinUser->openid,
+                    'weixin_unionid' => $weixinUser->unionid,
+                    'employee_id' => 0,
+                ]
+            );
         }
 
-        session()->forget($verificationKey);
-
+        \Auth::guard('member')->login($member);
         return response(['status' => 'success', 'data' => ['member' => $member->toArray()]]);
+        session()->forget($verificationKey);
     }
 }

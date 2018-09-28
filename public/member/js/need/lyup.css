@@ -1,0 +1,130 @@
+.lyup-m-layer {
+  position: relative;
+  z-index: 9999999;
+}
+.lyup-m-layer * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}
+.lyup-m-layer .lyup-shade,
+.lyup-m-layer .lyup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.lyup-m-layer .lyup-shade {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.lyup-m-layer .lyup-container {
+  display: table;
+  font-family: Helvetica, arial, sans-serif;
+  pointer-events: none;
+}
+.lyup-m-layer .lyup-section {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.lyup-m-layer .lyup-main {
+  width: 280px;
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  background-color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-duration: .2s;
+  animation-duration: .2s;
+}
+.lyup-m-layer .lyup-title {
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 5px 5px 0 0;
+  text-align: center;
+  background-color: #ff8b03;
+  color: #fff;
+}
+.lyup-m-layer .lyup-content {
+  padding: 20px 15px;
+  line-height: 22px;
+  text-align: center;
+}
+.lyup-m-layer .lyup-btnbox {
+  display: box;
+  display: -moz-box;
+  display: -webkit-box;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  font-size: 0;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  border-radius: 0 0 5px 5px;
+  color: #666;
+}
+.lyup-m-layer .lyup-btnbox span {
+  position: relative;
+  text-align: center;
+  border-radius: 0 0 5px 5px;
+  display: block;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  -webkit-box-flex: 1;
+  font-size: 14px;
+  cursor: pointer;
+}
+.lyup-m-layer .lyup-btnbox span.lyup-no {
+  border-right: 1px solid #eee;
+  border-radius: 0 0 0 5px;
+}
+@-webkit-keyframes lyup-ani-scale {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes lyup-ani-scale {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.lyup-m-layer .lyup-ani-scale {
+  animation-name: lyup-ani-scale;
+  -webkit-animation-name: lyup-ani-scale;
+}
+.lyup-m-layer .lyup-main-msg {
+  width: auto;
+  max-width: 90%;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+.lyup-m-layer .lyup-main-msg .lyup-content {
+  padding: 10px 20px;
+}

@@ -13,10 +13,18 @@ use GuzzleHttp\Client;
 trait WeixinAuthHelper{
 
     protected $guzzleOptions = [];
+
     protected $appId = '';
     protected $secret = '';
 
-    public function __construct()
+/*    public function __construct()
+    {
+        parent::__construct();
+        $this->appId = config('services.weixin.app_id');
+        $this->secret = config('services.weixin.secret');
+    }*/
+
+    public function setAuthConfig()
     {
         $this->appId = config('services.weixin.app_id');
         $this->secret = config('services.weixin.secret');

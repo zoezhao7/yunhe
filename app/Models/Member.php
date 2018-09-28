@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-class Member extends Model
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class Member extends Authenticatable
 {
+    use Notifiable;
+
     protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status', 'remark', 'employee_id'];
 
     /**
