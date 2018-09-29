@@ -28,7 +28,7 @@
                 {
                     phone: $('input[name="phone"]').val(),
                     _token: $('meta[name="csrf-token"]').attr('content')
-                },
+                }
             ).success(function (data) {
                 if (data.status == 'error' || data.errors) {
                     lyup.msg(data.message);

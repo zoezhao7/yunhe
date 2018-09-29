@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Coin;
+use App\Notifications\CoinChanged;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored

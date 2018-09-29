@@ -9,7 +9,7 @@ class Member extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status', 'remark', 'employee_id'];
+    protected $fillable = ['name', 'phone', 'idnumber', 'address', 'status', 'remark', 'employee_id', 'avatar', 'weixin_openid', 'weixin_unionid'];
 
     /**
      * 客户是否属于登录当前登录用户

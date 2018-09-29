@@ -21,9 +21,9 @@ class LoginController extends Controller
         // 获取微信用户信息
         if (!$request->has('code') || !$request->code) {
             return redirect()->to($weixinUser->authorizeUrl(route('member.login')));
-        }
+        } 
         $userInfo = $weixinUser->getInfo($request->code);
-
+        
         // 客户已经存在，登陆验证
         if ($this->guard()->attempt(['weixin_openid' => $userInfo['openid']])) {
             return redirect()->route('member.center');

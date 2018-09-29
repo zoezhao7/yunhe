@@ -52,7 +52,7 @@ trait WeixinAuthHelper{
     public function authorizeUrl($redirectUrl)
     {
         $appId = $this->appId;
-        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUrl}&response_type=code&scope=snsapi_base#wechat_redirect";
+        return "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUrl}&response_type=code&scope=snsapi_userinfo#wechat_redirect";
     }
 
     public function tokenUrl($code)
