@@ -34,4 +34,9 @@ class Store extends Model
     {
         return $this->hasMany(Employee::class);
     }
+
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class, Employee::class);
+    }
 }

@@ -505,7 +505,7 @@ body {
 .score_content .detail_box ul li {
   padding: 0.26666667rem 0;
 }
-.score_content .detail_box ul li .left .name {
+.score_content .detail_box ul li .left .type {
   font-size: 0.4rem;
 }
 .score_content .detail_box ul li .left .time {

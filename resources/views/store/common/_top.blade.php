@@ -22,25 +22,25 @@
 
             <li class="dropdown">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
-                    <img src="/admin/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle">
-                    <b class="hidden-xs">{{ \Auth::guard('store')->user()->real_name }}</b>
+                    <img src="{{ \Auth::guard('store')->user()->avatar }}" alt="user-img" width="36" class="img-circle">
+                    <b class="hidden-xs">{{ \Auth::guard('store')->user()->name }}</b>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated flipInY">
 
                     <li>
-                        <div class="dw-user-box">
-                            <div class="u-img"><img src="/admin/plugins/images/users/varun.jpg" alt="user" /></div>
+                        <div class="dw-user-box" style="padding: 10px 20px;">
+                            <div class="u-img"><img src="{{ \Auth::guard('store')->user()->avatar }}" alt="user" style="width: 60px;" /></div>
                             <div class="u-text">
-                                <h4>{{ \Auth::guard('store')->user()->real_name }}</h4>
-                                <p class="text-muted">{{ \Auth::guard('store')->user()->user_name }}</p>
+                                <h4>{{ \Auth::guard('store')->user()->name }}</h4>
+                                <p class="text-muted">{{ \Auth::guard('store')->user()->phone }}</p>
                             </div>
                         </div>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#"><i class="ti-settings"></i> 账户设置</a></li>
                     <li role="separator" class="divider"></li>
-                    <form id="logout_form" action="{{ route('admin.logout') }}" method="post">
+                    <form id="logout_form" action="{{ route('store.logout') }}" method="post">
                         {{ csrf_field() }}
                         <li>
                             <a href="javascript:void(0);" onclick="document:logout_form.submit();">

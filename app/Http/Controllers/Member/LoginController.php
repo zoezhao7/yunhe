@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Extensions\EloquentMemberProvider;
 use App\Models\Member;
 use App\Models\WeixinUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Hashing\HashManager;
 
 class LoginController extends Controller
 {
@@ -22,11 +24,12 @@ class LoginController extends Controller
         }
         $userInfo = $weixinUser->getInfo($request->code);
 
-        // 登陆验证
+        // 客户已经存在，登陆验证
         if ($this->guard()->attempt(['weixin_openid' => $userInfo['openid']])) {
             return redirect()->route('member.center');
         }
 
+        // 创建用户
         // 保存微信用户数据
         $weixinUser = WeixinUser::firstOrCreate(
             ['openid' => $userInfo['openid']],
@@ -42,19 +45,8 @@ class LoginController extends Controller
                 'unionid' => isset($userInfo['unionid\'']) ? $userInfo['unionid\''] : '',
             ]
         );
-
         // 跳转到创建用户页面（手机号）
         return redirect()->route('member.members.create', $weixinUser);
-
-    }
-
-    public function attempt(array $credentials = [], $remember = false)
-    {
-        $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
-
-        $this->login($user, $remember);
-
-        return true;
     }
 
     // 定义用户名字段
@@ -66,6 +58,7 @@ class LoginController extends Controller
     // 定义守护器
     protected function guard()
     {
+        \Auth::guard('member')->setProvider(new EloquentMemberProvider(app('hash.driver'), 'App\Models\Member'));
         return \Auth::guard('member');
     }
 

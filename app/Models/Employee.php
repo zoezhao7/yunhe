@@ -41,6 +41,7 @@ class Employee extends Authenticatable
     public function orders()
     {
         return $this->hasManyThrough(Order::class, Member::class);
+        return $this->hasManyThrough(Order::class, Member::class);
     }
 
     // 下级订单
@@ -103,8 +104,35 @@ class Employee extends Authenticatable
         return $this->statusMsg[$this->status]['label_string'];
     }
 
+    public function getAvatarAttribute($value)
+    {
+        return $value ? $value : $this->defaultAvatar();
+    }
+
     public function isSuperAdmin()
     {
         return false;
+    }
+
+    public function defaultAvatar()
+    {
+        return config('app.url') . '/member/images/avatar_pic.jpg';
+    }
+
+    public function getStarStringAttribute()
+    {
+        $str = '';
+        for ($i = 0; $i < $this->star; $i++) {
+            $str .= '<span class="on"></span>';
+        }
+        for ($i = 0; $i < (5 - $this->star); $i++) {
+            $str .= '<span></span>';
+        }
+        return $str;
+    }
+
+    public function membersCount()
+    {
+        return $this->members()->count() + 20;
     }
 }

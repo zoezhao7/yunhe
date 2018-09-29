@@ -6,6 +6,8 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
     Route::post('store/login', 'LoginController@login')->name('store.login.post');
 
     Route::middleware(['auth.store'])->group(function () {
+        #退出登录
+        Route::post('store/logout', 'LoginController@logout')->name('store.logout');
         #欢迎页
         Route::get('store/welcome', 'WelcomeController@index')->name('store.welcome');
         #产品管理

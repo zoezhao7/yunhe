@@ -10,6 +10,10 @@ class CoinsController extends Controller
 {
     public function index(Request $request)
     {
-        dd('this is coins index page');
+        $member = \Auth::guard('member')->user();
+
+        $coins = $member->coins()->recent()->get();
+
+        return view('member.coins.index', compact('member', 'coins'));
     }
 }

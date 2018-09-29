@@ -36,9 +36,10 @@ class Member extends Authenticatable
             'type' => '1',
             'number' => ceil($order->money),
             'account_number' => $coin_count,
-            'remark' => '购买 - 订单编号[' . $order->idnumber . ']',
+            'remark' => '购买轮毂 - 订单编号[' . $order->idnumber . ']',
         ];
-        Coin::insert($data);
+        $coin = Coin::create($data);
+        return $coin;
     }
 
     // 客户名下有待审核和审核通过的订单
@@ -75,5 +76,17 @@ class Member extends Authenticatable
     public function isSuperAdmin()
     {
         return false;
+    }
+
+    public function markAsRead()
+    {
+        $this->notification_count = 0;
+        $this->save();
+        $this->unreadNotifications->markAsRead();
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('id', 'desc');
     }
 }

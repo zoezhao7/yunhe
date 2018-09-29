@@ -27,11 +27,11 @@
                 <table class="table product-overview" id="myTable">
                     <thead>
                     <tr>
-                        <th>序号</th>
+                        <th>#</th>
                         <th>图片</th>
                         <th>系列</th>
                         <th>名称</th>
-                        <th>规格尺寸</th>
+                        <th width="30%">规格尺寸</th>
                         <th width="30%">简介</th>
                         <th>上架时间</th>
                         <th>销量</th>
@@ -47,7 +47,7 @@
                         <td><a href="{{ route('store.products.specs', $product->id) }}">{{ $product->name }}</a></td>
                         <td>
                             @foreach ($product->specs as $key=>$spec)
-                                @if ($key>0) <br> @endif
+                                @if ($key>0) | @endif
                                 {{ $spec->size }}
                             @endforeach
                         </td>

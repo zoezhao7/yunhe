@@ -50,8 +50,8 @@
                         lyup.msg(data.message);
                         return false;
                     } else if(data.status == 'success') {
-                        if(data.member.employee_id == 0) {
-                            window.location.href = "/member/members/" + data.member.id + "/binding_employee";
+                        if(data.data.member.employee_id == 0) {
+                            window.location.href = "/member/edit_employee";
                         } else {
                             window.location.href = "{{ route('member.center') }}";
                         }
@@ -91,7 +91,13 @@
                 '/member/verification_codes',
                 {phone: $('input[name="phone"]').val(), _token: $('meta[name="csrf-token"]').attr('content')},
                 function (data) {
-                    alert(data);
+                    if(data.status == 'success') {
+                        lyup.msg('验证码已发送，请注意查收');
+                        return true;
+                    } else {
+                        lyup.msg('验证码发送失败，请重新尝试');
+                        return false;
+                    }
                 }
             );
         }

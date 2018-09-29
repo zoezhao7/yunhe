@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <a href="{{ route('store.accounts.create') }}"
-               class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加账务</a>
+               class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">记账</a>
             <ol class="breadcrumb">
                 <li><a href="{{ route('store.welcome') }}">首页</a></li>
                 <li class="active">账务列表</li>

@@ -10,7 +10,11 @@ class OrdersController extends Controller
 {
     public function index(Request $request)
     {
-        dd('this is orders index page');
+        $member = \Auth::guard('member')->user();
+
+        $orders = $member->orders()->recent()->where('status', 1)->get();
+
+        return view('member.orders.index', compact('orders'));
     }
 
     public function show(Request $request, Order $order)

@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\Spec;
+use App\Notifications\CoinChanged;
 use App\Notifications\OrderChecked;
 use Dingo\Api\Routing\Helpers;
 
@@ -43,13 +44,15 @@ class OrderObserver
 
         // 订单状态变动时添加消息
         if($order->isDirty('status')) {
-            $employee = $order->member->employee;
+            $member = $order->member;
+            $employee = $member->employee;
+
             $employee->notify(new OrderChecked($order));
             $employee->increment('notification_count');
 
             // 操作客户积分
             if($order->status == 1) {
-                $order->member->gainCoinsByOrder($order);
+                $coin = $member->gainCoinsByOrder($order);
             }
         }
     }
