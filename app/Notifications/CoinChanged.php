@@ -46,7 +46,7 @@ class CoinChanged extends Notification
         $sign = $this->coin->number > 0 ? '+' : '';
         return [
             'title' => '积分提醒',
-            'content' => $this->coin->typeMsg[$this->coin->type]['name'] . '，积分' . $sign . $this->coin->number,
+            'content' => Coin::$typeMsg[$this->coin->type]['name'] . '，积分' . $sign . $this->coin->number,
         ];
     }
 

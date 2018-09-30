@@ -32,7 +32,7 @@
                 @foreach($coins as $coin)
                     <li class="flex_align bor_b">
                         <div class="left flex_1">
-                            <div class="type">{{ $coin->typeMsg[$coin->type]['name'] }}</div>
+                            <div class="type">{{ \App\Models\Coin::$typeMsg[$coin->type]['name'] }}</div>
                             <div class="time">{{ $coin->created_at }}</div>
                         </div>
                         <div class="right">

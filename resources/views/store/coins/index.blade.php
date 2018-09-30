@@ -27,16 +27,40 @@
         <div class="white-box">
 
             @if (!isset($member) || !$member->id)
-            <div>
-                <form method="get" action="{{ url()->full() }}" >
-                    {{ csrf_field() }}
-                    <input type="text" name="search_key" value="{{ request()->input('search_key') }}" id="demo-input-search2" placeholder="输入客户姓名..." class="form-control">
-                </form>
-            </div>
+                <div class="panel-body" style="padding-top:0;padding-left:0;">
+                    <form>
+                        <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                            <input type="text" class="form-control" id="" name="member_name"
+                                   value="{{ $request->member_name }}" placeholder="客户姓名">
+                        </div>
+                        <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                            <select class="form-control" name="coin_type">
+                                <option value="">类型</option>
+                                @foreach(\App\Models\Coin::$typeMsg as $type)
+                                    <option value="{{ $type['id'] }}"
+                                            @if($request->coin_type == $type['id']) selected @endif>{{ $type['name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                            <select class="form-control" name="order_by">
+                                <option value="">排序</option>
+                                <option value="coins.number" @if($request->order_by == 'coins.number') selected @endif>
+                                    积分数量
+                                </option>
+                                <option value="coins.id" @if($request->order_by == 'coins.id') selected @endif>操作时间
+                                </option>
+                            </select>
+                        </div>
+                        <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                            <button class="btn btn-block btn-info" style="max-width: 100px;">查询</button>
+                        </div>
+                    </form>
+                </div>
             @endif
 
             <div class="table-responsive">
-                <table class="table member-overview" id="myTable">
+                <table class="table member-overview color-table info-table" id="myTable">
                     <thead>
                     <tr>
                         <th>序号</th>
@@ -45,7 +69,7 @@
                         <th>操作积分</th>
                         <th>账户积分</th>
                         <th>说明</th>
-                        <th>操作源</th>
+                        <th>操作人</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,27 +77,21 @@
                         <tr>
                             <td>{{ $key+1 }}</td>
                             <td>
-                                @if ($coin->type == 1)
-                                    <span class="label label-info">订单</span>
-                                @endif
-                                @if ($coin->type == 2)
-                                    <span class="label label-warning">人工操作</span>
-                                @endif
+                                <span class="label {{\App\Models\Coin::$typeMsg[$coin->type]['label_class']}}">{{ \App\Models\Coin::$typeMsg[$coin->type]['name'] }}</span>
                             </td>
                             <td>
                                 @if (isset($member) && $member->id)
-                                    {{ $coin->member->name }}
+                                    {{ $coin->member_name }}
                                 @else
-                                    <a href="{{ route('store.members.coins', $coin->member->id) }}">
-                                        {{ $coin->member->name }}
+                                    <a href="{{ route('store.members.coins', $coin->member_name) }}">
+                                        {{ $coin->member_name }}
                                     </a>
                                 @endif
                             </td>
                             <td>@if($coin->number > 0) + @endif{{ $coin->number }}</td>
-                            <td>{{ $coin->member->coin_count }}</td>
+                            <td>{{ $coin->member_coin_count }}</td>
                             <td>{{ $coin->remark }}</td>
-                            <td>@if($coin->order_id) 订单：[{{ $coin->order->idnumber }}] @elseif($coin->employee_id)
-                                    操作员：[{{ $coin->employee->name }}] @else @endif</td>
+                            <td>@if($coin->employee_id) 操作人：[{{ $coin->employee_name }}] @else -- @endif</td>
                         </tr>
                     @endforeach
                 </table>

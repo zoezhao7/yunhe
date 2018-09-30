@@ -24,11 +24,43 @@
 
 <div class="row">
     <div class="white-box">
+
+        <div class="panel-body" style="padding-top:0;padding-left:0;">
+            <form>
+                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                    <input type="text" class="form-control" id="" name="member_name"
+                           value="{{ $request->member_name }}" placeholder="客户姓名">
+                </div>
+                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                    <input type="text" class="form-control" id="" name="employee_name"
+                           value="{{ $request->employee_name }}" placeholder="顾问姓名">
+                </div>
+                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                    <select class="form-control" name="order_status">
+                        <option value="">状态</option>
+                        <option value="0" @if($request->order_status == '0') selected @endif>待审核</option>
+                        <option value="1" @if($request->order_status == '1') selected @endif>审核通过</option>
+                        <option value="2" @if($request->order_status == '2') selected @endif>审核失败</option>
+                    </select>
+                </div>
+                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                    <select class="form-control" name="order_by">
+                        <option value="">排序</option>
+                        <option value="orders.money" @if($request->order_by == 'orders.money') selected @endif>成交金额</option>
+                        <option value="orders.id" @if($request->order_by == 'orders.id') selected @endif>成交时间</option>
+                    </select>
+                </div>
+                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                    <button class="btn btn-block btn-info" style="max-width: 100px;">查询</button>
+                </div>
+            </form>
+        </div>
+
         <div class="table-responsive">
-            <table class="table member-overview" id="myTable">
+            <table class="table member-overview  color-table info-table" id="myTable">
                 <thead>
                 <tr>
-                    <th>序号</th>
+                    <th>#</th>
                     <th>编号</th>
                     <th>客户</th>
                     <th>销售</th>

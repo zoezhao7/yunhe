@@ -21,18 +21,43 @@
 
     <div class="row">
         <div class="white-box">
-            <div>
-                <form method="get" action="{{ url()->full() }}" >
-                    {{ csrf_field() }}
-                    <input type="text" name="search_key" value="{{ request()->input('search_key') }}" id="demo-input-search2" placeholder="输入员工姓名..." class="form-control">
+
+            <div class="panel-body" style="padding-top:0;padding-left:0;">
+                <form>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="employee_name"
+                               value="{{ $request->employee_name }}" placeholder="姓名">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="employee_phone"
+                               value="{{ $request->employee_phone }}" placeholder="手机号码">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <select class="form-control" name="employee_type">
+                            <option value="">身份</option>
+                            <option value="1" @if($request->employee_type == 1) selected @endif>店长</option>
+                            <option value="2" @if($request->employee_type == 2) selected @endif>销售</option>
+                            <option value="3" @if($request->employee_type == 3) selected @endif>渠道</option>
+                        </select>
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <select class="form-control" name="employee_status">
+                            <option value="">在职/离职</option>
+                            <option value="1" @if($request->employee_status == 1) selected @endif>在职</option>
+                            <option value="2" @if($request->employee_status == 2) selected @endif>离职</option>
+                        </select>
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <button class="btn btn-block btn-info" style="max-width: 100px;">查询</button>
+                    </div>
                 </form>
             </div>
 
             <div class="table-responsive">
-                <table class="table member-overview" id="myTable">
+                <table class="table member-overview color-table info-table" id="myTable">
                     <thead>
                     <tr>
-                        <th>序号</th>
+                        <th>#</th>
                         <th>姓名</th>
                         <th>身份</th>
                         <th>上级</th>

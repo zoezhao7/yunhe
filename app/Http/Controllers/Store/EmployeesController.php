@@ -15,15 +15,24 @@ class EmployeesController extends Controller
 	{
         $manager = \Auth::guard('store')->user();
 
-	    $query = Employee::query();
+	    $query = Employee::query()->where('store_id', '=', $manager->store_id)->recent();
 
-	    // 搜索
-	    if($keyWord = $request->input('search_key')) {
-	        $query->where('name', 'like', '%' . $keyWord . '%');
+        if ($employeeName = (string)$request->employee_name) {
+            $query->where('name', 'like', "%{$employeeName}%");
         }
-        $employees = $query->where('store_id', '=', $manager->store_id)->recent()->paginate();
+        if ($employeyPhone = (integer)$request->employee_phone) {
+            $query->where('phone', $employeyPhone);
+        }
+        if ($employeeType = (integer)$request->employee_type) {
+            $query->where('type', $employeeType);
+        }
+        if ($employeeStatus = (integer)$request->employee_status) {
+            $query->where('status', $employeeStatus);
+        }
 
-		return view('store.employees.index', compact('employees'));
+        $employees = $query->paginate();
+
+		return view('store.employees.index', compact('employees', 'request'));
 	}
 
     public function show(Employee $employee)

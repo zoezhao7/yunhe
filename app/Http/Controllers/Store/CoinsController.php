@@ -10,48 +10,57 @@ use App\Http\Controllers\Controller;
 
 class CoinsController extends Controller
 {
-	public function index(Request $request)
-	{
-        $query = Coin::query()->has('member');
+    public function index(Request $request)
+    {
+        $query = Coin::query()
+            ->has('member')
+            ->selectRaw("coins.id, coins.number, coins.type, coins.remark, coins.created_at, coins.employee_id,
+             members.name as member_name, members.coin_count as member_coin_count, 
+             employees.name as employee_name")
+            ->leftJoin('members', 'coins.member_id', '=', 'members.id')
+            ->leftJoin('orders', 'coins.order_id', '=', 'orders.id')
+            ->leftJoin('employees', 'coins.employee_id', '=', 'employees.id');
 
-        if($keyWord = $request->input('search_key')) {
-            $member_ids = Member::where('name', 'like', "%{$keyWord}%")->pluck('id');
-            if(!empty($member_ids)) {
-                $query->whereIn('member_id', $member_ids);
-            }else{
-                $coins = [];
-                return view('store.coins.index', compact('coins'));
-            }
+        if ($memberName = (string)$request->member_name) {
+            $query->where('members.name', 'like', "%{$memberName}%");
+        }
+        if ($coinType = (integer)$request->coin_type) {
+            $query->where('coins.type', $coinType);
+        }
+        if ($orderBy = (string)$request->order_by) {
+            $query->orderBy((string)$request->order_by, 'desc');
+        } else {
+            $query->recent();
         }
 
-		$coins = $query->with(['employee', 'order', 'member'])->paginate();
-		return view('store.coins.index', compact('coins'));
-	}
-
-    public function memberIndex(Member $member)
-    {
-        $coins = $member->coins()->with(['employee', 'order', 'member'])->paginate();
-        return view('store.coins.index', compact('member', 'coins'));
+        $coins = $query->paginate();
+        return view('store.coins.index', compact('coins', 'request'));
     }
 
-	public function memberCreate(Member $member, Coin $coin)
-	{
-		return view('store.coins.create_and_edit', compact('member', 'coin'));
-	}
+    public function memberIndex(Request $request, Member $member)
+    {
+        $coins = $member->coins()->with(['employee', 'order', 'member'])->paginate();
+        return view('store.coins.index', compact('member', 'coins', 'request'));
+    }
 
-	public function memberStore(Member $member, CoinRequest $request)
-	{
-	    $data = $request->all();
-	    $data['member_id'] = $member->id;
-	    $data['type'] = 2; // 人工操作
+    public function memberCreate(Member $member, Coin $coin)
+    {
+        return view('store.coins.create_and_edit', compact('member', 'coin'));
+    }
+
+    public function memberStore(Member $member, CoinRequest $request)
+    {
+        $data = $request->all();
+        $data['member_id'] = $member->id;
+        $data['type'] = 2; // 人工操作
         $data['account_number'] = $member->coin_count + ceil($data['number']);
         $data['employee_id'] = \Auth::guard('store')->user()->id;
-		$coin = Coin::create($data);
+        $coin = Coin::create($data);
 
-		$member->coin_count = $member->coin_count + ceil($data['number']);
-		$member->save();
+        $member->coin_count = $member->coin_count + ceil($data['number']);
+        $member->save();
 
-		return redirect()->back()->with('success', '积分操作成功');
-	}
+        return redirect()->back()->with('success', '积分操作成功');
+    }
 
 }

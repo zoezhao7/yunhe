@@ -6,9 +6,9 @@ class Coin extends Model
 {
     protected $fillable = ['member_id', 'employee_id', 'order_id', 'type', 'number', 'account_number', 'remark'];
 
-    public $typeMsg = [
-        1 => ['id' => 1, 'name' => '购买轮毂'],
-        2 => ['id' => 2, 'name' => '人工操作'],
+    public static $typeMsg = [
+        1 => ['id' => 1, 'name' => '购买轮毂', 'label_class' => 'label-info'],
+        2 => ['id' => 2, 'name' => '人工操作',  'label_class' => 'label-warning'],
     ];
 
     public function member()

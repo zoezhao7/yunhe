@@ -8,20 +8,36 @@ use App\Http\Controllers\Controller;
 
 class OrdersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $manager = \Auth::guard('store')->user();
 
-        $orders = Order::selectRaw('orders.*, members.name as member_name, employees.name as employee_name, specs.size as spec_size, products.name as product_name')
+        $query = Order::selectRaw('orders.*, members.name as member_name, employees.name as employee_name, specs.size as spec_size, products.name as product_name')
             ->leftJoin('specs', 'orders.spec_id', '=', 'specs.id')
             ->leftJoin('products', 'orders.product_id', '=', 'products.id')
             ->leftJoin('members', 'orders.member_id', '=', 'members.id')
             ->leftJoin('employees', 'members.employee_id', '=', 'employees.id')
-            ->where('employees.store_id', '=', $manager->store_id)
-            ->recent()
-            ->paginate();
+            ->where('employees.store_id', '=', $manager->store_id);
 
-        return view('store.orders.index', compact('orders'));
+
+        if ($memberName = (string)$request->member_name) {
+            $query->where('members.name', 'like', "%{$memberName}%");
+        }
+        if ($employeeName = (string)$request->employee_name) {
+            $query->where('employees.name', 'like', "%{$employeeName}%");
+        }
+        if (in_array((string)$request->order_status, ['0', '1', '2'])) {
+            $query->where('orders.status', (integer)$request->order_status);
+        }
+        if ($orderBy = (string)$request->order_by) {
+            $query->orderBy((string)$request->order_by, 'desc');
+        } else {
+            $query->recent();
+        }
+
+        $orders = $query->paginate();
+
+        return view('store.orders.index', compact('orders', 'request'));
     }
 
     public function show(Order $order)
@@ -31,7 +47,7 @@ class OrdersController extends Controller
 
     public function checkSuccess(Order $order)
     {
-        if($order->status > 0) {
+        if ($order->status > 0) {
             return redirect()->back()->with('danger', '订单已经被审核， 操作失败！');
         }
 
@@ -43,7 +59,7 @@ class OrdersController extends Controller
 
     public function checkFail(Order $order)
     {
-        if($order->status > 0) {
+        if ($order->status > 0) {
             return redirect()->back()->with('danger', '订单已经被审核， 操作失败！');
         }
 

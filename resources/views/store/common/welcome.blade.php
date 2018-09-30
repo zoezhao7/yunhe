@@ -8,9 +8,12 @@
                     <h4 class="page-title">欢迎你，{{ $manager->name }}</h4>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                    <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>
+
+                    <!-- <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>
+                    -->
+
                     <ol class="breadcrumb">
-                        <li class="active">{{ now()->format('Y-m-d') }}</li>
+                        <li class="active">{{ $manager->store->name }}，{{ now()->format('Y-m-d') }}</li>
                     </ol>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -28,8 +31,6 @@
                                     </li>
                                     <li class="col-last">
                                         <h3 class="counter text-right m-t-15">{{ $productCount }}</h3>
-                                    </li>
-                                    <li class="col-middle">
                                         <h4>产品数量</h4>
                                     </li>
                                 </ul>
@@ -42,8 +43,6 @@
                                     </li>
                                     <li class="col-last">
                                         <h3 class="counter text-right m-t-15">{{ $orderSum }}</h3>
-                                    </li>
-                                    <li class="col-middle">
                                         <h4>总销售额</h4>
                                     </li>
                                 </ul>
@@ -56,8 +55,6 @@
                                     </li>
                                     <li class="col-last">
                                         <h3 class="counter text-right m-t-15">{{ $orderMonthCount }}</h3>
-                                    </li>
-                                    <li class="col-middle">
                                         <h4>月订单数</h4>
                                     </li>
                                 </ul>
@@ -70,8 +67,6 @@
                                     </li>
                                     <li class="col-last">
                                         <h3 class="counter text-right m-t-15">{{ $orderMonthSum }}</h3>
-                                    </li>
-                                    <li class="col-middle">
                                         <h4>月销售额</h4>
                                     </li>
                                 </ul>

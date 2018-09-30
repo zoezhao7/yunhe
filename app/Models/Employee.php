@@ -78,7 +78,7 @@ class Employee extends Authenticatable
 
     public function hasMember()
     {
-        return !empty($this->members());
+        return $this->members()->count() > 0;
     }
 
 

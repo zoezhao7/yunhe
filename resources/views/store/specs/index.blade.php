@@ -7,7 +7,7 @@
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品规格列表</h4> </div>
+            <h4 class="page-title">产品规格列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -42,19 +42,19 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($specs as $key=>$spec)
-                                <tr>
-                                    <td align="center">{{ $spec->number }}</td>
-                                    <td align="center">{{ $spec->size }}</td>
-                                    <td align="center" class="font-500">￥{{ $spec->price }}</td>
-                                    <td>
-                                        <p>
-                                            @foreach ($spec->content as $key=>$value)
-                                                {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
-                                            @endforeach
+                                    <tr>
+                                        <td align="center">{{ $spec->number }}</td>
+                                        <td align="center">{{ $spec->size }}</td>
+                                        <td align="center" class="font-500">￥{{ $spec->price }}</td>
+                                        <td>
+                                            <p>
+                                                @foreach ($spec->content as $key=>$value)
+                                                    {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
+                                                @endforeach
 
-                                        </p>
-                                    </td>
-                                </tr>
+                                            </p>
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -74,9 +74,18 @@
                 <h2> {{ $product->discount }}% </h2>
                 <small>简介</small>
                 <h2> {{ $product->intro }} </h2>
-                <hr>
-                <img src="{{ $product->image }}" width="200"
-                     class="thumbnail img-responsive">
+                <small>产品图</small>
+                <h2><img src="{{ $product->image }}" width="200" class="thumbnail img-responsive"></h2>
+                <small>色彩</small>
+                <h2>
+                    @foreach($product->colors as $color)
+                        <div style="width:50%;float: left;text-align:center;"><img src="{{ $color['path'] }}" width="90" class="thumbnail img-responsive" style="margin-bottom: 0;">
+                            <small>{{ $color['title'] }}</small>
+                        </div>
+                    @endforeach
+                    <div style="clear: both;"></div>
+                </h2>
+
             </div>
         </div>
     </div>

@@ -2,23 +2,18 @@
 
     <div class="navbar-header">
 
-        <div class="top-left-part">
-            <a class="logo" href="index.html">
-                <span class="hidden-xs"></span>
+        <div class="top-left-part" style="width:auto; text-align: center; border-right: 1px solid rgba(0, 0, 0, 0.08);">
+            <a class="logo" href="javascript:void(0);">
+                <span class="hidden-xs" style="margin: 0 25px;">{{ \Auth::guard('store')->user()->store->name }}</span>
             </a>
         </div>
 
         <ul class="nav navbar-top-links navbar-left">
-            <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i class="ti-close ti-menu"></i></a></li>
+            <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i
+                            class="ti-close ti-menu"></i></a></li>
         </ul>
 
         <ul class="nav navbar-top-links navbar-right pull-right">
-            <li>
-                <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                    <input type="text" placeholder="Search..." class="form-control">
-                    <a href=""><i class="fa fa-search"></i></a>
-                </form>
-            </li>
 
             <li class="dropdown">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
@@ -30,7 +25,8 @@
 
                     <li>
                         <div class="dw-user-box" style="padding: 10px 20px;">
-                            <div class="u-img"><img src="{{ \Auth::guard('store')->user()->avatar }}" alt="user" style="width: 60px;" /></div>
+                            <div class="u-img"><img src="{{ \Auth::guard('store')->user()->avatar }}" alt="user"
+                                                    style="width: 60px;"/></div>
                             <div class="u-text">
                                 <h4>{{ \Auth::guard('store')->user()->name }}</h4>
                                 <p class="text-muted">{{ \Auth::guard('store')->user()->phone }}</p>
@@ -42,12 +38,12 @@
                     <li role="separator" class="divider"></li>
                     <form id="logout_form" action="{{ route('store.logout') }}" method="post">
                         {{ csrf_field() }}
-                        <li>
-                            <a href="javascript:void(0);" onclick="document:logout_form.submit();">
-                                <i class="fa fa-power-off"></i> 退出登录
-                            </a>
-                        </li>
                     </form>
+                    <li>
+                        <a href="javascript:void(0);" onclick="document:logout_form.submit();">
+                            <i class="fa fa-power-off"></i> 退出登录
+                        </a>
+                    </li>
 
                 </ul>
             </li>
