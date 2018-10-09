@@ -18,7 +18,6 @@ class MembersController extends Controller
         $query = Member::withCount('cars')
             ->selectRaw('members.*, employees.name as employee_name, employees.type as employee_type')
             ->leftJoin('employees', 'employee_id', '=', 'employees.id')
-            ->recent()
             ->where('employees.store_id', '=', $employee->store_id);
 
         if ($memberName = (string)$request->member_name) {
@@ -29,6 +28,8 @@ class MembersController extends Controller
         }
         if($orderBy = (string) $request->order_by){
             $query->orderBy($orderBy, 'desc');
+        } else {
+            $query->orderBy('members.id', 'desc');
         }
 
         $members = $query->paginate();

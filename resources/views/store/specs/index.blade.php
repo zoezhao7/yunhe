@@ -37,13 +37,18 @@
                                     <th style="text-align:center" width="10%">编号</th>
                                     <th style="text-align:center" width="10%">尺寸</th>
                                     <th style="text-align:center" width="10%">价格</th>
-                                    <th style="text-align:center" width="60%">参数</th>
+                                    <th style="text-align:center" width="50%">参数</th>
+                                    <th style="text-align:center" width="10%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($specs as $key=>$spec)
                                     <tr>
-                                        <td align="center">{{ $spec->number }}</td>
+                                        <td align="center">
+                                            <a href="{{ route('store.specs.show', $spec->id) }}">
+                                            {{ $spec->idnumber }}
+                                            </a>
+                                        </td>
                                         <td align="center">{{ $spec->size }}</td>
                                         <td align="center" class="font-500">￥{{ $spec->price }}</td>
                                         <td>
@@ -51,8 +56,13 @@
                                                 @foreach ($spec->content as $key=>$value)
                                                     {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
                                                 @endforeach
-
                                             </p>
+                                        </td>
+                                        <td align="center">
+                                            <a href="{{ route('store.specs.stock_orders.create', $spec->id)  }}"
+                                               class="btn btn-default" data-toggle="tooltip">
+                                                进货
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -79,7 +89,9 @@
                 <small>色彩</small>
                 <h2>
                     @foreach($product->colors as $color)
-                        <div style="width:50%;float: left;text-align:center;"><img src="{{ $color['path'] }}" width="90" class="thumbnail img-responsive" style="margin-bottom: 0;">
+                        <div style="width:50%;float: left;text-align:center;"><img src="{{ $color['path'] }}" width="90"
+                                                                                   class="thumbnail img-responsive"
+                                                                                   style="margin-bottom: 0;">
                             <small>{{ $color['title'] }}</small>
                         </div>
                     @endforeach

@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="/admin/plugins/images/favicon.png">
-    <title>Ample Admin Template - The Ultimate Multipurpose admin template</title>
+    <title>云和管理平台</title>
     <!-- Bootstrap Core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- animation CSS -->
@@ -35,18 +34,17 @@
                 {{ csrf_field() }}
 
                 <a href="javascript:void(0)" class="text-center db">
-                    <img src="/admin/plugins/images/admin-logo-dark.png" alt="Home" /><br/>
-                    <img src="/admin/plugins/images/admin-text-dark.png" alt="Home" />
+                    云和管理平台
                 </a>
 
                 <div class="form-group m-t-40">
                     <div class="col-xs-12">
-                        <input name="user_name" class="form-control" type="text" required="" placeholder="Username">
+                        <input name="user_name" class="form-control" type="text" required="" placeholder="用户名">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input name="password" class="form-control" type="password" required="" placeholder="Password">
+                        <input name="password" class="form-control" type="password" required="" placeholder="密码">
                     </div>
                 </div>
 
@@ -76,11 +74,10 @@
 <!-- jQuery -->
 <script src="/admin/plugins/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/admin/bootstrap/dist/js/bootstrap.min.js"></script>
 <!--Wave Effects -->
-<script src="js/waves.js"></script>
+<script src="/admin/js/waves.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="js/custom.min.js"></script>
-
+<script src="/admin/js/custom.min.js"></script>
 </body>
 </html>

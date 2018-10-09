@@ -23,7 +23,7 @@ class EmployeeObserver
     public function saving(Employee $employee)
     {
         $employee->letter = strtoupper(substr(pinyin_abbr($employee->name), 0, 1));
-        if ($employee->superior_id > 0) {
+        if ($employee->superior_id > 0 && $employee->type == 2) {
             $employee->type = 3;
         }
 

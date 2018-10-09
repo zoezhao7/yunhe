@@ -32,7 +32,7 @@
                     
                 <div class="form-group">
                 	<label for="number-field">Number</label>
-                	<input class="form-control" type="text" name="number" id="number-field" value="{{ old('number', $spec->number ) }}" />
+                	<input class="form-control" type="text" name="number" id="number-field" value="{{ old('number', $spec->idnumber ) }}" />
                 </div> 
                 <div class="form-group">
                     <label for="product_id-field">Product_id</label>

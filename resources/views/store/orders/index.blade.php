@@ -28,6 +28,10 @@
         <div class="panel-body" style="padding-top:0;padding-left:0;">
             <form>
                 <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                    <input type="text" class="form-control" id="" name="order_idnumber"
+                           value="{{ $request->order_idnumber }}" placeholder="订单编号">
+                </div>
+                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                     <input type="text" class="form-control" id="" name="member_name"
                            value="{{ $request->member_name }}" placeholder="客户姓名">
                 </div>

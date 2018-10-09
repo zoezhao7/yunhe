@@ -25,7 +25,7 @@
 
                 <label>Number</label>
 <p>
-	{{ $spec->number }}
+	{{ $spec->idnumber }}
 </p> <label>Product_id</label>
 <p>
 	{{ $spec->product_id }}

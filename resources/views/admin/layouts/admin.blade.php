@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-   This is a starter template page. Use this page to start your new project from
-   scratch. This page gets rid of all links and provides the needed markup only.
-   -->
 <html lang="en">
 
 <head>
@@ -12,8 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/admin/plugins/images/favicon.png">
     <title>@yield('title') - 云和</title>
     <!-- Bootstrap Core CSS -->
     <link href="/admin/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">

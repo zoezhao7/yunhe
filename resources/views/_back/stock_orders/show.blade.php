@@ -46,16 +46,16 @@
 	{{ $stock_order->product_idnumber }}
 </p> <label>Transport_number</label>
 <p>
-	{{ $stock_order->transport_number }}
+	{{ $stock_order->delivery_number }}
 </p> <label>Delivery_notes</label>
 <p>
-	{{ $stock_order->delivery_notes }}
+	{{ $stock_order->delivery_note }}
 </p> <label>Receipted_at</label>
 <p>
 	{{ $stock_order->receipted_at }}
 </p> <label>Transported_at</label>
 <p>
-	{{ $stock_order->transported_at }}
+	{{ $stock_order->delivered_at }}
 </p> <label>Received_at</label>
 <p>
 	{{ $stock_order->received_at }}

@@ -16,7 +16,7 @@ class SpecTransformer extends TransformerAbstract
         return [
             'id' => $spec->id,
             'size' => $spec->size,
-            'number' => $spec->number,
+            'number' => $spec->idnumber,
             'price' => $spec->price,
             'discount' => $spec->discount>0 ? $spec->discount . '%' : '无',
             'content' => $spec->content,

@@ -59,7 +59,8 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品折扣</label>
                                         <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                            <input type="text" value="{{ old('discount', $product->discount) }}" name="discount" class="form-control">
+                                            <input type="text" value="{{ old('discount', $product->discount) }}"
+                                                   name="discount" class="form-control">
                                             <span class="input-group-addon bootstrap-touchspin-postfix input-group-append">
                                                 <span class="input-group-text">%</span>
                                             </span>
@@ -67,7 +68,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品简介</label>
-                                        <textarea name="intro" class="form-control" rows="5">{{ old('intro', $product->intro) }}</textarea>
+                                        <textarea name="intro" class="form-control"
+                                                  rows="5">{{ old('intro', $product->intro) }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品图片</label>
@@ -83,33 +85,49 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label>轮毂色彩</label>
+                                        <div class="row upload_row">
+                                            <div class="col-sm-6 ol-md-6 col-xs-12 m-b-20">
+                                                <div>
+                                                    <input type="file" class="dropify" name="colors[][path]" />
+                                                </div>
+                                                <input type="text" class="form-control m-t-10" name="colors[][path]" data-show-remove="false" placeholder="输入色彩名称">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 ol-md-6 col-xs-12">
+                                                <button class="btn btn-block btn-info" type="button" style="width: 200px;" onclick="addUpload()">添加色彩</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">色彩</label>
                                         <div class="form-group">
                                             @if($product->id)
-                                            @foreach ($product->colors as $key => $color)
+                                                @foreach ($product->colors as $key => $color)
                                                     <input type="file" name="edit_colors[{{ $key }}][path]"/>
-                                                    <input type="text" value="{{ $color['title'] }}" name="edit_colors[{{ $key }}][title]" placeholder="色彩名称"/>
-                                                    <img src="{{ $color['path'] }}" class="thumbnail img-responsive" width="200">
+                                                    <input type="text" value="{{ $color['title'] }}"
+                                                           name="edit_colors[{{ $key }}][title]" placeholder="色彩名称"/>
+                                                    <img src="{{ $color['path'] }}" class="thumbnail img-responsive"
+                                                         width="200">
 
-                                            @endforeach
+                                                @endforeach
                                             @endif
                                             @for ($i=1; $i<4; $i++)
-                                                <input type="file" name="colors[{{ $i }}][path]" />
-                                                <input type="text" name="colors[{{ $i }}][title]" placeholder="色彩名称" />
+                                                <input type="file" name="colors[{{ $i }}][path]"/>
+                                                <input type="text" name="colors[{{ $i }}][title]" placeholder="色彩名称"/>
                                             @endfor
                                         </div>
-
-
                                     </div>
-
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">产品详情</label>
                                         <div class="form-group">
-                                            <textarea name="content" id="editor" rows="15" placeholder="Enter text ...">{!! $product->content !!}</textarea>
+                                            <textarea name="content" id="editor" rows="15"
+                                                      placeholder="Enter text ...">{!! $product->content !!}</textarea>
                                         </div>
                                     </div>
-
 
                                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">提交
                                     </button>
@@ -134,5 +152,36 @@
                 textarea: $('#editor'),
             });
         });
+
+        var messages = {
+            'default': '上传图片',
+            'replace': '替换图片',
+            'remove':  '删除',
+            'error':  '上传时发生未知错误'
+        };
+        $(document).ready(function() {
+            $('.dropify').dropify({
+                messages: messages
+            });
+        });
+
+        function addUpload(){
+            var tpl = '<div class="col-sm-6 ol-md-6 col-xs-12 m-b-20 more_upload_box">'+
+                '<div>'+
+                '<input type="file" class="dropify" />'+
+                '</div>'+
+                '<input type="text" class="form-control m-t-10" id="" placeholder="输入颜色名称">'+
+                '<button class="btn btn-sm btn-danger btn-outline m-t-10" type="button" onclick="deleteBox(this)" style="width: 100px;">删除</button>'+
+                '</div>';
+            $('.upload_row').append(tpl);
+            $('.dropify').dropify({
+                messages: messages
+            });
+        }
+
+        function deleteBox(el){
+            $(el).parents('.more_upload_box').remove();
+        }
     </script>
+
 @endsection

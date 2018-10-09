@@ -34,13 +34,20 @@ class CoinsController extends Controller
         }
 
         $coins = $query->paginate();
-        return view('store.coins.index', compact('coins', 'request'));
+
+
+        $page_name = isset($member) && $member->id ? $member->name . '的积分记录' : '积分记录';
+
+        return view('store.coins.index', compact('coins', 'request', 'page_name'));
     }
 
     public function memberIndex(Request $request, Member $member)
     {
         $coins = $member->coins()->with(['employee', 'order', 'member'])->paginate();
-        return view('store.coins.index', compact('member', 'coins', 'request'));
+
+        $page_name = isset($member) && $member->id ? $member->name . '的积分记录' : '积分记录';
+
+        return view('store.coins.index', compact('member', 'coins', 'request', 'page_name'));
     }
 
     public function memberCreate(Member $member, Coin $coin)

@@ -20,6 +20,9 @@ class OrdersController extends Controller
             ->where('employees.store_id', '=', $manager->store_id);
 
 
+        if ($order_idnumber = (string)$request->order_idnumber) {
+            $query->where('orders.idnumber', $order_idnumber);
+        }
         if ($memberName = (string)$request->member_name) {
             $query->where('members.name', 'like', "%{$memberName}%");
         }

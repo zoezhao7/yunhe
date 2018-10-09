@@ -9,8 +9,19 @@ use App\Models\StockOrder;
 
 class StockOrderObserver
 {
-    public function creating(StockOrder $stock_order)
+    public function creating(StockOrder $order)
     {
-        $stock_order->idnumber = $stock_order->getIdnumber();
+        $order->idnumber = $order->getIdnumber();
+    }
+
+    public function updating(StockOrder $stockOrder)
+    {
+    }
+
+    public function deleting(StockOrder $order)
+    {
+        if($order->status > 0) {
+            denied('已接单，不允许删除！');
+        }
     }
 }

@@ -27,7 +27,7 @@
                                 <tr>
                                     <td class="text-center"><strong>{{$spec->id}}</strong></td>
 
-                                    <td>{{$spec->number}}</td> <td>{{$spec->product_id}}</td> <td>{{$spec->price}}</td> <td>{{$spec->discount}}</td> <td>{{$spec->content}}</td>
+                                    <td>{{$spec->idnumber}}</td> <td>{{$spec->product_id}}</td> <td>{{$spec->price}}</td> <td>{{$spec->discount}}</td> <td>{{$spec->content}}</td>
                                     
                                     <td class="text-right">
                                         <a class="btn btn-xs btn-primary" href="{{ route('specs.show', $spec->id) }}">

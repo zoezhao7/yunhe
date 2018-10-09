@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
-use App\Models\Product;
 use App\Handlers\ImageUploadHandler;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Spec;
 
 class ProductsController extends Controller
 {
@@ -16,11 +17,28 @@ class ProductsController extends Controller
         $this->middleware('auth.admin');
     }
 
-	public function index()
+	public function index(Request $request)
 	{
-		$products = Product::with('specs')->recent()->paginate();
+        $query = Product::query()->with('specs')->recent();
 
-		return view('admin.products.index', compact('products'));
+        if ($productName = (string)$request->spec_idnumber) {
+            $spec = Spec::where('idnumber', $request->spec_idnumber)->first();
+            if($spec) {
+                return redirect()->route('admin.products.specs', $spec->product_id);
+            }
+        }
+        if ($productName = (string)$request->product_name) {
+            $query->where('name', 'like', "%{$productName}%");
+        }
+        if ($categoryId = (string)$request->category_id) {
+            $query->where('category_id', $categoryId);
+        }
+
+		$products = $query->paginate();
+
+		$categories = Category::select('id', 'name')->get();
+
+		return view('admin.products.index', compact('products', 'request', 'categories'));
 	}
 
     public function show(Product $product)
@@ -66,8 +84,7 @@ class ProductsController extends Controller
 	public function edit(Product $product)
 	{
         //$this->authorize('update', $product);
-        $categories = Category::all();
-        $product->colors = json_decode($product->colors, true);
+        $categories = Category::select('id', 'name')->get();
 
 		return view('admin.products.create_and_edit', compact('product', 'categories'));
 	}
@@ -77,8 +94,6 @@ class ProductsController extends Controller
 		//$this->authorize('update', $product);
         $data = $request->all();
 
-        // 轮毂色彩数组 Json
-        $colors = json_decode($product->colors, true);
         foreach($colors as $key => $color) {
             if(!isset($request->edit_colors[$key])) {
                 unset($colors[$key]);

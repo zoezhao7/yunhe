@@ -27,6 +27,10 @@
             <div class="panel-body" style="padding-top:0;padding-left:0;">
                 <form>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="spec_idnumber"
+                               value="{{ $request->spec_idnumber }}" placeholder="产品规格编号">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <input type="text" class="form-control" id="" name="product_name"
                                value="{{ $request->product_name }}" placeholder="产品名称">
                     </div>
@@ -68,10 +72,9 @@
                             </td>
                             <td><a href="{{ route('store.products.specs', $product->id) }}">{{ $product->name }}</a>
                             </td>
-                            <td>
+                            <td style="line-height: 28px;">
                                 @foreach ($product->specs as $key=>$spec)
-                                    @if ($key>0) | @endif
-                                    {{ $spec->size }}
+                                    <a href="{{ route('store.specs.show', $spec->id) }}"><span class="label label-info">{{ $spec->size }}</span></a>
                                 @endforeach
                             </td>
                             <td>{{ $product->intro }}</td>

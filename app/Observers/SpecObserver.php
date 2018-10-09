@@ -13,6 +13,8 @@ class SpecObserver
 
     public function deleting(Spec $spec)
     {
-        denied('该产品规格已存在订单， 不允许删除！');
+        if($spec->hasOrder()) {
+            denied('该产品规格已存在订单， 不允许删除！');
+        }
     }
 }

@@ -27,7 +27,7 @@
                                 <tr>
                                     <td class="text-center"><strong>{{$stock_order->id}}</strong></td>
 
-                                    <td>{{$stock_order->store_id}}</td> <td>{{$stock_order->employee_id}}</td> <td>{{$stock_order->spec_id}}</td> <td>{{$stock_order->color}}</td> <td>{{$stock_order->number}}</td> <td>{{$stock_order->status}}</td> <td>{{$stock_order->product_idnumber}}</td> <td>{{$stock_order->transport_number}}</td> <td>{{$stock_order->delivery_notes}}</td> <td>{{$stock_order->receipted_at}}</td> <td>{{$stock_order->transported_at}}</td> <td>{{$stock_order->received_at}}</td>
+                                    <td>{{$stock_order->store_id}}</td> <td>{{$stock_order->employee_id}}</td> <td>{{$stock_order->spec_id}}</td> <td>{{$stock_order->color}}</td> <td>{{$stock_order->number}}</td> <td>{{$stock_order->status}}</td> <td>{{$stock_order->product_idnumber}}</td> <td>{{$stock_order->delivery_number}}</td> <td>{{$stock_order->delivery_note}}</td> <td>{{$stock_order->receipted_at}}</td> <td>{{$stock_order->delivered_at}}</td> <td>{{$stock_order->received_at}}</td>
                                     
                                     <td class="text-right">
                                         <a class="btn btn-xs btn-primary" href="{{ route('stock_orders.show', $stock_order->id) }}">

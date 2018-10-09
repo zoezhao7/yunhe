@@ -21,15 +21,15 @@ class SpecsController extends Controller
 		return view('admin.specs.index', compact('specs'));
 	}
 
+	public function show(Spec $spec)
+    {
+        return view('admin.specs.show', compact('spec'));
+    }
+
 	public function productIndex(Product $product)
     {
         $specs = $product->specs()->recent()->paginate();
         return view('admin.specs.index', compact('specs', 'product'));
-    }
-
-    public function show(Spec $spec)
-    {
-        return view('admin.specs.show', compact('spec'));
     }
 
 	public function create(Spec $spec)
@@ -40,7 +40,7 @@ class SpecsController extends Controller
 	public function store(SpecRequest $request)
 	{
 		$spec = Spec::create($request->all());
-		return redirect()->route('admin.specs.index')->with('message', '产品规格添加成功！');
+		return redirect()->route('admin.specs.index')->with('success', '产品型号添加成功！');
 	}
 
 	public function edit(Spec $spec)
@@ -54,14 +54,15 @@ class SpecsController extends Controller
 		// $this->authorize('update', $spec);
 		$spec->update($request->all());
 
-		return redirect()->route('admin.specs.index')->with('message', '产品规格编辑成功！');
+		return redirect()->route('admin.specs.index')->with('success', '产品型号编辑成功！');
 	}
 
 	public function destroy(Spec $spec)
 	{
 		// $this->authorize('destroy', $spec);
+        $spec->idnumber = $spec->idnumber;
 		$spec->delete();
 
-		return redirect()->route('admin.specs.index')->with('message', '产品规格删除成功！');
+		return redirect()->route('admin.products.specs', $spec->product_id)->with('success', "编号为 [{$spec->idnumber}] 的产品型号删除成功！");
 	}
 }

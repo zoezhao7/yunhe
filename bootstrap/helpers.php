@@ -9,8 +9,12 @@ function getActionName()
 
 function denied($message = '没有权限！')
 {
-    echo "<script type='text/javascript'>alert('{$message}'); window.history.back();</script>";
-    exit;
+    if(request()->expectsJson()) {
+        return response(['success' => false, 'message' => $message]);
+    } else {
+        echo "<script type='text/javascript'>alert('{$message}'); window.history.back();</script>";
+        exit;
+    }
 }
 
 function filterNull($data)

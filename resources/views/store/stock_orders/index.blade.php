@@ -7,7 +7,7 @@
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">备货订单列表</h4> </div>
+            <h4 class="page-title">备货订单列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -24,16 +24,46 @@
 
     <div class="row">
         <div class="white-box">
+
+            <div class="panel-body" style="padding-top:0;padding-left:0;">
+                <form>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="stock_order_idnumber"
+                               value="{{ $request->stock_order_idnumber }}" placeholder="备货编号">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="product_name"
+                               value="{{ $request->product_name }}" placeholder="产品名称">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="spec_idnumber"
+                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <select class="form-control" name="order_status">
+                            <option value="">订单状态</option>
+                            @foreach(\App\Models\StockOrder::$statusMsg as $msg)
+                                <option value="{{ $msg['id'] }}" @if($request->order_status == $msg['id']) selected @endif>{{ $msg['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <button class="btn btn-block btn-info" style="max-width: 100px;">查询</button>
+                    </div>
+                </form>
+            </div>
+
             <div class="table-responsive">
-                <table class="table member-overview" id="myTable">
+                <table class="table product-overview color-table info-table" id="myTable">
                     <thead>
                     <tr>
-                        <th>序号</th>
-                        <th>编号</th>
+                        <th>#</th>
+                        <th>备货编号</th>
+                        <th>图片</th>
                         <th>产品</th>
                         <th>型号</th>
-                        <th>色彩</th>
-                        <th>数量</th>
+                        <th>轮毂色彩</th>
+                        <th>数量（套）</th>
                         <th>下单时间</th>
                         <th>状态</th>
                         <th>操作</th>
@@ -41,29 +71,34 @@
                     </thead>
                     <tbody>
 
-                    @foreach ($stock_orders as $key => $order)
+                    @foreach ($stockOrders as $key => $order)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td> -- </td>
-                            <td>{{ $order->product->name }}</td>
-                            <td>{{ $order->spec->number }} - {{ $order->spec->size }}</td>
+                            <td>
+                                <a href="{{ route('store.stock_orders.show', $order->id) }}">{{ $order->idnumber }}</a>
+                            </td>
+                            <td><img src="{{ $order->product->image }}" width="70px;"></td>
+                            <td>
+                                <a href="{{ route('store.products.specs', $order->product_id) }}">{{ $order->product->name }}</a>
+                            </td>
+                            <td>{{ $order->spec->idnumber }} - {{ $order->spec->size }}</td>
                             <td>{{ $order->color }}</td>
                             <td>{{ $order->number }}</td>
-                            <td>{{ $order->created_at }}</td>
-                            <td>@if ($order->status == 0)
-                                    <span class="label label-danger">待接单</span>
-                                @elseif($order->status==1)
-                                    <span class="label label-success">备货中</span>
-                                @elseif($order->status==2)
-                                    <span class="label label-success">已发货</span>
-                                @elseif($order->status==3)
-                                    <span class="label label-success">已发货</span>
-                                @else
-                                    <span class="label label-inverse">状态错误</span>
-                                @endif
+                            <td>{{ $order->created_at->format('m-d H:i') }}</td>
+                            <td>
+                                    <span class="label {{ App\Models\StockOrder::$statusMsg[$order->status]['label-class'] }}">{{ App\Models\StockOrder::$statusMsg[$order->status]['name'] }}</span>
                             </td>
                             <td>
-
+                                @if($order->status==0)
+                                <a href="{{ route('store.stock_orders.edit', $order->id)  }}"
+                                   class="text-inverse p-r-10" data-toggle="tooltip" title="编辑订单"><i
+                                            class="ti-marker-alt"></i></a>
+                                <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('store.stock_orders.destroy', $order->id) }}" style="display: inline">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="删除订单" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                                </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -71,7 +106,7 @@
                 </table>
 
                 <div class="dataTables_paginate paging_simple_numbers" id="example23_paginate">
-                    {!! $orders->appends(Request::except('page'))->render() !!}
+                    {!! $stockOrders->appends(Request::except('page'))->render() !!}
                 </div>
 
             </div>

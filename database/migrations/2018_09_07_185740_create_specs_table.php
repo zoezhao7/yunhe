@@ -9,7 +9,7 @@ class CreateSpecsTable extends Migration
 	{
 		Schema::create('specs', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('number')->unique()->index();
+            $table->string('idnumber')->unique()->index();
             $table->integer('product_id')->index();
             $table->string('size')->default('')->content('尺寸');
             $table->float('price', 10, 2)->default(0);

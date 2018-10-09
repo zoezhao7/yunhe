@@ -1,7 +1,5 @@
 @extends('store.layouts.store')
 
-{{ $page_name = isset($member) && $member->id ? $member->name . '的积分记录' : '积分记录' }}
-
 @section('title', $page_name)
 
 @section('content')
@@ -63,7 +61,7 @@
                 <table class="table member-overview color-table info-table" id="myTable">
                     <thead>
                     <tr>
-                        <th>序号</th>
+                        <th>#</th>
                         <th>操作类型</th>
                         <th>姓名</th>
                         <th>操作积分</th>

@@ -3,7 +3,7 @@
     <div class="navbar-header">
 
         <div class="top-left-part" style="width:auto; text-align: center; border-right: 1px solid rgba(0, 0, 0, 0.08);">
-            <a class="logo" href="javascript:void(0);">
+            <a class="logo" href="{{ route('store.welcome') }}">
                 <span class="hidden-xs" style="margin: 0 25px;">{{ \Auth::guard('store')->user()->store->name }}</span>
             </a>
         </div>
@@ -34,7 +34,7 @@
                         </div>
                     </li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#"><i class="ti-settings"></i> 账户设置</a></li>
+                    <li><a href="{{ route('store.my.passwordEdit') }}"><i class="ti-settings"></i> 修改密码</a></li>
                     <li role="separator" class="divider"></li>
                     <form id="logout_form" action="{{ route('store.logout') }}" method="post">
                         {{ csrf_field() }}

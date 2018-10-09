@@ -59,20 +59,20 @@
                 	<input class="form-control" type="text" name="product_idnumber" id="product_idnumber-field" value="{{ old('product_idnumber', $stock_order->product_idnumber ) }}" />
                 </div> 
                 <div class="form-group">
-                	<label for="transport_number-field">Transport_number</label>
-                	<input class="form-control" type="text" name="transport_number" id="transport_number-field" value="{{ old('transport_number', $stock_order->transport_number ) }}" />
+                	<label for="delivery_number-field">Transport_number</label>
+                	<input class="form-control" type="text" name="delivery_number" id="delivery_number-field" value="{{ old('delivery_number', $stock_order->delivery_number ) }}" />
                 </div> 
                 <div class="form-group">
-                	<label for="delivery_notes-field">Delivery_notes</label>
-                	<textarea name="delivery_notes" id="delivery_notes-field" class="form-control" rows="3">{{ old('delivery_notes', $stock_order->delivery_notes ) }}</textarea>
+                	<label for="delivery_note-field">Delivery_notes</label>
+                	<textarea name="delivery_note" id="delivery_note-field" class="form-control" rows="3">{{ old('delivery_note', $stock_order->delivery_note ) }}</textarea>
                 </div> 
                 <div class="form-group">
                     <label for="receipted_at-field">Receipted_at</label>
                     <input class="form-control" type="text" name="receipted_at" id="receipted_at-field" value="{{ old('receipted_at', $stock_order->receipted_at ) }}" />
                 </div> 
                 <div class="form-group">
-                    <label for="transported_at-field">Transported_at</label>
-                    <input class="form-control" type="text" name="transported_at" id="transported_at-field" value="{{ old('transported_at', $stock_order->transported_at ) }}" />
+                    <label for="delivered_at-field">Transported_at</label>
+                    <input class="form-control" type="text" name="delivered_at" id="delivered_at-field" value="{{ old('delivered_at', $stock_order->delivered_at ) }}" />
                 </div> 
                 <div class="form-group">
                     <label for="received_at-field">Received_at</label>

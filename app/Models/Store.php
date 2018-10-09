@@ -39,4 +39,9 @@ class Store extends Model
     {
         return $this->hasManyThrough(Order::class, Employee::class);
     }
+
+    public function stockOrders()
+    {
+        return $this->hasMany(StockOrder::class);
+    }
 }

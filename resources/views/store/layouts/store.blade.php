@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="/admin/plugins/images/favicon.png">
     <title>@yield('title') - 云和</title>
     <link href="/admin/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">

@@ -5,27 +5,15 @@
         <!-- Toggle icon for mobile view -->
         <div class="top-left-part">
             <!-- Logo -->
-            <a class="logo" href="index.html">
+            <a class="logo" href="{{ route('admin.welcome') }}">
                     <span class="hidden-xs">
+                        云和
                      </span>
             </a>
         </div>
         <!-- /Logo -->
 
-        <!-- Search input and Toggle icon -->
-        <ul class="nav navbar-top-links navbar-left">
-            <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i class="ti-close ti-menu"></i></a></li>
-        </ul>
-
-        <!-- This is the message dropdown -->
         <ul class="nav navbar-top-links navbar-right pull-right">
-            <!-- /.Task dropdown -->
-            <!-- /.dropdown -->
-            <li>
-                <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                    <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
-            </li>
-
 
             <li class="dropdown">
                 <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
@@ -46,17 +34,16 @@
                     </li>
 
                     <li role="separator" class="divider"></li>
-                    <li><a href="#"><i class="ti-settings"></i> 账户设置</a></li>
+                    <li><a href="{{ route('admin.my.password_edit') }}"><i class="ti-settings"></i> 修改密码</a></li>
                     <li role="separator" class="divider"></li>
-
                     <form id="logout_form" action="{{ route('admin.logout') }}" method="post">
                         {{ csrf_field() }}
-                        <li>
-                            <a href="javascript:void(0);" onclick="document:logout_form.submit();">
-                                <i class="fa fa-power-off"></i> 退出登录
-                            </a>
-                        </li>
                     </form>
+                    <li>
+                        <a href="javascript:void(0);" onclick="document:logout_form.submit();">
+                            <i class="fa fa-power-off"></i> 退出登录
+                        </a>
+                    </li>
 
                 </ul>
                 <!-- /.dropdown-user -->

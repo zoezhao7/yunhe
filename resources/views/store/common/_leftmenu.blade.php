@@ -15,8 +15,8 @@
 
             <li  class="nav @if(str_contains(request()->route()->getName(), ['products'])) active @endif" >
                 <a href="{{ route('store.products.index') }}" class="waves-effect">
-                    <i class="mdi mdi-airballoon fa-fw" data-icon="v"></i>
-                    <span class="hide-menu">产品管理</span>
+                    <i class="mdi mdi-clipboard-text fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">产品库</span>
                 </a>
             </li>
 
@@ -53,6 +53,20 @@
                 <a href="{{ route('store.accounts.index') }}" class="waves-effect">
                     <i class="mdi mdi-chart-areaspline fa-fw" data-icon="v"></i>
                     <span class="hide-menu">账务记录</span>
+                </a>
+            </li>
+
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['commissions'])) active @endif" >
+                <a href="{{ route('store.commissions.index') }}" class="waves-effect">
+                    <i class="mdi mdi-cash-multiple fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">佣金记录</span>
+                </a>
+            </li>
+
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['stockOrders'])) active @endif" >
+                <a href="{{ route('store.stock_orders.index') }}" class="waves-effect">
+                    <i class="mdi mdi-cart-plus fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">备货订单管理</span>
                 </a>
             </li>
 

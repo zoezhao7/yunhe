@@ -1,21 +1,23 @@
 @extends('admin.layouts.admin')
 
-@section('title', '产品规则列表')
+@section('title', '产品型号列表')
 
 @section('content')
 
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品规格列表</h4> </div>
+            <h4 class="page-title">产品型号列表</h4> </div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
+            <a href="{{ route('admin.specs.create') }}" class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品型号</a>
+
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.welcome') }}">首页</a></li>
                 <li><a href="{{ route('admin.products.index') }}">产品列表</a></li>
-                <li class="active">产品规格列表</li>
+                <li class="active">产品型号列表</li>
             </ol>
         </div>
         <!-- /.breadcrumb -->
@@ -44,31 +46,36 @@
                                 <tbody>
                                 @foreach ($specs as $key=>$spec)
                                 <tr>
-                                    <td align="center">{{ $spec->number }}</td>
+                                    <td align="center">
+                                        <a href="{{ route('admin.specs.show', $spec->id) }}" >
+                                            {{ $spec->idnumber }}
+                                        </a>
+                                    </td>
                                     <td align="center">{{ $spec->size }}</td>
                                     <td align="center" class="font-500">￥{{ $spec->price }}</td>
                                     <td>
                                         <p>
-                                            @foreach (json_decode($spec->content, true) as $key=>$value)
+                                            @foreach ($spec->content as $key=>$value)
                                                 {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
                                             @endforeach
-
                                         </p>
                                     </td>
                                     <td align="center">
-                                        <a href="{{ route('admin.specs.edit', $product->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
-                                        <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('admin.specs.destroy', $product->id) }}" style="display: inline">
+                                        <a href="{{ route('admin.specs.edit', $spec->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑">
+                                            <i class="ti-marker-alt"></i>
+                                        </a>
+                                        <form onsubmit="return confirm('确认删除吗？');" id="delete_form_{{ $spec->id }}" method="post" action="{{ route('admin.specs.destroy', $spec->id) }}" style="display: inline">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
-                                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form_{{ $spec->id }}').submit();" class="text-inverse" title="删除" data-toggle="tooltip">
+                                                <i class="ti-trash"></i>
+                                            </a>
                                         </form>
                                     </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-
-                            <button class="btn btn-info pull-right">添加产品规格</button>
                         </div>
                     </div>
                 </div>

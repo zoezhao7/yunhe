@@ -11,16 +11,22 @@
 
         <ul class="nav" id="side-menu">
 
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['products'])) active @endif" >
+                <a href="{{ route('admin.products.index') }}" class="waves-effect">
+                    <i class="mdi mdi-clipboard-text fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">产品管理</span></a>
+            </li>
+
             <li  class="nav @if(str_contains(request()->route()->getName(), ['members'])) active @endif" >
                 <a href="{{ route('admin.members.index') }}" class="waves-effect">
                     <i class="mdi mdi-account fa-fw" data-icon="v"></i>
                     <span class="hide-menu">客户管理</span></a>
             </li>
 
-            <li  class="nav @if(str_contains(request()->route()->getName(), ['products'])) active @endif" >
-                <a href="{{ route('admin.products.index') }}" class="waves-effect">
-                    <i class="mdi mdi-cart fa-fw" data-icon="v"></i>
-                    <span class="hide-menu">产品管理</span></a>
+            <li  class="nav @if(str_contains(request()->route()->getName(), ['stock_orders'])) active @endif" >
+                <a href="{{ route('admin.stock_orders.index') }}" class="waves-effect">
+                    <i class="mdi mdi-cart-plus fa-fw" data-icon="v"></i>
+                    <span class="hide-menu">备货订单</span></a>
             </li>
 
             <li>
@@ -46,7 +52,6 @@
                     </li>
                 </ul>
             </li>
-
 
             <li>
                 <a href="javascript:void(0)" class="waves-effect @if(str_contains(request()->route()->getName(), ['admins', 'roles', 'nodes'])) active @endif">
