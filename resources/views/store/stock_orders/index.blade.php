@@ -89,15 +89,11 @@
                                     <span class="label {{ App\Models\StockOrder::$statusMsg[$order->status]['label-class'] }}">{{ App\Models\StockOrder::$statusMsg[$order->status]['name'] }}</span>
                             </td>
                             <td>
-                                @if($order->status==0)
-                                <a href="{{ route('store.stock_orders.edit', $order->id)  }}"
-                                   class="text-inverse p-r-10" data-toggle="tooltip" title="编辑订单"><i
-                                            class="ti-marker-alt"></i></a>
-                                <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('store.stock_orders.destroy', $order->id) }}" style="display: inline">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                    <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="删除订单" data-toggle="tooltip"><i class="ti-trash"></i></a>
-                                </form>
+                                @if($order->status == 0)
+                                    <form onsubmit="return confirm('确认取消订单吗？');" method="post" action="{{ route('store.stock_orders.cancel', $order->id) }}" style="display: inline">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-outline btn-xs btn-danger">取消订单</button>
+                                    </form>
                                 @endif
                             </td>
                         </tr>

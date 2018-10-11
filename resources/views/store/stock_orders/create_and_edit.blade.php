@@ -26,7 +26,7 @@
         <div class="col-lg-12">
             <div class="white-box">
                 <div class="">
-                    <h2 class="m-b-0 m-t-0">规格编号：{{ $spec->idnumber }}</h2>
+                    <h2 class="m-b-0 m-t-0">型号ID：{{ $spec->idnumber }}</h2>
                     <small class="text-muted db">{{ $product->name }}</small>
                     <hr>
                     <div class="row">
@@ -48,7 +48,7 @@
                                 <small class="text-success">({{ $product->discount }} 折扣)</small>
                             </h2>
                             <h3 class="box-title m-t-20">尺寸：{{ $spec->size }}</h3>
-                            <h3 class="box-title m-t-20">规格参数：</h3>
+                            <h3 class="box-title m-t-20">型号参数：</h3>
                             @foreach($spec->content as $key=>$value)
                                 <span class="label label-success">{{ $key }}：{{ $value }}</span>
                             @endforeach
@@ -59,12 +59,12 @@
                             <div class="table-responsive">
                                 <div class="col-sm-6 col-xs-6">
                                     @if ($stockOrder->id)
-                                        <form method="POST"
+                                        <form onsubmit="return form_check(this);" method="POST"
                                               action="{{ route('store.stock_orders.update', $stockOrder->id) }}"
                                               enctype="multipart/form-data">
                                             {{ method_field('PUT') }}
                                             @else
-                                                <form method="POST" action="{{ route('store.stock_orders.store') }}">
+                                                <form onsubmit="return form_check(this);" method="POST" action="{{ route('store.stock_orders.store') }}">
                                                     @endif
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="product_id" value="{{ $product->id }}"/>
@@ -102,8 +102,7 @@
                                                         <textarea class="form-control" rows="5" name="remark">{{ old('remark', $stockOrder->remark ) }}</textarea>
                                                     </div>
 
-                                                    <button type="submit"
-                                                            class="btn btn-success waves-effect waves-light m-r-10">下单
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">下单
                                                     </button>
                                                 </form>
                                 </div>

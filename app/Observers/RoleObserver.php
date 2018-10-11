@@ -20,7 +20,7 @@ class RoleObserver
 
     public function saved(Role $role)
     {
-        $role->getRoleNodes($role);
+        $role->getRoleNodes($role->id);
     }
 
 

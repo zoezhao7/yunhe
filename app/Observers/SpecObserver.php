@@ -17,4 +17,5 @@ class SpecObserver
             denied('该产品规格已存在订单， 不允许删除！');
         }
     }
+
 }

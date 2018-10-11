@@ -18,9 +18,9 @@ class checkPermission
     {
         $admin = Auth::user();
 
-        if (!$admin->isSuperAdmin() && !in_array(getActionName(), $admin->getNodes())) {
+        if (!$admin->isSuperAdmin() && !in_array(getControllerActionName(), $admin->getNodes())) {
 
-            if ($request->ajax() || $request->wantsJson() || $request->isJson()) {
+            if ($request->expectsJson()) {
                 return response('Unauthorized', 403);
             } else {
                 echo "<script type='text/javascript'>alert('您没有权限！'); window.history.back();</script>";

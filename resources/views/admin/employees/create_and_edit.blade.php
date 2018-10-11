@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-{{ $page_name = $employee->id ? '编辑员工' : '添加员工'  }}
+<?php $page_name = $employee->id ? '编辑员工' : '添加员工'; ?>
 
 @section('title', $page_name)
 
@@ -61,6 +61,16 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">门店</label>
+                                        <select class="form-control" name="store_id" required>
+                                            <option value="0">请选择门店</option>
+                                            @foreach ($stores as $store)
+                                                <option value="{{ $store->id }}" {{ $employee->store_id == $store->id ? 'selected' : '' }}>{{ $store->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="exampleInputEmail1">身份</label>
                                         <select class="form-control" name="type" required>
                                             @foreach (\App\Models\Employee::$types as $type)
@@ -70,11 +80,20 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">门店</label>
-                                        <select class="form-control" name="store_id" required>
-                                            <option value="0">请选择门店</option>
-                                            @foreach ($stores as $store)
-                                                <option value="{{ $store->id }}" {{ $employee->store_id == $store->id ? 'selected' : '' }}>{{ $store->name }}</option>
+                                        <label for="exampleInputEmail1">上级（渠道归属的销售）：</label>
+                                        <select class="form-control" name="superior_id" required>
+                                            <option value="0">无</option>
+                                            @foreach ($employees as $item)
+                                                <option value="{{ $item['id'] }}" {{ $employee->superior_id == $item['id'] ? 'selected' : '' }}>{{ $item['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">状态</label>
+                                        <select class="form-control" name="status" required>
+                                            @foreach ($employee->statusMsg as $status)
+                                                <option value="{{ $status['id'] }}" {{ $employee->status == $status['id'] ? 'selected' : '' }}>{{ $status['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>

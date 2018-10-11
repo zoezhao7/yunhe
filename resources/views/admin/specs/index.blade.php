@@ -7,12 +7,13 @@
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品型号列表</h4> </div>
+            <h4 class="page-title">产品型号列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
-            <a href="{{ route('admin.specs.create') }}" class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品型号</a>
+            <a href="{{ route('admin.products.specs.create', $product->id) }}"
+               class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品型号</a>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.welcome') }}">首页</a></li>
@@ -45,34 +46,34 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($specs as $key=>$spec)
-                                <tr>
-                                    <td align="center">
-                                        <a href="{{ route('admin.specs.show', $spec->id) }}" >
-                                            {{ $spec->idnumber }}
-                                        </a>
-                                    </td>
-                                    <td align="center">{{ $spec->size }}</td>
-                                    <td align="center" class="font-500">￥{{ $spec->price }}</td>
-                                    <td>
-                                        <p>
-                                            @foreach ($spec->content as $key=>$value)
-                                                {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
-                                            @endforeach
-                                        </p>
-                                    </td>
-                                    <td align="center">
-                                        <a href="{{ route('admin.specs.edit', $spec->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑">
-                                            <i class="ti-marker-alt"></i>
-                                        </a>
-                                        <form onsubmit="return confirm('确认删除吗？');" id="delete_form_{{ $spec->id }}" method="post" action="{{ route('admin.specs.destroy', $spec->id) }}" style="display: inline">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <a href="javascript:void(0);" onclick="document.getElementById('delete_form_{{ $spec->id }}').submit();" class="text-inverse" title="删除" data-toggle="tooltip">
-                                                <i class="ti-trash"></i>
+                                    <tr>
+                                        <td align="center">
+                                            <a href="{{ route('admin.specs.show', $spec->id) }}">
+                                                {{ $spec->idnumber }}
                                             </a>
-                                        </form>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td align="center">{{ $spec->size }}</td>
+                                        <td align="center" class="font-500">￥{{ $spec->price }}</td>
+                                        <td style="line-height: 30px;">
+                                            <p>
+                                                @if($spec->content)
+                                                    @foreach ($spec->content as $key=>$value)
+                                                        <span class="label label-info">{{ $key }}:{{ $value }}</span>
+                                                    @endforeach
+                                                @endif
+                                            </p>
+                                        </td>
+                                        <td align="center">
+                                            <a href="{{ route('admin.specs.edit', $spec->id) }}" class="btn btn-xs btn-outline btn-info">编辑</a>
+                                            <form onsubmit="return confirm('确定要删除吗！');" id="delete_form_{{ $spec->id }}"
+                                                  method="post" action="{{ route('admin.specs.destroy', $spec->id) }}"
+                                                  style="display: inline">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="btn btn-xs btn-outline btn-danger">删除</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -97,6 +98,17 @@
             </div>
         </div>
     </div>
+@endsection
 
-
+@section('script')
+    <script>
+        function sure(){
+            if(confirm("您即将执行form表单，确定吗？")){
+                alert("即将执行form表单中request.asp的内容");
+            }
+            else{
+                return false;
+            }
+        }
+    </script>
 @endsection

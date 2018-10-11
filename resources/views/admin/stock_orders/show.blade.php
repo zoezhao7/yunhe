@@ -6,6 +6,8 @@
 
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <link href="/admin/plugins/bower_components/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="/admin/plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -32,65 +34,67 @@
 
                 <h3 class="box-title">订单信息</h3>
                 <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th width="25%">订货人</th>
-                            <th width="25%">备注</th>
-                            <th width="50%">订单进度
-                                @if($stockOrder->status == 0)
-                                    <button class="btn btn-info" style="float:right;" id="btn-jiedan">接单</button>
-                                @elseif($stockOrder->status == 1)
-                                    <button class="btn btn-info" style="float:right;" data-toggle="modal" data-target="#responsive-modal" id="btn-fahuo">发货</button>
-                                @endif
-                            </th>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                门店：{{ $stockOrder->store->name }}<br>
-                                订购人：{{ $stockOrder->employee->name }}<br>
-                                电话：{{ $stockOrder->employee->phone }}<br>
-                                下单时间：{{ $stockOrder->created_at->format('Y-m-d H:i') }}
-                            </td>
-                            <td>
-                                <p>{{ $stockOrder->remark }}</p>
-                            </td>
-                            <td style="line-height:28px;">
-                                @if($stockOrder->status == 0)
-                                    <span class="label label-danger">待接单</span>
-                                @endif
+                    <thead>
+                    <tr>
+                        <th width="25%">订货人</th>
+                        <th width="25%">备注</th>
+                        <th width="50%">订单进度
+                            @if($stockOrder->status == 0)
+                                <button class="btn btn-info" style="float:right;" id="btn-jiedan">接单</button>
+                            @elseif($stockOrder->status == 1)
+                                <button class="btn btn-info" style="float:right;" data-toggle="modal"
+                                        data-target="#responsive-modal" id="btn-fahuo">发货
+                                </button>
+                            @endif
+                        </th>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            门店：{{ $stockOrder->store->name }}<br>
+                            订购人：{{ $stockOrder->employee->name }}<br>
+                            电话：{{ $stockOrder->employee->phone }}<br>
+                            下单时间：{{ $stockOrder->created_at->format('Y-m-d H:i') }}
+                        </td>
+                        <td>
+                            <p>{{ $stockOrder->remark }}</p>
+                        </td>
+                        <td style="line-height:28px;">
+                            @if($stockOrder->status == 0)
+                                <span class="label label-danger">待接单</span>
+                            @endif
 
-                                @if($stockOrder->status == 1)
-                                    <span class="label label-success">已接单</span>&nbsp;
-                                    接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
-                                    <span class="label label-danger">待发货</span>
-                                @endif
+                            @if($stockOrder->status == 1)
+                                <span class="label label-success">已接单</span>&nbsp;
+                                接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
+                                <span class="label label-danger">待发货</span>
+                            @endif
 
-                                @if($stockOrder->status == 2)
-                                    <span class="label label-success">已接单</span>&nbsp;
-                                    接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
-                                    <span class="label label-success">已发货</span>&nbsp;
-                                    发货时间：{{ date('M-d H:i', strtotime($stockOrder->delivered_at)) }}
-                                    ，物流单号：{{ $stockOrder->delivery_number }}<br>
-                                    <span class="label label-danger">待收货</span>
-                                @endif
+                            @if($stockOrder->status == 2)
+                                <span class="label label-success">已接单</span>&nbsp;
+                                接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
+                                <span class="label label-success">已发货</span>&nbsp;
+                                发货时间：{{ date('M-d H:i', strtotime($stockOrder->delivered_at)) }}
+                                ，物流单号：{{ $stockOrder->delivery_number }}<br>
+                                <span class="label label-danger">待收货</span>
+                            @endif
 
-                                @if($stockOrder->status == 3)
-                                        <span class="label label-success">已接单</span>&nbsp;
-                                        接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
-                                    <span class="label label-success">已发货</span>&nbsp;
-                                        发货时间：{{ date('M-d H:i', strtotime($stockOrder->delivered_at)) }}
-                                    ，物流单号：{{ $stockOrder->delivery_number }}<br>
-                                    <span class="label label-success">已收货</span>&nbsp;
-                                        收货时间：{{ date('M-d H:i', strtotime($stockOrder->received_at)) }}
-                                @endif
+                            @if($stockOrder->status == 3)
+                                <span class="label label-success">已接单</span>&nbsp;
+                                接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
+                                <span class="label label-success">已发货</span>&nbsp;
+                                发货时间：{{ date('M-d H:i', strtotime($stockOrder->delivered_at)) }}
+                                ，物流单号：{{ $stockOrder->delivery_number }}<br>
+                                <span class="label label-success">已收货</span>&nbsp;
+                                收货时间：{{ date('M-d H:i', strtotime($stockOrder->received_at)) }}
+                            @endif
 
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
                 <h3 class="box-title" style="margin-top: 40px;">货物清单</h3>
                 <div class="table-responsive">
@@ -138,31 +142,35 @@
     </div>
 
     <div class="table-responsive">
-        <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">发货单</h4> </div>
+                        <h4 class="modal-title">发货单</h4></div>
                     <div class="modal-body">
-                        <form id="delivery_form" action="{{ route('admin.stock_orders.delivery', $stockOrder->id) }}" method="post">
+                        <form onsubmit="return form_check(this);" id="delivery_form" action="{{ route('admin.stock_orders.delivery', $stockOrder->id) }}"
+                              method="post">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">发货时间：</label>
-                                <input type="text" class="form-control" id="" name="delivered_at" required> </div>
+                                <input type="text" class="form-control input-daterange-datepicker" id="delivered_time" name="delivered_at" required></div>
                             <div class="form-group">
                                 <label for="recipient-name" class="control-label">物流单号：</label>
-                                <input type="text" class="form-control" id="" name="delivery_number" required> </div>
+                                <input type="text" class="form-control" id="" name="delivery_number" required></div>
                             <div class="form-group">
                                 <label for="message-text" class="control-label">备注：</label>
                                 <textarea class="form-control" id="" name="delivery_note"></textarea>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-danger waves-effect waves-light">确认发货
+                                </button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">取消</button>
-                        <button type="button" onclick="document:delivery_form.submit()" class="btn btn-danger waves-effect waves-light">确认发货</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -172,9 +180,11 @@
 @endsection
 
 @section('script')
-    <script src="/admin/plugins/bower_components/blockUI/jquery.blockUI.js"></script>
+    <script src="/admin/plugins/bower_components/moment/moment.js"></script>
     <script src="/admin/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+    <script src="/admin/plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script>
+
         $('#btn-jiedan').click(function () {
 
             $('html').block({
@@ -211,87 +221,31 @@
             var SweetAlert = function () {
             };
             SweetAlert.prototype.init = function () {
-
-                //Basic
-                $('#sa-basic').click(function () {
-                    swal("Here's a message!");
-                });
-
-                //A title with a text under
-                $('#sa-title').click(function () {
-                    swal("Here's a message!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.")
-                });
-
                 //Success Message
                 $('#sa-success').click(function () {
                     swal("接单成功！", "", "success")
                 });
-
-                //Warning Message
-                $('#sa-warning').click(function () {
-                    swal({
-                        title: "Are you sure?",
-                        text: "You will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        closeOnConfirm: false
-                    }, function () {
-                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                    });
-                });
-
-                //Parameter
-                $('#sa-params').click(function () {
-                    swal({
-                        title: "Are you sure?",
-                        text: "You will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "No, cancel plx!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    }, function (isConfirm) {
-                        if (isConfirm) {
-                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                        } else {
-                            swal("Cancelled", "Your imaginary file is safe :)", "error");
-                        }
-                    });
-                });
-
-                //Custom Image
-                $('#sa-image').click(function () {
-                    swal({
-                        title: "Govinda!",
-                        text: "Recently joined twitter",
-                        imageUrl: "../plugins/images/users/agent2.jpg"
-                    });
-                });
-
-                //Auto Close Timer
-                $('#sa-close').click(function () {
-                    swal({
-                        title: "Auto close alert!",
-                        text: "I will close in 2 seconds.",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                });
-
-
             },
                 //init
                 $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert
         }(window.jQuery),
-
-//initializing
             function ($) {
                 "use strict";
                 $.SweetAlert.init()
             }(window.jQuery);
+
+
+        $('#delivered_time').daterangepicker({
+            "singleDatePicker":true,
+            "timePicker":true,
+            "timePicker24Hour":true,
+            "locale": {
+                "format": 'YYYY-MM-DD hh:mm',
+                "applyLabel": '确定',
+                "cancelLabel": '取消',
+                "daysOfWeek": ['日', '一', '二', '三', '四', '五', '六'],
+                "monthNames": ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            }
+        });
     </script>
 @endsection

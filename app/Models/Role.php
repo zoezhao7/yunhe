@@ -34,8 +34,6 @@ class Role extends Model
 
         $key = 'role_' . $role_id . '_nodes';
 
-        Cache::forget($key);
-
         if (!Cache::has($key)) {
             Cache::forever($key, $this->_getNodeArray($role_id));
         }
@@ -45,8 +43,7 @@ class Role extends Model
 
     protected function _getNodeArray($role_id)
     {
-        $role = Role::find($role_id);
-
+        $role = Role::where('id', (int) $role_id)->first();
         if (!$role) {
             return [];
         }

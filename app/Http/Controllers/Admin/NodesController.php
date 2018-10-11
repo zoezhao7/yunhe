@@ -11,6 +11,7 @@ class NodesController extends Controller
 {
     public function index(Request $request, Node $node)
     {
+        $nodes = Node::paginate();
         return view('admin.nodes.index', compact('request', 'nodes'));
     }
 

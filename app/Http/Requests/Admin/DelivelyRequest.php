@@ -25,7 +25,7 @@ class DelivelyRequest extends FormRequest
     {
         return [
             'delivered_at' => 'required|date',
-            'delivery_number' => 'required|string',
+            'delivery_number' => 'required|alpha_dash',
             'delivery_note' => 'string',
         ];
     }
@@ -35,6 +35,7 @@ class DelivelyRequest extends FormRequest
         return [
             'delivered_at.required' => '发货时间不能为空',
             'delivery_number.required' => '物流单号不能为空',
+            'delivery_number.alpha_dash' => '请填写正确的物流单号',
             'delivered_at.date' => '发货时间格式错误',
         ];
     }

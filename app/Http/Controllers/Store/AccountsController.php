@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Store;
 
+use Illuminate\Http\Request;
 use App\Models\Account;
 use App\Http\Requests\AccountRequest;
 use App\Http\Controllers\Controller;
@@ -13,11 +14,20 @@ class AccountsController extends Controller
         // $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index()
+	public function index(Request $request)
 	{
 	    $manager = \Auth::guard('store')->user();
-		$accounts = Account::with('employee')->where('store_id', $manager->store_id)->paginate();
-		return view('store.accounts.index', compact('accounts'));
+	    $query = Account::query()->with('employee')->where('store_id', $manager->store_id)->recent();
+
+	    if($request->has('stime') && $request->stime) {
+	        $query->where('operated_at', '>=', $request->stime);
+        }
+        if($request->has('etime') && $request->stime) {
+            $query->where('operated_at', '<=', $request->etime);
+        }
+
+		$accounts = $query->paginate();
+		return view('store.accounts.index', compact('accounts', 'request'));
 	}
 
 	public function create(Account $account)

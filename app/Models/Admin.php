@@ -20,11 +20,13 @@ class Admin extends Authenticatable
     public function getNodes()
     {
         $role = app(Role::class);
+
         $nodes = [];
 
         foreach ($this->role_ids as $role_id) {
             $nodes = array_merge($nodes, $role->getRoleNodes($role_id));
         }
+
         return array_unique($nodes);
     }
 
@@ -41,6 +43,24 @@ class Admin extends Authenticatable
     public function scopeOrdered($query)
     {
         return $query->orderBy('order', 'desc');
+    }
+
+    public function orderTasks()
+    {
+        return StockOrder::with('store', 'employee')->where('status', 0)->recent()->get();
+    }
+
+    public function checkPermission($actionName)
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($actionName && in_array((string)$actionName, $this->getNodes())) {
+            return true;
+        }
+
+        return false;
     }
 
 }

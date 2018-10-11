@@ -21,9 +21,14 @@ class Product extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function stockOrders()
+    {
+        return $this->hasMany(StockOrder::class);
+    }
+
     public function hasOrder()
     {
-        return !empty($this->orders());
+        return $this->orders()->count() > 0 || $this->stockOrders()->count() > 0;
     }
 
     protected function getColorsAttribute($value)

@@ -28,7 +28,7 @@
                 <form>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <input type="text" class="form-control" id="" name="spec_idnumber"
-                               value="{{ $request->spec_idnumber }}" placeholder="产品规格编号">
+                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <input type="text" class="form-control" id="" name="product_name"
@@ -78,7 +78,7 @@
                                 @endforeach
                             </td>
                             <td>{{ $product->intro }}</td>
-                            <td>{{ $product->created_at->format('Y-m-d') }}</td>
+                            <td>@if($product->created_at) {{ $product->created_at->format('Y-m-d') }} @endif</td>
                         </tr>
                     @endforeach
                     </tbody>

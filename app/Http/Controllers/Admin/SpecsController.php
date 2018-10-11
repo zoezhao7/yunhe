@@ -15,54 +15,74 @@ class SpecsController extends Controller
         // $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index()
-	{
-		$specs = Spec::recent()->paginate();
-		return view('admin.specs.index', compact('specs'));
-	}
+    public function index()
+    {
+        $specs = Spec::recent()->paginate();
+        return view('admin.specs.index', compact('specs'));
+    }
 
-	public function show(Spec $spec)
+    public function show(Spec $spec)
     {
         return view('admin.specs.show', compact('spec'));
     }
 
-	public function productIndex(Product $product)
+    public function productIndex(Product $product)
     {
         $specs = $product->specs()->recent()->paginate();
         return view('admin.specs.index', compact('specs', 'product'));
     }
 
-	public function create(Spec $spec)
-	{
-		return view('admin.specs.create_and_edit', compact('spec'));
-	}
+    public function create(Spec $spec, Product $product)
+    {
+        return view('admin.specs.create_and_edit', compact('spec', 'product'));
+    }
 
-	public function store(SpecRequest $request)
-	{
-		$spec = Spec::create($request->all());
-		return redirect()->route('admin.specs.index')->with('success', '产品型号添加成功！');
-	}
+    public function store(SpecRequest $request)
+    {
+        $data = $request->only('product_id', 'idnumber', 'size', 'price', 'param_key', 'param_value');
 
-	public function edit(Spec $spec)
-	{
+        if (!empty($data['param_key'])) {
+            foreach ($data['param_key'] as $key => $value) {
+                $content[$value] = isset($data['param_value'][$key]) ? $data['param_value'][$key] : '';
+            }
+            $data['content'] = json_encode($content);
+        }
+
+        Spec::create($data);
+        return redirect()->route('admin.products.specs', $data['product_id'])->with('success', '产品型号添加成功！');
+    }
+
+    public function edit(Spec $spec)
+    {
         // $this->authorize('update', $spec);
-		return view('admin.specs.create_and_edit', compact('spec'));
-	}
 
-	public function update(SpecRequest $request, Spec $spec)
-	{
-		// $this->authorize('update', $spec);
-		$spec->update($request->all());
+        $product = $spec->product;
+        return view('admin.specs.create_and_edit', compact('spec', 'product'));
+    }
 
-		return redirect()->route('admin.specs.index')->with('success', '产品型号编辑成功！');
-	}
+    public function update(SpecRequest $request, Spec $spec)
+    {
+        // $this->authorize('update', $spec);
+        $data = $request->all();
 
-	public function destroy(Spec $spec)
-	{
-		// $this->authorize('destroy', $spec);
+        if (!empty($data['param_key'])) {
+            foreach ($data['param_key'] as $key => $value) {
+                $content[$value] = isset($data['param_value'][$key]) ? $data['param_value'][$key] : '';
+            }
+            $data['content'] = json_encode($content);
+        }
+
+        $spec->update($data);
+
+        return redirect()->back()->with('success', '产品型号更新成功！');
+    }
+
+    public function destroy(Spec $spec)
+    {
+        // $this->authorize('destroy', $spec);
         $spec->idnumber = $spec->idnumber;
-		$spec->delete();
+        $spec->delete();
 
-		return redirect()->route('admin.products.specs', $spec->product_id)->with('success', "编号为 [{$spec->idnumber}] 的产品型号删除成功！");
-	}
+        return redirect()->route('admin.products.specs', $spec->product_id)->with('success', "编号为 [{$spec->idnumber}] 的产品型号删除成功！");
+    }
 }

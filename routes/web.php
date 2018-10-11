@@ -31,7 +31,8 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         Route::get('store/orders/{order}', 'OrdersController@show')->name('store.orders.show');
         #备货订单
         Route::get('store/specs/{spec}/stock_orders/create', 'StockOrdersController@create')->name('store.specs.stock_orders.create');
-        Route::post('store/stock_orders/{stock_order}/received', 'StockOrdersController@received')->name('stock.stock_orders.received');
+        Route::post('store/stock_orders/{stock_order}/received', 'StockOrdersController@received')->name('store.stock_orders.received');
+        Route::post('store/stock_orders/{stock_order}/cancel', 'StockOrdersController@cancel')->name('store.stock_orders.cancel');
         Route::resource('store/stock_orders', 'StockOrdersController', ['as' => 'store', 'only' => ['index', 'edit', 'update', 'store', 'destroy', 'show']]);
 
         #账务记录
@@ -64,8 +65,10 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
         #产品
         Route::resource('admin/categories', 'CategoriesController', ['as' => 'admin']);
         Route::resource('admin/products', 'ProductsController', ['as' => 'admin']);
+        #产品型号
         Route::get('admin/products/{product}/specs', 'SpecsController@productIndex')->name('admin.products.specs');
-        Route::resource('admin/specs', 'SpecsController', ['as' => 'admin']);
+        Route::get('admin/products/{product}/specs/create', 'SpecsController@create')->name('admin.products.specs.create');
+        Route::resource('admin/specs', 'SpecsController', ['as' => 'admin', 'only' => ['index', 'show', 'edit', 'update', 'store', 'destroy']]);
         #门店
         Route::resource('admin/stores', 'StoresController', ['as' => 'admin']);
         Route::resource('admin/employees', 'EmployeesController', ['as' => 'admin']);

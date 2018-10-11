@@ -23,36 +23,47 @@
 
 <body class="fix-sidebar">
 
-    <!-- Preloader -->
-    <!--
-    <div class="preloader">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-        </svg>
-    </div>
-    -->
+<!-- Preloader -->
+<!--
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+    </svg>
+</div>
+-->
 
-    <div id="wrapper">
+<div id="wrapper">
 
-        @include('store.common._top')
+    @include('store.common._top')
 
-        @include('store.common._leftmenu')
+    @include('store.common._leftmenu')
 
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                @yield('content', 'this is a new page')
-            </div>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            @yield('content', 'this is a new page')
         </div>
-
     </div>
 
-    <script src="/admin/plugins/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/admin/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
-    <script src="/admin/js/jquery.slimscroll.js"></script>
-    <script src="/admin/js/custom.js"></script>
+</div>
 
-    @yield('script')
+<script src="/admin/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/admin/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/admin/plugins/bower_components/blockUI/jquery.blockUI.js"></script>
+<script src="/admin/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="/admin/js/jquery.slimscroll.js"></script>
+<script src="/admin/js/custom.js"></script>
+
+@yield('script')
+
+<script>
+    function form_check(domm) {
+        $(domm).block({
+            message: '<h4><img src="/admin/plugins/images/busy.gif" /> 提交中...</h4>',
+            css: {border: '1px solid #fff'}
+        });
+        return true;
+    }
+</script>
 
 </body>
 </html>

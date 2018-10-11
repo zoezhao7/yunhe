@@ -26,21 +26,13 @@ class NodeRequest extends FormRequest
     {
         switch ($this->method()) {
             case 'POST':
-                return [
-                    'controller_name' => 'required',
-                    'controller' => 'required|regex:/^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*?$/|unique:admin_nodes,controller',
-                    'action_name' => 'required',
-                    'action' => 'required|unique:admin_nodes,action',
-                ];
-                break;
             case 'PUT':
             case 'PATCH':
-                $id = $this->route('node')->id;
                 return [
                     'controller_name' => 'required',
-                    'controller' => 'required|regex:/^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*?$/|unique:admin_nodes,controller,' . $id,
+                    'controller' => 'required|regex:/^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*?$/',
                     'action_name' => 'required',
-                    'action' => 'required|unique:admin_nodes,action,' . $id,
+                    'action' => 'required|string',
                 ];
                 break;
             default;

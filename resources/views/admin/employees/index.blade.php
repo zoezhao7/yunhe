@@ -99,11 +99,11 @@
                                         <td>{{ $employee->phone }}</td>
                                         <td>{{ $employee->idnumber }}</td>
                                         <td>
-                                            <a href="{{ route('admin.employees.edit', $employee->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
-                                            <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('admin.employees.destroy', $employee->id) }}" style="display: inline">
+                                            <a href="{{ route('admin.employees.edit', $employee->id) }}" class="btn btn-xs btn-outline btn-info">编辑</a>
+                                            <form onsubmit="return confirm('确定要删除吗！');" id="delete_form_{{ $employee->id }}" method="post" action="{{ route('admin.employees.destroy', $employee->id) }}" style="display: inline">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-                                                <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a>
+                                                <button type="submit" class="btn btn-xs btn-outline btn-danger">删除</button>
                                             </form>
                                         </td>
                                     </tr>

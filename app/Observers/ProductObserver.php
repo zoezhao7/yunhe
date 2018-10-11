@@ -16,8 +16,9 @@ class ProductObserver
 
     public function deleting(Product $product)
     {
-
-        denied('该产品已存在订单， 不允许删除！');
+        if ($product->hasOrder()) {
+            denied('该产品已存在订单， 不允许删除！');
+        }
     }
 
     public function deleted(Product $product)

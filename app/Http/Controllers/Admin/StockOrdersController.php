@@ -18,14 +18,13 @@ class StockOrdersController extends Controller
 
     public function index(Request $request)
     {
-
         $query = StockOrder::with('store', 'product', 'spec')->recent();
 
         if ($stockOrderIdnumber = (string)$request->stock_order_idnumber) {
             $query->where('idnumber', $stockOrderIdnumber);
         }
-        if ($orderStatus = (int)$request->order_status) {
-            $query->where('status', $orderStatus);
+        if ($request->has('order_status')) {
+            $query->where('status', (int)$request->order_status);
         }
         if ($productName = (string)$request->product_name) {
             $productIds = Product::where('name', 'like', "%{$productName}%")->pluck('id');
@@ -57,22 +56,21 @@ class StockOrdersController extends Controller
 
     public function orderTaking(StockOrder $stockOrder)
     {
-        if($stockOrder->status > 0)
-        {
-            return response(['success'=>false, 'message'=>'订单状态异常，请刷新页面！']);
+        if ($stockOrder->status > 0) {
+            return response(['success' => false, 'message' => '订单状态异常，请刷新页面！']);
         }
         $stockOrder->status = 1;
         $stockOrder->receipted_at = now();
         $stockOrder->save();
-        return response(['success'=>true, 'message'=>'']);
+        return response(['success' => true, 'message' => '']);
     }
 
     public function delivery(DelivelyRequest $request, StockOrder $stockOrder)
     {
-        if($stockOrder->status !== 1)
-        {
-            return response(['success'=>false, 'message'=>'订单状态异常，请刷新页面！']);
+        if ($stockOrder->status !== 1) {
+            return response(['success' => false, 'message' => '订单状态异常，请刷新页面！']);
         }
+
         $data = $request->all();
         $stockOrder->status = 2;
         $stockOrder->delivery_number = $data['delivery_number'];

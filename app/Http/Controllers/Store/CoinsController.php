@@ -14,7 +14,7 @@ class CoinsController extends Controller
     {
         $query = Coin::query()
             ->has('member')
-            ->selectRaw("coins.id, coins.number, coins.type, coins.remark, coins.created_at, coins.employee_id,
+            ->selectRaw("coins.id, coins.number, coins.type, coins.account_number, coins.remark, coins.created_at, coins.employee_id, members.id as member_id,
              members.name as member_name, members.coin_count as member_coin_count, 
              employees.name as employee_name")
             ->leftJoin('members', 'coins.member_id', '=', 'members.id')
@@ -34,8 +34,7 @@ class CoinsController extends Controller
         }
 
         $coins = $query->paginate();
-
-
+        
         $page_name = isset($member) && $member->id ? $member->name . '的积分记录' : '积分记录';
 
         return view('store.coins.index', compact('coins', 'request', 'page_name'));

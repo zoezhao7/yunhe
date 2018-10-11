@@ -98,4 +98,14 @@ class StockOrdersController extends Controller
         $stockOrder->save();
         return ['success' => true];
     }
+
+    public function cancel(StockOrder $stockOrder)
+    {
+        if($stockOrder->status !== 0) {
+            return redirect()->back()->with('danger', '订单状态异常， 请刷新后重试！');
+        }
+        $stockOrder->status = 9;
+        $stockOrder->save();
+        return redirect()->back()->with('success', '订单取消成功！');
+    }
 }

@@ -81,13 +81,13 @@
                                 @if (isset($member) && $member->id)
                                     {{ $coin->member_name }}
                                 @else
-                                    <a href="{{ route('store.members.coins', $coin->member_name) }}">
+                                    <a href="{{ route('store.members.coins', $coin->member_id) }}">
                                         {{ $coin->member_name }}
                                     </a>
                                 @endif
                             </td>
                             <td>@if($coin->number > 0) + @endif{{ $coin->number }}</td>
-                            <td>{{ $coin->member_coin_count }}</td>
+                            <td>{{ $coin->account_number }}</td>
                             <td>{{ $coin->remark }}</td>
                             <td>@if($coin->employee_id) 操作人：[{{ $coin->employee_name }}] @else -- @endif</td>
                         </tr>

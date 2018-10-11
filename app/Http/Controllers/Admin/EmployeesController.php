@@ -52,7 +52,8 @@ class EmployeesController extends Controller
 	public function create(Employee $employee)
 	{
 	    $stores = Store::all();
-		return view('admin.employees.create_and_edit', compact('employee', 'stores'));
+	    $employees = Employee::select('id', 'name')->whereIn('type', [1, 2])->get();
+		return view('admin.employees.create_and_edit', compact('employee', 'stores', 'employees'));
 	}
 
 	public function store(EmployeeRequest $request)
@@ -70,7 +71,8 @@ class EmployeesController extends Controller
 	{
         // $this->authorize('update', $employee);
         $stores = Store::all();
-		return view('admin.employees.create_and_edit', compact('employee', 'stores'));
+        $employees = Employee::whereIn('status', [1,2])->get();
+		return view('admin.employees.create_and_edit', compact('employee', 'stores', 'employees'));
 	}
 
 	public function update(EmployeeRequest $request, Employee $employee)

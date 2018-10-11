@@ -11,6 +11,7 @@ class StockOrder extends Model
         1 => ['id'=> 1, 'name' =>'备货中', 'label-class' => 'label-warning' ],
         2 => ['id'=> 2, 'name' =>'已发货', 'label-class' => 'label-primary' ],
         3 => ['id'=> 3, 'name' =>'已收货', 'label-class' => 'label-success' ],
+        9 => ['id'=> 9, 'name' =>'已取消', 'label-class' => 'label-default' ],
     ];
 
     public function getIdnumber()

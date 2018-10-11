@@ -7,8 +7,8 @@ class Account extends Model
     protected $fillable = ['store_id', 'employee_id', 'order_id', 'stock_order_id', 'type', 'money', 'channel', 'operated_at', 'remark'];
 
     public $typeMsg = [
-        1 => ['id' => 1, 'name' => '收入'],
-        2 => ['id' => 2, 'name' => '支出'],
+        1 => ['id' => 1, 'name' => '收入', 'label_class' => 'label-success'],
+        2 => ['id' => 2, 'name' => '支出', 'label_class' => 'label-danger'],
     ];
 
     public $channelMsg = [
