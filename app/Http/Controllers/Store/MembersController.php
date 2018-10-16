@@ -15,16 +15,16 @@ class MembersController extends Controller
     {
         $employee = \Auth::guard('store')->user();
 
-        $query = Member::withCount('cars')
-            ->selectRaw('members.*, employees.name as employee_name, employees.type as employee_type')
-            ->leftJoin('employees', 'employee_id', '=', 'employees.id')
-            ->where('employees.store_id', '=', $employee->store_id);
+        $query = Member::selectRaw('members.*, em1.name as employee_name, em1.type as employee_type, em2.name as superior_name')
+            ->leftJoin('employees as em1', 'employee_id', '=', 'em1.id')
+            ->leftJoin('employees as em2', 'em1.superior_id', '=', 'em2.id')
+            ->where('em1.store_id', '=', $employee->store_id);
 
         if ($memberName = (string)$request->member_name) {
             $query->where('members.name', 'like', "%{$memberName}%");
         }
         if ($employeeName = (string)$request->employee_name) {
-            $query->where('employees.name', 'like', "%{$employeeName}%");
+            $query->where('em1.name', 'like', "%{$employeeName}%");
         }
         if($orderBy = (string) $request->order_by){
             $query->orderBy($orderBy, 'desc');

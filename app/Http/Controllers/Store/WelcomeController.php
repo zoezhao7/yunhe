@@ -12,6 +12,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
+
         $manager = \Auth::guard('store')->user();
         $store = $manager->store;
 

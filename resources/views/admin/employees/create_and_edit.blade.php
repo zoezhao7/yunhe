@@ -73,7 +73,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">身份</label>
                                         <select class="form-control" name="type" required>
-                                            @foreach (\App\Models\Employee::$types as $type)
+                                            @foreach (\App\Models\Employee::$typeMsg as $type)
                                                 <option value="{{ $type['id'] }}" {{ $employee->type == $type['id'] ? 'selected' : '' }}>{{ $type['name'] }}</option>
                                             @endforeach
                                         </select>
@@ -92,7 +92,7 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">状态</label>
                                         <select class="form-control" name="status" required>
-                                            @foreach ($employee->statusMsg as $status)
+                                            @foreach (\App\Models\Employee::$statusMsg as $status)
                                                 <option value="{{ $status['id'] }}" {{ $employee->status == $status['id'] ? 'selected' : '' }}>{{ $status['name'] }}</option>
                                             @endforeach
                                         </select>

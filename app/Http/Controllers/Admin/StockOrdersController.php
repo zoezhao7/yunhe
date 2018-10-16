@@ -12,31 +12,19 @@ class StockOrdersController extends Controller
 
     public function show(StockOrder $stockOrder)
     {
-        //$order = StockOrder::find(3)
-        return view('admin.stock_orders.show', compact('stockOrder', 'product', 'spec'));
+        $stockOrderProducts = $stockOrder->stockOrderProducts()->with(['spec.product.category', 'hubs'])->get();
+        return view('admin.stock_orders.show', compact('stockOrder', 'stockOrderProducts'));
     }
 
     public function index(Request $request)
     {
-        $query = StockOrder::with('store', 'product', 'spec')->recent();
+        $query = StockOrder::with('stockOrderProducts.spec.product.category')->recent();
 
         if ($stockOrderIdnumber = (string)$request->stock_order_idnumber) {
             $query->where('idnumber', $stockOrderIdnumber);
         }
         if ($request->has('order_status')) {
             $query->where('status', (int)$request->order_status);
-        }
-        if ($productName = (string)$request->product_name) {
-            $productIds = Product::where('name', 'like', "%{$productName}%")->pluck('id');
-            $query->whereIn('product_id', $productIds);
-        }
-        if ($specNumber = (string)$request->spec_idnumber) {
-            $spec = Spec::where('number', $specNumber)->first();
-            if ($spec) {
-                $query->where('spec_id', $spec->id);
-            } else {
-                $query->where('spec_id', 0);
-            }
         }
 
         $stockOrders = $query->paginate();
@@ -49,11 +37,7 @@ class StockOrdersController extends Controller
         return view('admin.stock_orders.create_and_edit', compact('order'));
     }
 
-    public function update()
-    {
-
-    }
-
+    // 接单
     public function orderTaking(StockOrder $stockOrder)
     {
         if ($stockOrder->status > 0) {
@@ -65,10 +49,17 @@ class StockOrdersController extends Controller
         return response(['success' => true, 'message' => '']);
     }
 
+    // 发货
     public function delivery(DelivelyRequest $request, StockOrder $stockOrder)
     {
         if ($stockOrder->status !== 1) {
             return response(['success' => false, 'message' => '订单状态异常，请刷新页面！']);
+        }
+
+        foreach($stockOrder->stockOrderProducts as $pro) {
+            if($pro->hubs()->count() == 0) {
+                return redirect()->back()->with('danger', '请先填写备货清单中，产品的SN码，再进行发货！');
+            }
         }
 
         $data = $request->all();

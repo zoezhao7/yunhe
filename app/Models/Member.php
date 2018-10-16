@@ -26,7 +26,8 @@ class Member extends Authenticatable
      */
     public function gainCoinsByOrder(Order $order)
     {
-        $coin_count = $this->coin_count + ceil($order->money);
+        $coin = ceil($order->money * Coin::$orderPercent);
+        $coin_count = $this->coin_count + $coin;
         $this->coin_count = $coin_count;
         $this->save();
 
@@ -34,7 +35,7 @@ class Member extends Authenticatable
             'member_id' => $this->id,
             'order_id' => $order->id,
             'type' => '1',
-            'number' => ceil($order->money),
+            'number' => $coin,
             'account_number' => $coin_count,
             'remark' => '购买轮毂 - 订单编号[' . $order->idnumber . ']',
         ];

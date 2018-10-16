@@ -42,7 +42,7 @@
                                     <div class="mail-contnet">
                                         <h5>{{ $order->store->name }}</h5>
                                         <span class="mail-desc">有一笔新的备货订单需要处理。</span>
-                                        <span class="time">{{ $order->created_at->format('M-d H:i') }}</span>
+                                        <span class="time">{{ $order->created_at->format('m-d H:i') }}</span>
                                     </div>
                                 </a>
                             </div>

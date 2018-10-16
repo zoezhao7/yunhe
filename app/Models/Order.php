@@ -4,12 +4,22 @@ namespace App\Models;
 
 class Order extends Model
 {
-    protected $fillable = ['member_id', 'car_id', 'product_id', 'spec_id', 'parameters', 'price', 'discount', 'money', 'dealt_at', 'status', 'remark', 'number'];
+    protected $fillable = ['member_id', 'car_id', 'money', 'dealt_at', 'status', 'remark', 'number'];
 
 
     public function member()
     {
         return $this->belongsTo(Member::class);
+    }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 
     public function spec()
@@ -20,6 +30,11 @@ class Order extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function hubs()
+    {
+        return $this->hasManyThrough(Hub::class, OrderProduct::class);
     }
 
     public function getParametersAttribute($value)
@@ -41,6 +56,11 @@ class Order extends Model
 
     public function getIdnumber()
     {
-        return $this->spec->id . rand(1111, 9999) . time();
+        return $this->employee_id . date('md') . rand(111, 999) . uniqid();
+    }
+
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
     }
 }

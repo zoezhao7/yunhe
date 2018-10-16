@@ -45,4 +45,9 @@ class Spec extends Model
         return json_decode($value, true);
     }
 
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
 }

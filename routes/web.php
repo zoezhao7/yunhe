@@ -25,15 +25,20 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         #客户管理
         Route::resource('store/members', 'MembersController', ['as' => 'store']);
         #订单管理
+        Route::get('store/orders/{order}', 'OrderController@show')->name('store.orders.show');
+        Route::post('store/order_products/hubs/bindding', 'OrdersController@orderProductBinddingHubs')->name('store.order_products.hubs.bindding');
         Route::put('store/orders/{order}/check_success', 'OrdersController@checkSuccess')->name('store.orders.check_success');
         Route::put('store/orders/{order}/check_fail', 'OrdersController@checkFail')->name('store.orders.check_fail');
         Route::get('store/orders', 'OrdersController@index')->name('store.orders.index');
         Route::get('store/orders/{order}', 'OrdersController@show')->name('store.orders.show');
         #备货订单
+        Route::get('store/stock_orders/shopping_cart', 'StockOrdersController@shoppingCart')->name('store.stock_orders.shopping_cart');
+        Route::delete('store/stock_orders/product/{stock_order_product}', 'StockOrdersController@destroyProduct')->name('store.stock_orders.product.destroy');
         Route::get('store/specs/{spec}/stock_orders/create', 'StockOrdersController@create')->name('store.specs.stock_orders.create');
         Route::post('store/stock_orders/{stock_order}/received', 'StockOrdersController@received')->name('store.stock_orders.received');
         Route::post('store/stock_orders/{stock_order}/cancel', 'StockOrdersController@cancel')->name('store.stock_orders.cancel');
         Route::resource('store/stock_orders', 'StockOrdersController', ['as' => 'store', 'only' => ['index', 'edit', 'update', 'store', 'destroy', 'show']]);
+        Route::post('store/stock_orders/add_product', 'StockOrdersController@addProduct')->name('store.stock_orders.add_product');
 
         #账务记录
         Route::resource('store/accounts', 'AccountsController', ['only' => ['index', 'create', 'store', 'destroy'], 'as' => 'store']);
@@ -85,6 +90,9 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
         #我的
         Route::get('admin/my/password', 'MyController@passwordEdit')->name('admin.my.password_edit');
         Route::put('admin/my/password', 'MyController@passwordUpdate')->name('admin.my.password_update');
+        #轮毂
+        Route::post('admin/stock_orders/hubs', 'HubsController@stockOrderStore')->name('admin.stock_orders.hubs.store');
+        Route::resource('admin/hubs', 'HubsController', ['as' => 'admin']);
     });
 
 });

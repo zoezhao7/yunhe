@@ -19,6 +19,14 @@
                 </li>
             @endif
 
+            @if (\Auth::user()->checkPermission('hubs.index'))
+                <li class="nav @if(str_contains(request()->route()->getName(), ['hubs'])) active @endif">
+                    <a href="{{ route('admin.hubs.index') }}" class="waves-effect">
+                        <i class="mdi mdi-table-large fa-fw" data-icon="v"></i>
+                        <span class="hide-menu">轮毂仓库</span></a>
+                </li>
+            @endif
+
             @if (\Auth::user()->checkPermission('members.index'))
                 <li class="nav @if(str_contains(request()->route()->getName(), ['members'])) active @endif">
                     <a href="{{ route('admin.members.index') }}" class="waves-effect">

@@ -32,19 +32,10 @@
                                value="{{ $request->stock_order_idnumber }}" placeholder="备货编号">
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
-                        <input type="text" class="form-control" id="" name="product_name"
-                               value="{{ $request->product_name }}" placeholder="产品名称">
-                    </div>
-                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
-                        <input type="text" class="form-control" id="" name="spec_idnumber"
-                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
-                    </div>
-                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <select class="form-control" name="order_status">
                             <option value="">订单状态</option>
                             @foreach(\App\Models\StockOrder::$statusMsg as $msg)
-                                <option value="{{ $msg['id'] }}"
-                                        @if($request->order_status == $msg['id']) selected @endif>{{ $msg['name'] }}</option>
+                                <option value="{{ $msg['id'] }}" @if($request->order_status == $msg['id']) selected @endif>{{ $msg['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -58,13 +49,9 @@
                 <table class="table product-overview color-table info-table" id="myTable">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>备货编号</th>
-                        <th>门店</th>
-                        <th>图片</th>
-                        <th>产品</th>
-                        <th>型号</th>
-                        <th>颜色</th>
-                        <th>数量（套）</th>
+                        <th>产品清单</th>
                         <th>下单时间</th>
                         <th>状态</th>
                         <th>操作</th>
@@ -74,25 +61,21 @@
 
                     @foreach ($stockOrders as $key => $order)
                         <tr>
+                            <td>{{ $key+1 }}</td>
                             <td>
                                 <a href="{{ route('admin.stock_orders.show', $order->id) }}">{{ $order->idnumber }}</a>
                             </td>
-                            <td>
-                                {{ $order->store->name }}
+                            <td style="line-height: 30px;">
+                                @foreach($order->stockOrderProducts as $stockOrderProduct)
+                                    <span class="label label-info">{{ $stockOrderProduct->spec->idnumber }}*{{ $stockOrderProduct->number }}</span>
+                                @endforeach
                             </td>
-                            <td><img src="{{ $order->product->image }}" width="70px;"></td>
-                            <td>
-                                <a href="{{ route('admin.products.specs', $order->product_id) }}">{{ $order->product->name }}</a>
-                            </td>
-                            <td>{{ $order->spec->idnumber }} - {{ $order->spec->size }}</td>
-                            <td>{{ $order->color }}</td>
-                            <td>{{ $order->number }}</td>
                             <td>{{ $order->created_at->format('m-d H:i') }}</td>
                             <td>
                                 <span class="label {{ App\Models\StockOrder::$statusMsg[$order->status]['label-class'] }}">{{ App\Models\StockOrder::$statusMsg[$order->status]['name'] }}</span>
                             </td>
                             <td>
-                                <a href="{{ route('admin.stock_orders.show', $order->id) }}" class="btn btn-info btn-small">详情</a>
+                                <a href="{{ route('admin.stock_orders.show', $order->id) }}" class="btn btn-info btn-outline">查看详情</a>
                             </td>
                         </tr>
                     @endforeach

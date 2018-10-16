@@ -46,8 +46,8 @@
                                         <div class="form-group">
                                             <label><strong>在售/下架</strong></label>
                                             <select class="form-control" name="is_sale" required>
-                                                <option value="1" {{ $product->is_sale ? '' : 'selected' }}>在售</option>
-                                                <option value="0" {{ !$product->is_sale ? '' : 'selected' }}>下架</option>
+                                                <option value="1" {{ $product->is_sale ? 'selected' : '' }}>在售</option>
+                                                <option value="0" {{ !$product->is_sale ? 'selected' : '' }}>下架</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -69,11 +69,14 @@
                                         <div class="form-group">
                                             <label><strong>产品折扣</strong></label>
                                             <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                                <input type="text" value="{{ old('discount', $product->discount) }}"
-                                                       name="discount" class="form-control">
-                                                <span class="input-group-addon bootstrap-touchspin-postfix input-group-append">
-                                                <span class="input-group-text">%</span>
-                                            </span>
+                                                <select class="form-control" name="discount" required>
+                                                    <option value="0" {{ $product->discount == 0 ? 'selected' : '' }}>无折扣</option>
+                                                    <option value="0.5" {{ $product->discount == 5 ? 'selected' : '' }}>5折</option>
+                                                    <option value="0.8" {{ $product->discount == 8 ? 'selected' : '' }}>8折</option>
+                                                    <option value="0.85" {{ $product->discount == 8.5 ? 'selected' : '' }}>8.5折</option>
+                                                    <option value="0.9" {{ $product->discount == 9 ? 'selected' : '' }}>9折</option>
+                                                    <option value="0.95" {{ $product->discount == 9.5 ? 'selected' : '' }}>9.5折</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">

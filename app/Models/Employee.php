@@ -14,15 +14,18 @@ class Employee extends Authenticatable
 
     protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id', 'status'];
 
-    public $statusMsg = [
-        '1' => ['id' => 1, 'name' => '在职', 'label_string' => '<span class="label label-success ">在职</span>'],
-        '2' => ['id' => 2, 'name' => '离职', 'label_string' => '<span class="label label-danger ">离职</span>'],
+    public static $statusMsg = [
+        '1' => ['id' => 1, 'name' => '在职', 'label_class' => 'label-success'],
+        '2' => ['id' => 2, 'name' => '离职', 'label_class' => 'label-danger'],
+        '3' => ['id' => 3, 'name' => '兼职', 'label_class' => 'label-warning'],
     ];
 
-    public static $types = [
-        ['id' => 2, 'name' => '销售'],
-        ['id' => 3, 'name' => '渠道'],
-        ['id' => 1, 'name' => '店长'],
+    public static $typeMsg = [
+        '2' => ['id' => 2, 'name' => '销售', 'label_class' => 'label-success'],
+        '3' => ['id' => 3, 'name' => '渠道', 'label_class' => 'label-warning'],
+        '4' => ['id' => 4, 'name' => '客服', 'label_class' => 'label-primary'],
+        '5' => ['id' => 5, 'name' => '技术', 'label_class' => 'label-info'],
+        '1' => ['id' => 1, 'name' => '店长', 'label_class' => 'label-danger'],
     ];
 
     // 下级

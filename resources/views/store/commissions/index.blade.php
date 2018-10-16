@@ -69,10 +69,10 @@
                             <td>{{ $commission->money }}</td>
                             <td>
                                 @if ($commission->type == 'order')
-                                    <span class="label label-danger">轮毂销售</span>
+                                    <span class="label label-danger">一级销售</span>
                                 @endif
                                 @if ($commission->type == 'subordinate')
-                                    <span class="label label-info">渠道提成</span>
+                                    <span class="label label-info">二级销售</span>
                                 @endif
                             </td>
                             <td>

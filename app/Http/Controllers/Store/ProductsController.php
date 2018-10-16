@@ -13,12 +13,14 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        $query = Product::with('specs')->recent();
+        $query = Product::with(['specs' => function($query) {
+            $query->orderBy('size', 'asc');
+        }])->recent();
 
         if ($productName = (string)$request->spec_idnumber) {
-            $spec = Spec::where('number', $request->spec_idnumber)->first();
+            $spec = Spec::where('idnumber', $request->spec_idnumber)->first();
             if($spec) {
-                return redirect()->route('store.products.specs', $spec->product_id);
+                return redirect()->route('store.specs.show', $spec->id);
             }
         }
         if ($productName = (string)$request->product_name) {

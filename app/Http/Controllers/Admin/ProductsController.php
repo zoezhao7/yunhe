@@ -24,7 +24,7 @@ class ProductsController extends Controller
         if ($productName = (string)$request->spec_idnumber) {
             $spec = Spec::where('idnumber', $request->spec_idnumber)->first();
             if ($spec) {
-                return redirect()->route('admin.products.specs', $spec->product_id);
+                return redirect()->route('admin.specs.show', $spec->id);
             }
         }
         if ($productName = (string)$request->product_name) {

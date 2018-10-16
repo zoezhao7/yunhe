@@ -1,6 +1,6 @@
 @extends('store.layouts.store')
 
-<?php $page_name = $stockOrder->id ? '修改备货订单' : '备货下单'; ?>
+<?php $page_name = $stockOrderProduct->id ? '修改备货订单' : '备货下单'; ?>
 
 @section('title', $page_name)
 
@@ -58,26 +58,26 @@
                             <hr style="margin-top: 5px;">
                             <div class="table-responsive">
                                 <div class="col-sm-6 col-xs-6">
-                                    @if ($stockOrder->id)
+                                    @if ($stockOrderProduct->id)
                                         <form onsubmit="return form_check(this);" method="POST"
-                                              action="{{ route('store.stock_orders.update', $stockOrder->id) }}"
+                                              action="{{ route('store.stock_orders.update', $stockOrderProduct->id) }}"
                                               enctype="multipart/form-data">
                                             {{ method_field('PUT') }}
                                             @else
-                                                <form onsubmit="return form_check(this);" method="POST" action="{{ route('store.stock_orders.store') }}">
+                                                <form onsubmit="return form_check(this);" method="POST" action="{{ route('store.stock_orders.add_product') }}">
                                                     @endif
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="product_id" value="{{ $product->id }}"/>
                                                     <input type="hidden" name="spec_id" value="{{ $spec->id }}"/>
 
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">进货数量（套）：</label>
+                                                        <label for="exampleInputEmail1">轮毂个数：</label>
                                                         <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
                                                             <span class="input-group-btn input-group-prepend"><button
                                                                         class="btn btn-default btn-outline bootstrap-touchspin-down"
                                                                         type="button">-</button></span>
                                                             <input id="tch3_22" type="text"
-                                                                   value="{{ old('name', $stockOrder->number ? $stockOrder->number : 1) }}"
+                                                                   value="{{ old('name', $stockOrderProduct->number ? $stockOrderProduct->number : 1) }}"
                                                                    name="number"
                                                                    data-bts-button-down-class="btn btn-default btn-outline"
                                                                    data-bts-button-up-class="btn btn-default btn-outline"
@@ -92,14 +92,14 @@
                                                         <select class="form-control" name="color" required>
                                                             <option value="">请选择轮毂色彩</option>
                                                             @foreach ($product->colors as $color)
-                                                                <option value="{{ $color['title'] }}" {{ $stockOrder->color == $color['title'] ? 'selected' : '' }}>{{ $color['title'] }}</option>
+                                                                <option value="{{ $color['title'] }}" {{ $stockOrderProduct->color == $color['title'] ? 'selected' : '' }}>{{ $color['title'] }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">备注</label>
-                                                        <textarea class="form-control" rows="5" name="remark">{{ old('remark', $stockOrder->remark ) }}</textarea>
+                                                        <textarea class="form-control" rows="5" name="remark">{{ old('remark', $stockOrderProduct->remark ) }}</textarea>
                                                     </div>
 
                                                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">下单

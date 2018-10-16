@@ -26,8 +26,9 @@ class OrderRequest extends FormRequest
         return [
             'member_id' => 'required|exists:members,id',
             'car_id' => 'nullable|integer',
-            'spec_id' => 'required|integer|exists:specs,id',
-            'parameters' => 'nullable|string',
+            //'spec_id' => 'required|integer|exists:specs,id',
+            //'parameters' => 'nullable|string',
+            'products' => 'required|array',
             'money' => 'required|numeric|min:1',
             'dealt_at' => 'required|date',
             'number' => 'nullable|integer'

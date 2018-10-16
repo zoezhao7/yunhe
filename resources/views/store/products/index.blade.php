@@ -28,7 +28,7 @@
                 <form>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <input type="text" class="form-control" id="" name="spec_idnumber"
-                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
+                               value="{{ $request->spec_idnumber }}" placeholder="CID">
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <input type="text" class="form-control" id="" name="product_name"

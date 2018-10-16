@@ -1,21 +1,19 @@
 @extends('store.layouts.store')
 
-@section('title', '产品规则列表')
+@section('title', '产品管理')
 
 @section('content')
 
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品规格列表</h4></div>
+            <h4 class="page-title">产品列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-
             <ol class="breadcrumb">
                 <li><a href="{{ route('store.welcome') }}">首页</a></li>
-                <li><a href="{{ route('store.products.index') }}">产品列表</a></li>
-                <li class="active">产品规格列表</li>
+                <li class="active">产品列表</li>
             </ol>
         </div>
         <!-- /.breadcrumb -->
@@ -24,83 +22,78 @@
     @include('store.common._message')
 
     <div class="row">
-        <div class="col-md-9 col-lg-9 col-sm-7">
-            <div class="panel panel-info">
-                <div class="panel-wrapper collapse in" aria-expanded="true">
-                    <div class="pan
+        <div class="white-box">
 
-                    el-body">
-                        <div class="table-responsive">
-                            <table class="table product-overview">
-                                <thead>
-                                <tr>
-                                    <th style="text-align:center" width="10%">编号</th>
-                                    <th style="text-align:center" width="10%">尺寸</th>
-                                    <th style="text-align:center" width="10%">价格</th>
-                                    <th style="text-align:center" width="50%">参数</th>
-                                    <th style="text-align:center" width="10%">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($specs as $key=>$spec)
-                                    <tr>
-                                        <td align="center">
-                                            <a href="{{ route('store.specs.show', $spec->id) }}">
-                                            {{ $spec->idnumber }}
-                                            </a>
-                                        </td>
-                                        <td align="center">{{ $spec->size }}</td>
-                                        <td align="center" class="font-500">￥{{ $spec->price }}</td>
-                                        <td>
-                                            <p>
-                                                @foreach ($spec->content as $key=>$value)
-                                                    {{ $key }}:{{ $value }}&nbsp;&nbsp;&nbsp;
-                                                @endforeach
-                                            </p>
-                                        </td>
-                                        <td align="center">
-                                            <a href="{{ route('store.specs.stock_orders.create', $spec->id)  }}"
-                                               class="btn btn-default" data-toggle="tooltip">
-                                                进货
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-
-                        </div>
+            <div class="panel-body" style="padding-top:0;padding-left:0;">
+                <form>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="spec_idnumber"
+                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
                     </div>
-                </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <input type="text" class="form-control" id="" name="spec_name"
+                               value="{{ $request->spec_name }}" placeholder="产品名称">
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <select class="form-control" name="category_id">
+                            <option value="">产品系列</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" @if($request->category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
+                        <button class="btn btn-block btn-info" style="max-width: 100px;">查询</button>
+                    </div>
+                </form>
             </div>
-        </div>
-        <div class="col-md-3 col-lg-3 col-sm-5">
-            <div class="white-box">
-                <h3 class="box-title">{{ $product->name }}</h3>
-                <hr>
-                <small>分类</small>
-                <h2> {{ $product->category->name }} </h2>
-                <small>折扣</small>
-                <h2> {{ $product->discount }}% </h2>
-                <small>简介</small>
-                <h2> {{ $product->intro }} </h2>
-                <small>产品图</small>
-                <h2><img src="{{ $product->image }}" width="200" class="thumbnail img-responsive"></h2>
-                <small>色彩</small>
-                <h2>
-                    @foreach($product->colors as $color)
-                        <div style="width:50%;float: left;text-align:center;"><img src="{{ $color['path'] }}" width="90"
-                                                                                   class="thumbnail img-responsive"
-                                                                                   style="margin-bottom: 0;">
-                            <small>{{ $color['title'] }}</small>
-                        </div>
+
+            <div class="table-responsive">
+                <table class="table spec-overview color-table info-table" id="myTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>CID</th>
+                        <th>系列</th>
+                        <th>图片</th>
+                        <th>系列/产品名称</th>
+                        <th>尺寸</th>
+                        <th width="20%">参数</th>
+                        <th width="20%">简介</th>
+                        <th>上架日期</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($specs as $key => $spec)
+                        <tr>
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $spec->idnumber }}</td>
+                            <td><span class="label label-success font-weight-100">{{ $spec->category->name }}</span>
+                            <td> @if ($spec->product->image) <img src="{{ $spec->product->image }}" alt="" width="50"> @endif
+                            </td>
+                            <td><span class="label label-success font-weight-100">{{ $spec->category->name }}</span>
+                            </td>
+                            <td><a href="{{ route('store.specs.specs', $spec->id) }}">{{ $spec->name }}</a>
+                            </td>
+                            <td style="line-height: 28px;">
+                                @foreach ($spec->specs as $key=>$spec)
+                                    <a href="{{ route('store.specs.show', $spec->id) }}"><span class="label label-info">{{ $spec->size }}</span></a>
+                                @endforeach
+                            </td>
+                            <td>{{ $spec->intro }}</td>
+                            <td>@if($spec->created_at) {{ $spec->created_at->format('Y-m-d') }} @endif</td>
+                        </tr>
                     @endforeach
-                    <div style="clear: both;"></div>
-                </h2>
+                    </tbody>
+                </table>
+
+                <div class="dataTables_paginate paging_simple_numbers" id="example23_paginate">
+                    {!! $specs->appends(Request::except('page'))->render() !!}
+                </div>
 
             </div>
         </div>
     </div>
-
 
 @endsection

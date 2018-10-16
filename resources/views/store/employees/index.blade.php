@@ -35,16 +35,17 @@
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <select class="form-control" name="employee_type">
                             <option value="">身份</option>
-                            <option value="1" @if($request->employee_type == 1) selected @endif>店长</option>
-                            <option value="2" @if($request->employee_type == 2) selected @endif>销售</option>
-                            <option value="3" @if($request->employee_type == 3) selected @endif>渠道</option>
+                            @foreach(\App\Models\Employee::$typeMsg as $type)
+                                <option value="{{ $type['id'] }}" @if($request->employee_type == $type['id']) selected @endif>{{ $type['name'] }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <select class="form-control" name="employee_status">
-                            <option value="">在职/离职</option>
-                            <option value="1" @if($request->employee_status == 1) selected @endif>在职</option>
-                            <option value="2" @if($request->employee_status == 2) selected @endif>离职</option>
+                            <option value="">状态</option>
+                            @foreach(\App\Models\Employee::$statusMsg as $status)
+                                <option value="{{ $status['id'] }}" @if($request->employee_type == $status['id']) selected @endif>{{ $status['name'] }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
@@ -73,21 +74,16 @@
                             <td>{{ $key+1 }}</td>
                             <td>{{ $employee->name }}</td>
                             <td>
-                                @if ($employee->type == 1)
-                                    <span class="label label-danger">店长</span>
-                                @endif
-                                @if ($employee->type == 2)
-                                    <span class="label label-info">销售</span>
-                                @endif
-                                @if ($employee->type == 3)
-                                    <span class="label label-warning">渠道</span>
-                                @endif
+                                <span class="label {{ \App\Models\Employee::$typeMsg[$employee->type]['label_class'] }}">{{ \App\Models\Employee::$typeMsg[$employee->type]['name'] }}</span>
                             </td>
                             <td>@if($employee->superior_id) {{ $employee->superior->name }} @else -- @endif</td>
-                            <td>{{ $employee->phone }}</td>
+                            <td>{{ yc_phone($employee->phone) }}</td>
                             <td>{{ $employee->idnumber }}</td>
-                            {{--<td>{{ $employee->statusMsg[1]['name'] }} {{ $employee->status }}</td>--}}
-                            <td>{!! $employee->statusString !!}</td>
+                            <td>
+                                <span class="label {{ \App\Models\Employee::$statusMsg[$employee->status]['label_class'] }}">
+                                    {{ \App\Models\Employee::$statusMsg[$employee->status]['name'] }}
+                                </span>
+                            </td>
                             <td>
                                 <a href="{{ route('store.employees.edit', $employee->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑"><i class="ti-marker-alt"></i></a>
 

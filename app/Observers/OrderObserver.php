@@ -20,9 +20,6 @@ class OrderObserver
     {
         // 添加市场价、折扣、产品id
         $spec = Spec::find($order->spec_id);
-        $order->price = $spec->price;
-        $order->discount = $spec->discount;
-        $order->product_id = $spec->product_id;
 
         //签单销售的id
         $order->employee_id = \Auth::guard('api')->user()->id;

@@ -62,27 +62,27 @@
 
                             @if($stockOrder->status == 1)
                                 <span class="label label-success">已接单</span>&nbsp;
-                                接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
+                                接单时间：{{ date('m-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
                                 <span class="label label-danger">待发货</span>
                             @endif
 
                             @if($stockOrder->status == 2)
                                 <span class="label label-success">已接单</span>&nbsp;
-                                接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
+                                接单时间：{{ date('m-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
                                 <span class="label label-success">已发货</span>&nbsp;
-                                发货时间：{{ date('M-d H:i', strtotime($stockOrder->delivered_at)) }}
+                                发货时间：{{ date('m-d H:i', strtotime($stockOrder->delivered_at)) }}
                                 ，物流单号：{{ $stockOrder->delivery_number }}<br>
                                 <span class="label label-danger">待收货</span>
                             @endif
 
                             @if($stockOrder->status == 3)
                                 <span class="label label-success">已接单</span>&nbsp;
-                                接单时间：{{ date('M-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
+                                接单时间：{{ date('m-d H:i', strtotime($stockOrder->receipted_at)) }}<br>
                                 <span class="label label-success">已发货</span>&nbsp;
-                                发货时间：{{ date('M-d H:i', strtotime($stockOrder->delivered_at)) }}
+                                发货时间：{{ date('m-d H:i', strtotime($stockOrder->delivered_at)) }}
                                 ，物流单号：{{ $stockOrder->delivery_number }}<br>
                                 <span class="label label-success">已收货</span>&nbsp;
-                                收货时间：{{ date('M-d H:i', strtotime($stockOrder->received_at)) }}
+                                收货时间：{{ date('m-d H:i', strtotime($stockOrder->received_at)) }}
                             @endif
 
                         </td>
@@ -90,35 +90,51 @@
                     </tbody>
                 </table>
 
-                <h3 class="box-title" style="margin-top: 40px;">货物清单</h3>
+                <h3 class="box-title" style="margin-top: 40px;">备货清单</h3>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th width="20%">图片</th>
-                            <th width="30%">产品/型号</th>
-                            <th width="40%">参数</th>
-                            <th width="10%">价格</th>
+                            <th width="10%">CID</th>
+                            <th width="5%">数量</th>
+                            <th width="10">图片</th>
+                            <th width="15%">产品&尺寸</th>
+                            <th width="10%">颜色</th>
+                            <th width="25%">备注</th>
+                            <th width="25%">轮毂sn清单</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <?php $number_count = 0; ?>
+                        @foreach($stockOrderProducts as $stockOrderProduct)
+                            <?php $number_count += $stockOrderProduct->number; ?>
+                            <tr>
+                                <td>
+                                    <a href="{{ route('store.specs.show', $stockOrderProduct->spec->id) }}">
+                                        {{ $stockOrderProduct->spec->idnumber }}
+                                    </a>
+                                </td>
+                                <td class="font-500" align="center">{{ $stockOrderProduct->number }}</td>
+                                <td><img src="{{ $stockOrderProduct->spec->product->image }}" alt="" width="80"></td>
+                                <td>
+                                    {{ $stockOrderProduct->spec->product->category->name }}-{{ $stockOrderProduct->spec->product->name }}<br>
+                                    尺寸：{{ $stockOrderProduct->spec->size }}
+                                </td>
+                                <td style="line-height:28px;">
+                                    {{ $stockOrderProduct->color }}
+                                </td>
+                                <td class="font-500">{{ $stockOrderProduct->remark }}</td>
+                                <td>
+                                    @foreach($stockOrderProduct->hubs as $hub)
+                                        <span class="label label-info">{{ $hub->sn }}</span>
+                                    @endforeach
+                                </td>
+                            </tr>
+                        @endforeach
                         <tr>
-                            <td><img src="{{ $stockOrder->product->image }}" alt="iMac" width="80"></td>
-                            <td>
-                                {{ $stockOrder->product->category->name }}-{{ $stockOrder->product->name }}<br>
-                                型号：{{ $stockOrder->spec_idnumber }}
-                            </td>
-                            <td style="line-height:28px;">
-                                <span class="label label-info">颜色：{{ $stockOrder->color }}</span>
-                                @foreach($stockOrder->spec->content as $key=>$param)
-                                    <span class="label label-info">{{ $key }}：{{ $param }}</span>
-                                @endforeach
-                            </td>
-                            <td class="font-500">￥{{ $stockOrder->spec->price }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" class="font-500" align="right">总计</td>
-                            <td class="font-500">￥{{ $stockOrder->spec->price }}</td>
+                            <td class="font-500" align="right"><strong>总计：</strong></td>
+                            <td class="font-500" align="center"><strong>{{ $number_count }}</strong></td>
+                            <td colspan="5"></td>
                         </tr>
                         </tbody>
                     </table>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Requests\Api\OrderRequest;
+use App\Models\OrderProduct;
 use App\Transformers\EmployeeTransformer;
 use App\Transformers\OrderTransformer;
 use Illuminate\Http\Request;
@@ -26,18 +27,18 @@ class OrdersController extends Controller
     {
         $query = Order::query();
 
-        if($request->has('key_word') && $request->key_word) {
-            $keyWord = (string) $request->key_word;
+        if ($request->has('key_word') && $request->key_word) {
+            $keyWord = (string)$request->key_word;
             $product_ids = Product::where('name', 'like', '%' . $keyWord . '%')->pluck('id')->toArray();
 
-            if(!empty($product_ids)) {
+            if (!empty($product_ids)) {
                 $query->whereIn('product_id', $product_ids);
             } else {
                 $member_ids = Member::where('name', 'like', '%' . $keyWord . '%')->pluck('id')->toArray();
-                if(!empty($member_ids)) {
+                if (!empty($member_ids)) {
                     $query->whereIn('member_id', $member_ids);
                 } else {
-                    return $this->response->array(['data'=>[]]);
+                    return $this->response->array(['data' => []]);
                 }
             }
         }
@@ -67,10 +68,25 @@ class OrdersController extends Controller
             return $this->response->errorBadRequest('该ID不属于您的客户');
         }
 
-        $order->fill($request->all());
+        $data = $request->all();
+        $order->fill($data);
         $order->status = 0;
-
         $order->save();
+
+        // 保存订单产品
+        if (!is_array($data['products'])) {
+            $data['products'] = json_decode($data['products'], true);
+        }
+        if (is_array($data['products'])) {
+            foreach ($data['products'] as $product) {
+                $orderProduct = [];
+                $orderProduct['order_id'] = $order->id;
+                $orderProduct['spec_id'] = $product['spec_id'];
+                $orderProduct['color'] = $product['color'];
+                $orderProduct['number'] = $product['number'];
+                OrderProduct::create($orderProduct);
+            }
+        }
 
         return $this->response->created();
     }

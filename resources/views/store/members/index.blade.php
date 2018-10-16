@@ -56,8 +56,9 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>销售</th>
                         <th>姓名</th>
+                        <th>一级销售</th>
+                        <th>二级销售</th>
                         <th>手机号</th>
                         <th>车辆数</th>
                         <th>账户积分</th>
@@ -70,8 +71,9 @@
                     @foreach ($members as $key => $member)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $member->employee->name }}</td>
                             <td>{{ $member->name }}</td>
+                            <td>@if($member->superior_name){{ $member->superior_name }}@else{{ $member->employee_name }}@endif</td>
+                            <td>@if($member->superior_name){{ $member->employee->name }}@endif</td>
                             <td>{{ $member->phone }}</td>
                             <td>{{ $member->cars_count }}</td>
                             <td>{{ $member->coin_count }}</td>

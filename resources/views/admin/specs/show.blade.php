@@ -24,7 +24,7 @@
     @include('admin.common._error')
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <div class="white-box">
                 <div class="">
                     <h2 class="m-b-0 m-t-0">型号ID：{{ $spec->idnumber }}</h2>
@@ -46,7 +46,7 @@
                             <h4 class="box-title m-t-40">{{ $spec->product->category->name }} - {{ $spec->product->name }}</h4>
                             <p>{{ $spec->product->intro }}</p>
                             <h2 class="m-t-40">￥{{ $spec->price }}
-                                <small class="text-success">({{ $spec->product->discount }} 折扣)</small>
+                                <small class="text-success">({{ $spec->product->discount * 100 }}% 折扣)</small>
                             </h2>
                             <h3 class="box-title m-t-20">尺寸：{{ $spec->size }}</h3>
                             <h3 class="box-title m-t-20">规格参数：</h3>
@@ -56,6 +56,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="white-box">
+                <h2>库存清单</h2>
+                <hr>
+                <table class="table product-overview color-table info-table">
+                    <thead>
+                    <tr>
+                        <th>sn</th>
+                        <th>色彩</th>
+                        <th>门店</th>
+                        <th width="20%">状态</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($hubs as $hub)
+                        <tr @if($hub->order_id)style="color: #98a6ad;"@endif>
+                            <td>{{ $hub->sn }}</td>
+                            <td>{{ $hub->color }}</td>
+                            <td>{{ $hub->store->name }}</td>
+                            <td>@if($hub->status==1)
+                                    <span class="label label-warning">备货中</span>
+                                @elseif($hub->status==2)
+                                    <span class="label label-info">在库</span>
+                                @else
+                                    <span class="label label-danger">售出</span>
+                                @endif</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

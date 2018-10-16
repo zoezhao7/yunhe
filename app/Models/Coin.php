@@ -11,6 +11,9 @@ class Coin extends Model
         2 => ['id' => 2, 'name' => '人工操作',  'label_class' => 'label-warning'],
     ];
 
+    // 订单积分兑换比例，订单金额*0.1=积分
+    public static $orderPercent = 0.1;
+
     public function member()
     {
         return $this->belongsTo(Member::class);

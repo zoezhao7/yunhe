@@ -32,14 +32,6 @@
                                value="{{ $request->stock_order_idnumber }}" placeholder="备货编号">
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
-                        <input type="text" class="form-control" id="" name="product_name"
-                               value="{{ $request->product_name }}" placeholder="产品名称">
-                    </div>
-                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
-                        <input type="text" class="form-control" id="" name="spec_idnumber"
-                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
-                    </div>
-                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <select class="form-control" name="order_status">
                             <option value="">订单状态</option>
                             @foreach(\App\Models\StockOrder::$statusMsg as $msg)
@@ -59,11 +51,7 @@
                     <tr>
                         <th>#</th>
                         <th>备货编号</th>
-                        <th>图片</th>
-                        <th>产品</th>
-                        <th>型号</th>
-                        <th>轮毂色彩</th>
-                        <th>数量（套）</th>
+                        <th>产品清单</th>
                         <th>下单时间</th>
                         <th>状态</th>
                         <th>操作</th>
@@ -77,13 +65,11 @@
                             <td>
                                 <a href="{{ route('store.stock_orders.show', $order->id) }}">{{ $order->idnumber }}</a>
                             </td>
-                            <td><img src="{{ $order->product->image }}" width="70px;"></td>
-                            <td>
-                                <a href="{{ route('store.products.specs', $order->product_id) }}">{{ $order->product->name }}</a>
+                            <td style="line-height: 30px;">
+                                @foreach($order->stockOrderProducts as $stockOrderProduct)
+                                    <span class="label label-info">{{ $stockOrderProduct->spec->idnumber }}*{{ $stockOrderProduct->number }}</span>
+                                @endforeach
                             </td>
-                            <td>{{ $order->spec->idnumber }} - {{ $order->spec->size }}</td>
-                            <td>{{ $order->color }}</td>
-                            <td>{{ $order->number }}</td>
                             <td>{{ $order->created_at->format('m-d H:i') }}</td>
                             <td>
                                     <span class="label {{ App\Models\StockOrder::$statusMsg[$order->status]['label-class'] }}">{{ App\Models\StockOrder::$statusMsg[$order->status]['name'] }}</span>

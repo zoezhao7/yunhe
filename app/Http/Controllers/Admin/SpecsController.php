@@ -7,6 +7,7 @@ use App\Models\Spec;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SpecRequest;
+use App\Models\Hub;
 
 class SpecsController extends Controller
 {
@@ -23,7 +24,8 @@ class SpecsController extends Controller
 
     public function show(Spec $spec)
     {
-        return view('admin.specs.show', compact('spec'));
+        $hubs = Hub::with('store')->where('spec_id', $spec->id)->orderBy('order_id', 'asc')->orderBy('id', 'desc')->get();
+        return view('admin.specs.show', compact('spec', 'hubs'));
     }
 
     public function productIndex(Product $product)

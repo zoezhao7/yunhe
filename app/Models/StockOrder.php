@@ -16,7 +16,7 @@ class StockOrder extends Model
 
     public function getIdnumber()
     {
-        return 'SO' . $this->spec_id . '-' . date('md') . uniqid();
+        return 'SO' . $this->store_id . '-' . date('md') . uniqid();
     }
 
     public function product()
@@ -37,5 +37,10 @@ class StockOrder extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function stockOrderProducts()
+    {
+        return $this->hasMany(StockOrderProduct::class);
     }
 }

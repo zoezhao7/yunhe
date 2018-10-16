@@ -13,10 +13,7 @@ class StockOrderRequest extends Request
             case 'PATCH':
             {
                 return [
-                    'product_id' => 'required|integer',
-                    'spec_id' => 'required|integer',
-                    'color' => 'required|string',
-                    'number' => 'required|integer',
+                    'numbers' => 'required|array',
                     'remark' => 'nullable|string',
                 ];
             }
@@ -32,9 +29,6 @@ class StockOrderRequest extends Request
     public function messages()
     {
         return [
-            'spec_id.required' => '请选择产品规格',
-            'color.required' => '请选择产品颜色',
-            'number.required' => '请填写进货数量（套）',
         ];
     }
 }
