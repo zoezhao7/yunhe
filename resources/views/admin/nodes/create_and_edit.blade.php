@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-{{ $page_name = $node->id ? '编辑节点' : '创建节点'  }}
+<?php $page_name = $node->id ? '编辑节点' : '创建节点'; ?>
 
 @section('title', $page_name)
 

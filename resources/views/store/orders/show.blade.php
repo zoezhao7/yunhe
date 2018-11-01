@@ -127,7 +127,7 @@
                                    value="{{ $orderProduct->spec->idnumber }}">
                             <?php $number_count += $orderProduct->number; ?>
                             <tr>
-                                <td>{{ $orderProduct->spec->idnumber }}</td>
+                                <td><a href="{{ route('store.specs.show', $orderProduct->spec->id) }}">{{ $orderProduct->spec->idnumber }}</a></td>
                                 <td class="font-500" align="center">{{ $orderProduct->number }}</td>
                                 <td><img src="{{ $orderProduct->spec->product->image }}" alt="" width="80"></td>
                                 <td>
@@ -174,7 +174,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">添加sn</h4></div>
-                    <form onsubmit="return form_check(this);" id="delivery_form" action="{{ route('store.order_products.hubs.bindding') }}" method="post">
+                    <form  id="delivery_form" action="{{ route('store.order_products.hubs.bindding') }}" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" id="order_product_id" name="order_product_id" value="">
                     <div class="modal-body">

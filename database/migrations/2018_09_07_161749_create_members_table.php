@@ -25,6 +25,7 @@ class CreateMembersTable extends Migration
             $table->string('weixin_unionid')->default('');
             $table->text('remark')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

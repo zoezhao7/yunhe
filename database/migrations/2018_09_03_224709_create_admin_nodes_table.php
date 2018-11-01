@@ -22,6 +22,7 @@ class CreateAdminNodesTable extends Migration
             $table->tinyInteger('sort')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

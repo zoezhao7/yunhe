@@ -1,6 +1,6 @@
 @extends('store.layouts.store')
 
-{{ $page_name = $member->id ? '编辑客户资料' : '添加客户资料'  }}
+<?php $page_name = $member->id ? '编辑客户资料' : '添加客户资料'; ?>
 
 @section('title', $page_name)
 

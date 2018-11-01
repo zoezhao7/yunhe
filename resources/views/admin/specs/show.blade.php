@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-<?php $page_name = '产品型号详情'; ?>
+<?php $page_name = '产品尺寸详情'; ?>
 
 @section('title', $page_name)
 

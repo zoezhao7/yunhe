@@ -37,7 +37,7 @@
                             <li class="box-label">
                                 <a href="{{ route('admin.employees.index') }}">
                                     所有门店
-                                    <span>{{ $employee_count }}</span>
+                                    <span>{{ $employees->count() }}</span>
                                 </a>
                             </li>
                             <li class="divider"></li>
@@ -45,7 +45,7 @@
                                 <li>
                                     <a href="{{ route('admin.stores.employees', $item->id) }}">
                                         {{ $item->name }}
-                                        <span>{{ $item->employee_count }}</span>
+                                        <span>{{ $item->employees_count }}</span>
                                     </a>
                                 </li>
                             @endforeach
@@ -100,7 +100,7 @@
                                         <td>{{ $employee->idnumber }}</td>
                                         <td>
                                             <a href="{{ route('admin.employees.edit', $employee->id) }}" class="btn btn-xs btn-outline btn-info">编辑</a>
-                                            <form onsubmit="return confirm('确定要删除吗！');" id="delete_form_{{ $employee->id }}" method="post" action="{{ route('admin.employees.destroy', $employee->id) }}" style="display: inline">
+                                            <form  id="delete_form_{{ $employee->id }}" method="post" action="{{ route('admin.employees.destroy', $employee->id) }}" style="display: inline">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button type="submit" class="btn btn-xs btn-outline btn-danger">删除</button>

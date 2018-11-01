@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-{{ $page_name = $admin->id ? '编辑管理员' : '创建管理员'  }}
+<?php $page_name = $admin->id ? '编辑管理员' : '创建管理员'; ?>
 
 @section('title', $page_name)
 
@@ -52,8 +52,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">手机</label>
-                                        <input type="text" class="form-control" name="mobile"
-                                               value="{{ old('mobile', $admin->mobile) }}" placeholder="请输入手机号码">
+                                        <input type="text" class="form-control" name="phone"
+                                               value="{{ old('mobile', $admin->phone) }}" placeholder="请输入手机号码">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">邮箱</label>
@@ -69,7 +69,7 @@
                                                 @if ($admin->id)
                                                     <input id="checkbox{{ $key }}" name="role_ids[]"
                                                            value="{{ $role->id }}" type="checkbox"
-                                                           @if(in_array($role->id, $admin['role_ids'])) checked @endif>
+                                                           @if(!empty($admin['role_ids']) && in_array($role->id, $admin['role_ids'])) checked @endif>
                                                 @else
                                                     <input id="checkbox{{ $role->name . $key }}" name="role_ids[]"
                                                            value="{{ $role->id }}" type="checkbox">

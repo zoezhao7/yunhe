@@ -16,6 +16,7 @@ class CreateSpecsTable extends Migration
             $table->float('discount', 5, 2)->default(0);
             $table->text('content')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

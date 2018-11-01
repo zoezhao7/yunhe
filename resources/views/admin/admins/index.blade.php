@@ -48,13 +48,13 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $admin->user_name }}</td>
                                     <td>{{ $admin->real_name }}</td>
-                                    <td>{{ $admin->mobile }}</td>
+                                    <td>{{ $admin->phone }}</td>
                                     <td>{{ $admin->email }}</td>
                                     <td>{{ $admin->role_names }}</td>
                                     <td>
                                         <a href="{{ route('admin.admins.edit', $admin->id) }}" class="btn btn-sm btn-outline btn-info m-r-10">编辑</a>
 
-                                        <form onsubmit="return confirm('确认删除吗？')" method="post" action="{{ route('admin.admins.destroy', $admin->id) }}" style="display: inline">
+                                        <form  method="post" action="{{ route('admin.admins.destroy', $admin->id) }}" style="display: inline">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <button type="submit"  class="btn btn-sm btn-outline btn-danger">删除</button>

@@ -68,6 +68,7 @@
                         <th>账户积分余额</th>
                         <th>说明</th>
                         <th>操作人</th>
+                        <th>操作时间</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,6 +91,7 @@
                             <td>{{ $coin->account_number }}</td>
                             <td>{{ $coin->remark }}</td>
                             <td>@if($coin->employee_id) 操作人：[{{ $coin->employee_name }}] @else -- @endif</td>
+                            <td>{{ $coin->created_at->format('m-d H:i') }}</td>
                         </tr>
                     @endforeach
                 </table>

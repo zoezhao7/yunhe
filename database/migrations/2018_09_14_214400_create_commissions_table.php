@@ -16,6 +16,7 @@ class CreateCommissionsTable extends Migration
             $table->integer('order_id')->default(0)->content('佣金订单id');
             $table->float('money', 10, 2)->default(0)->conteng('金额');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

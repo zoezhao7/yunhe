@@ -21,45 +21,41 @@ class Role extends Model
         return true;
     }
 
-    /**
-     * 权限验证， 获取角色权限清单
-     * @param $role_id
-     * @return array|mixed
-     */
-    public function getRoleNodes($role_id)
+    // 获取角色权限树
+    public static function getNodeTree()
     {
-        if (!$role_id) {
-            return [];
+        if (!Cache::has('roleNodes')) {
+            Role::cacheNodeTree();
         }
 
-        $key = 'role_' . $role_id . '_nodes';
-
-        if (!Cache::has($key)) {
-            Cache::forever($key, $this->_getNodeArray($role_id));
-        }
-
-        return Cache::get($key);
+        return Cache::get('roleNodes');
     }
 
-    protected function _getNodeArray($role_id)
+    public static function refreshNodeTree()
     {
-        $role = Role::where('id', (int) $role_id)->first();
-        if (!$role) {
-            return [];
-        }
+        Cache::forget('roleNodes');
+        Role::getNodeTree();
+    }
 
-        $node_collect = Node::whereIn('id', $role->node_ids)->select('controller', 'action')->get();
-
-        $nodes = [];
-        foreach ($node_collect as $node) {
-            $actions = explode(',', $node->action);
-            foreach ($actions as $action) {
-                $nodes[] = $node->controller . '.' . $action;
+    public static function cacheNodeTree()
+    {
+        $tree = [];
+        $roles = Role::all();
+        $nodes = Node::all();
+        foreach ($roles as $role) {
+            $tree[$role->id] = [];
+            foreach ($nodes as $node) {
+                if (in_array($node->id, $role->node_ids)) {
+                    $actions = explode(',', $node->action);
+                    foreach ($actions as $action) {
+                        $tree[$role->id][] = strtolower($node->controller . '.' . $action);
+                    }
+                }
             }
         }
-
-        return $nodes;
+        Cache::forever('roleNodes', $tree);
     }
+
 
     public function getNodeIdsAttribute($value)
     {

@@ -30,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
 		\App\Models\Product::observe(\App\Observers\ProductObserver::class);
 		\App\Models\Role::observe(\App\Observers\RoleObserver::class);
 		\App\Models\Admin::observe(\App\Observers\AdminObserver::class);
+        \App\Models\EmployeeRole::observe(\App\Observers\EmployeeRoleObserver::class);
 
         //
     }

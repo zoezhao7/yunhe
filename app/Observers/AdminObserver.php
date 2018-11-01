@@ -14,6 +14,12 @@ class AdminObserver
         if(is_array($admin->role_ids)) {
             $admin->role_ids = json_encode($admin->role_ids);
         }
+    }
 
+    public function deleting(Admin $admin)
+    {
+        if($admin->id == 1) {
+            denied('该用户不允许删除！');
+        }
     }
 }

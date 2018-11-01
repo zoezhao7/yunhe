@@ -45,7 +45,7 @@ class EmployeesController extends Controller
         $employee = \Auth::guard('api')->user();
 
         if( ! $hasher->check($request->password, $employee->getAuthPassword()) ) {
-            return $this->response->errorBadRequest('原密码错误，请检查');
+            return $this->response->errorForbidden('原密码错误，请检查');
         }
 
         $employee->update(['password'=> $hasher->make($request->new_password)]);

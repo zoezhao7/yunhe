@@ -16,7 +16,7 @@
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.welcome') }}">首页</a></li>
                 <li><a href="{{ route('admin.products.index') }}">产品列表</a></li>
-                <li><a href="{{ route('admin.products.specs', $product->id) }}">产品型号列表</a></li>
+                <li><a href="{{ route('admin.products.specs', $product->id) }}">产品尺寸列表</a></li>
                 <li class="active">{{ $page_name }}</li>
             </ol>
         </div>
@@ -68,7 +68,7 @@
                                                         </div>
                                                         <div class="col-sm-1" style="line-height: 32px;text-align: center;padding:0;">：</div>
                                                         <div class="col-sm-6 ol-md-6 m-b-10">
-                                                            <input type="text" class="form-control" id="" name="param_value[]" placeholder="{{ $value }}">
+                                                            <input type="text" class="form-control" id="" name="param_value[]" value="{{ $value }}">
                                                         </div>
                                                     </div>
                                                 @endforeach

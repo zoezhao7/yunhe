@@ -16,6 +16,7 @@ class CreateMemosTable extends Migration
             $table->tinyInteger('status')->default(1)->index();
             $table->datetime('handled_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

@@ -1,8 +1,13 @@
 @extends('store.layouts.store')
 
-<?php $page_name = '产品型号详情'; ?>
+<?php $page_name = '产品尺寸详情'; ?>
 
 @section('title', $page_name)
+
+@section('style')
+    <link href="/admin/plugins/bower_components/custom-select/dist/css/select2.min.css" rel="stylesheet"
+          type="text/css"/>
+@endsection
 
 @section('content')
 
@@ -33,10 +38,10 @@
                             <h2 class="m-b-0 m-t-0">型号ID：{{ $spec->idnumber }}</h2>
                             <small class="text-muted db">{{ $spec->product->name }}</small>
                         </div>
-{{--                        <div class="col-lg-4">
-                            <a href="{{ route('store.specs.stock_orders.create', $spec->id) }}"
-                               class="btn btn-outline btn-info" style="float:right;">备货</a>
-                        </div>--}}
+                        {{--                        <div class="col-lg-4">
+                                                    <a href="{{ route('store.specs.stock_orders.create', $spec->id) }}"
+                                                       class="btn btn-outline btn-info" style="float:right;">备货</a>
+                                                </div>--}}
                     </div>
                     <hr>
                     <div class="row">
@@ -44,13 +49,15 @@
                             <div class="white-box text-center" style="margin-bottom: 0;">
                                 <img src="{{ $spec->product->image }}" class="img-responsive"/>
                             </div>
-                            @foreach($spec->product->colors as $color)
-                                <div style="width:50%;float: left;text-align:center;">
-                                    <img src="{{ $color['path'] }}" width="70%" class="thumbnail img-responsive"
-                                         style="margin:auto;">
-                                    <small>{{ $color['title'] }}</small>
-                                </div>
-                            @endforeach
+                            @if($spec->product->colors)
+                                @foreach($spec->product->colors as $color)
+                                    <div style="width:50%;float: left;text-align:center;">
+                                        <img src="{{ $color['path'] }}" width="70%" class="thumbnail img-responsive"
+                                             style="margin:auto;">
+                                        <small>{{ $color['title'] }}</small>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-6">
                             <h4 class="box-title m-t-40">{{ $spec->product->category->name }}
@@ -73,7 +80,7 @@
                             <hr style="margin-top: 5px;">
                             <div class="table-responsive">
                                 <div class="col-sm-6 col-xs-6">
-                                    <form onsubmit="return form_check(this);" method="POST"
+                                    <form  method="POST"
                                           action="{{ route('store.stock_orders.add_product') }}">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="product_id" value="{{ $spec->product->id }}"/>
@@ -81,18 +88,8 @@
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">轮毂个数：</label>
-                                            <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                                                <span class="input-group-btn input-group-prepend"><button
-                                                            class="btn btn-default btn-outline bootstrap-touchspin-down"
-                                                            type="button">-</button></span>
-                                                <input id="tch3_22" type="text" value="{{ old('number' ) }}"
-                                                       name="number"
-                                                       data-bts-button-down-class="btn btn-default btn-outline"
-                                                       data-bts-button-up-class="btn btn-default btn-outline"
-                                                       class="form-control">
-                                                <span class="input-group-btn input-group-append"><button
-                                                            class="btn btn-default btn-outline bootstrap-touchspin-up"
-                                                            type="button">+</button></span></div>
+                                            <input type="text" value="{{ old('number' ) }}" name="number" required
+                                                   class="form-control">
                                         </div>
 
                                         <div class="form-group">
@@ -104,13 +101,28 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">汽车型号：</label>
+                                            <select class="form-control select2" name="car_vehicle_id" required>
+                                                <option>选择车型</option>
+
+                                                @foreach ($vehicleTree as $brand)
+                                                    <optgroup label="{{ $brand['brand']['name'] }}">
+                                                        @foreach ($brand['vehicles'] as $vehicle)
+                                                            <option value="{{ $vehicle['id'] }}">{{ $vehicle['name'] }}</option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">备注</label>
-                                            <textarea class="form-control" rows="5" name="remark">{{ old('remark' ) }}</textarea>
+                                            <textarea class="form-control" rows="5"
+                                                      name="remark">{{ old('remark' ) }}</textarea>
                                         </div>
 
-                                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">下单
+                                        <button type="submit" class="btn btn-info waves-effect waves-light m-r-10">下单
                                         </button>
                                     </form>
                                 </div>
@@ -148,6 +160,27 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+
+    <script src="/admin/plugins/bower_components/custom-select/dist/js/select2.full.min.js"
+            type="text/javascript"></script>
+    <script>
+        $(function () {
+            // For select 2
+            $(".select2").select2();
+
+            //选中后回调
+            $(".select2").on("change", function (e) {
+                console.log(e.target.value);
+            });
+            //选完之后回去值
+            setTimeout(function () {
+                console.log($(".select2").val());
+            }, 4000);
+        });
+    </script>
 @endsection
 
 

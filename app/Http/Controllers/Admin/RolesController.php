@@ -30,7 +30,7 @@ class RolesController extends Controller
         $role->node_ids = json_encode($request->node_ids);
         $role->save();
 
-        return redirect()->route('admin.roles.index')->with('success', '节点创建成功！');
+        return redirect()->route('admin.roles.index')->with('success', '角色创建成功！');
     }
 
     public function edit(Role $role, Node $node)
@@ -47,7 +47,7 @@ class RolesController extends Controller
         $role->node_ids = json_encode($request->node_ids);
         $role->save();
 
-        return redirect()->route('admin.roles.index')->with('success', '节点更新成功！');
+        return redirect()->route('admin.roles.index')->with('success', '角色更新成功！');
     }
 
     public function destroy(Role $role)
@@ -55,6 +55,6 @@ class RolesController extends Controller
         $this->authorize('destroy', $role);
         $role->delete();
 
-        return redirect()->route('admin.roles.index')->with('success', '节点删除成功！');
+        return redirect()->route('admin.roles.index')->with('success', '角色删除成功！');
     }
 }

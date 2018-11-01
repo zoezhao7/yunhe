@@ -65,13 +65,13 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>门店</th>
-                    <th>销售</th>
                     <th>姓名</th>
+                    <th>门店</th>
+                    <th>一级销售</th>
+                    <th>二级销售</th>
                     <th>手机号</th>
                     <th>账户积分</th>
                     <th>添加时间</th>
-                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,22 +79,21 @@
                 @foreach ($members as $key => $member)
                 <tr>
                     <td>{{ $key+1 }}</td>
-                    <td>{{ $member->store_name }}</td>
-                    <td>{{ $member->employee_name }}</td>
                     <td>{{ $member->name }}</td>
-                    <td>{{ $member->phone }}</td>
+                    <td>{{ $member->store_name }}</td>
+                    <td>@if($member->superior_name){{ $member->superior_name }}@else{{ $member->employee_name }}@endif</td>
+                    <td>@if($member->superior_name){{ $member->employee_name }}@endif</td>
+                    <td>{{ yc_phone($member->phone) }}</td>
                     <td>{{ $member->coin_count }}</td>
                     <td>{{ $member->created_at }}</td>
-                    <td>
-                        <!--
+{{--                    <td>
                         <a href="{{ route('admin.members.edit', $member->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑"><i class="ti-marker-alt"></i></a>
-                        <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('admin.members.destroy', $member->id) }}" style="display: inline">
+                        <form  id="delete_form" method="post" action="{{ route('admin.members.destroy', $member->id) }}" style="display: inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="删除" data-toggle="tooltip"><i class="ti-trash"></i></a>
                         </form>
-                -->
-                    </td>
+                    </td>--}}
                 </tr>
                 @endforeach
                 </tbody>

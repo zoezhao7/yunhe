@@ -22,10 +22,37 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'code' => 'required',
+        ]);
+
+        $verificationKey = 'verificationCode_' . $request->phone;
+        // 验证码失效
+        if (!session()->has($verificationKey)) {
+            return response(['success' => false, 'message' => '验证码已失效，请重新发送']);
+        }
+        // 验证码错误
+        if (!hash_equals((string)session($verificationKey), (string)$request->code)) {
+            return response(['success' => false, 'message' => '验证码错误']);
+        }
+
+        // 登录验证
+        if (\Auth::attempt(['phone' => $request->phone, 'password' => $request->password], true)) {
+            return response(['success' => true, 'message' => '登录成功']);
+        }
+
+        return response(['success' => false, 'message' => '用户名或密码错误']);
+
+    }
+
     // 用户名字段
     public function username()
     {
-        return 'user_name';
+        return 'phone';
     }
 
     // 退出登录事件

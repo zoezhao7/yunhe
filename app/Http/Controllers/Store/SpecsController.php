@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Store;
 
+use App\Models\CarVehicle;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Spec;
 use Illuminate\Http\Request;
@@ -11,10 +13,11 @@ use App\Models\Hub;
 
 class SpecsController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
-		$specs = Spec::recent()->paginate();
-		return view('store.specs.index', compact('specs'));
+		$specs = Spec::with('product.category')->recent()->paginate();
+		$categories = Category::select('id', 'name')->get();
+		return view('store.specs.index', compact('specs', 'request', 'categories'));
 	}
 
 	public function productIndex(Product $product)
@@ -27,7 +30,10 @@ class SpecsController extends Controller
     {
         $manager = \Auth::guard('store')->user();
         $hubs = Hub::where('store_id', $manager->store_id)->where('spec_id', $spec->id)->orderBy('order_id', 'asc')->orderBy('id', 'desc')->get();
-        return view('store.specs.show', compact('spec', 'hubs'));
+
+        $vehicleTree = CarVehicle::getArrayTree();
+
+        return view('store.specs.show', compact('spec', 'hubs', 'vehicleTree'));
     }
 
 	public function create(Spec $spec)

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StockOrderProduct extends Model
 {
 
-    protected $fillable = ['spec_id', 'product_id', 'color', 'number', 'remark'];
+    protected $fillable = ['spec_id', 'product_id', 'car_vehicle_id', 'color', 'number', 'remark'];
 
     public function spec()
     {
@@ -18,4 +18,9 @@ class StockOrderProduct extends Model
     {
         return $this->hasMany(Hub::class);
     }
+    public function carVehicle()
+    {
+        return $this->belongsTo(CarVehicle::class);
+    }
+
 }

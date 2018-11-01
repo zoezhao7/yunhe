@@ -24,8 +24,8 @@ class CreateWeixinUsersTable extends Migration
             $table->string('country')->default('');
             $table->string('headimgurl')->default('');
             $table->string('privilege')->default('');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

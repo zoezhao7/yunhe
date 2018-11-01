@@ -1,6 +1,6 @@
 @extends('store.layouts.store')
 
-{{ $page_name = '修改密码'  }}
+<?php $page_name = '修改密码'; ?>
 
 @section('title', $page_name)
 

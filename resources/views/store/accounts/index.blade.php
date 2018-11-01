@@ -70,7 +70,7 @@
                             <td>{{ $account->remark }}</td>
                             <td>{{ $account->employee->name }}</td>
                             <td>
-                                <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post"
+                                <form  id="delete_form" method="post"
                                       action="{{ route('store.accounts.destroy', $account->id) }}"
                                       style="display: inline">
                                     {{ csrf_field() }}

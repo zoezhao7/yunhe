@@ -76,7 +76,7 @@
                             <div class="u-img"><img src="/admin/plugins/images/users/varun.jpg" alt="user" /></div>
                             <div class="u-text">
                                 <h4>{{ \Auth::user()->real_name }}</h4>
-                                <p class="text-muted">{{ \Auth::user()->user_name }}</p>
+                                <p class="text-muted">{{ \Auth::user()->phone }}</p>
                             </div>
                         </div>
                     </li>

@@ -3,16 +3,17 @@
 namespace App\Models;
 
 use App\Http\Requests\AuthorizationRequest;
+use App\Models\Traits\CheckPermission;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Authenticatable
+class Employee extends UserModel
 {
     use Notifiable;
+    use CheckPermission;
 
     protected $tokenSalt = 'yhyunhe#_lsf';
 
-    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id', 'status'];
+    protected $fillable = ['name', 'phone', 'store_id', 'type', 'password', 'idnumber', 'api_token', 'superior_id', 'status', 'role_ids'];
 
     public static $statusMsg = [
         '1' => ['id' => 1, 'name' => '在职', 'label_class' => 'label-success'],
@@ -23,10 +24,15 @@ class Employee extends Authenticatable
     public static $typeMsg = [
         '2' => ['id' => 2, 'name' => '销售', 'label_class' => 'label-success'],
         '3' => ['id' => 3, 'name' => '渠道', 'label_class' => 'label-warning'],
-        '4' => ['id' => 4, 'name' => '客服', 'label_class' => 'label-primary'],
-        '5' => ['id' => 5, 'name' => '技术', 'label_class' => 'label-info'],
         '1' => ['id' => 1, 'name' => '店长', 'label_class' => 'label-danger'],
     ];
+
+    //判断是否是店长
+    public function isSuperAdmin()
+    {
+        // 角色是店长并且在职
+        return $this->type == 1 && $this->status == 1;
+    }
 
     // 下级
     public function subordinates()
@@ -112,11 +118,6 @@ class Employee extends Authenticatable
         return $value ? $value : $this->defaultAvatar();
     }
 
-    public function isSuperAdmin()
-    {
-        return false;
-    }
-
     public function defaultAvatar()
     {
         return config('app.url') . '/member/images/avatar_pic.jpg';
@@ -137,5 +138,21 @@ class Employee extends Authenticatable
     public function membersCount()
     {
         return $this->members()->count() + 20;
+    }
+
+    // 获取用户的权限节点清单
+    public function getNodes()
+    {
+        $role_ids = $this->role_ids;
+        $roleNodeTree = EmployeeRole::getNodeTree();
+        $nodes = [];
+
+        foreach ($role_ids as $role_id) {
+            if (isset($roleNodeTree[$role_id])) {
+                $nodes = array_merge($nodes, $roleNodeTree[$role_id]);
+            }
+        }
+
+        return array_unique($nodes);
     }
 }

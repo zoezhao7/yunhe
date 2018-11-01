@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'intro', 'content', 'discount', 'image', 'sales', 'is_sale', 'category_id'];
+    protected $fillable = ['name', 'intro', 'content', 'discount', 'image', 'sales', 'is_sale', 'category_id', 'colors', 'fit_brands'];
 
     public function category()
     {
@@ -16,19 +16,19 @@ class Product extends Model
         return $this->hasMany(Spec::class);
     }
 
-    public function orders()
+    public function orderProducts()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasManyThrough(OrderProduct::class, Spec::class);
     }
 
-    public function stockOrders()
+    public function stockOrderProducts()
     {
-        return $this->hasMany(StockOrder::class);
+        return $this->hasMany(StockOrderProduct::class, Spec::class);
     }
 
     public function hasOrder()
     {
-        return $this->orders()->count() > 0 || $this->stockOrders()->count() > 0;
+        return $this->orderProducts()->count() > 0 || $this->stockOrderProducts()->count() > 0;
     }
 
     protected function getColorsAttribute($value)
@@ -48,5 +48,6 @@ class Product extends Model
 
         return json_decode($value, true);
     }
+
 
 }

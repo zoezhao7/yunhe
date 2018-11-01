@@ -18,13 +18,15 @@ class CreateEmployeesTable extends Migration
             $table->string('intro')->default('')->content('个人介绍');
             $table->string('avatar')->default('')->content('头像');
             $table->tinyInteger('star')->default(5)->content('星级');
-            $table->tinyInteger('type')->unsigned()->default(2)->content('1店长2员工3渠道');
+            $table->tinyInteger('type')->unsigned()->default(2)->content('1店长2员工3渠道4客服5技术');
             $table->string('password')->default('');
             $table->string('api_token', 100)->index()->default('');
             $table->integer('notification_count')->unsigned()->default(0)->content('通知消息数');
-            $table->tinyInteger('status')->unsigned()->default(1)->index()->content('1在职2离职');
+            $table->tinyInteger('status')->unsigned()->default(1)->index()->content('1在职2离职3兼职');
+            $table->string('role_ids')->default('')->content('角色清单');
             $table->string('remember_token', 100)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

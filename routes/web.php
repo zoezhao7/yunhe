@@ -6,17 +6,23 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
     Route::post('store/login', 'LoginController@login')->name('store.login.post');
 
     Route::middleware(['auth.store'])->group(function () {
+        Route::get('store/welcome', 'WelcomeController@index')->name('store.welcome');
         #退出登录
         Route::post('store/logout', 'LoginController@logout')->name('store.logout');
-        #欢迎页
-        Route::get('store/welcome', 'WelcomeController@index')->name('store.welcome');
+    });
+
+    Route::middleware(['auth.store', 'store.permission'])->group(function () {
         #产品管理
         Route::get('store/products/{product}/specs', 'SpecsController@productIndex')->name('store.products.specs');
         Route::get('store/specs/{spec}', 'SpecsController@show')->name('store.specs.show');
+        Route::get('store/specs/', 'SpecsController@index')->name('store.specs.index');
         Route::get('store/products', 'ProductsController@index')->name('store.products.index');
         Route::get('store/products/{product}', 'ProductsController@show')->name('store.products.show');
         #员工管理
         Route::resource('store/employees', 'EmployeesController', ['as' => 'store']);
+        #权限管理
+        Route::resource('store/nodes', 'NodesController', ['as' => 'store']);
+        Route::resource('store/roles', 'RolesController', ['as' => 'store']);
         #积分
         Route::get('store/members/{member}/coins/create', 'CoinsController@memberCreate')->name('store.members.coins.create');
         Route::post('store/members/{member}/coins', 'CoinsController@memberStore')->name('store.members.coins.store');
@@ -44,6 +50,7 @@ Route::namespace('Store')->middleware(['clean.form'])->group(function () {
         Route::resource('store/accounts', 'AccountsController', ['only' => ['index', 'create', 'store', 'destroy'], 'as' => 'store']);
         #佣金记录
         Route::resource('store/commissions', 'CommissionsController', ['only' => ['index'], 'as' => 'store']);
+        Route::get('store/commissions/make', 'CommissionsController@makeCommissions')->name('store.commissions.make');
         #我的
         Route::get('store/my/password', 'MyController@passwordEdit')->name('store.my.passwordEdit');
         Route::put('store/my/password', 'MyController@passwordUpdate')->name('store.my.passwordUpdate');
@@ -70,7 +77,7 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
         #产品
         Route::resource('admin/categories', 'CategoriesController', ['as' => 'admin']);
         Route::resource('admin/products', 'ProductsController', ['as' => 'admin']);
-        #产品型号
+        #产品尺寸
         Route::get('admin/products/{product}/specs', 'SpecsController@productIndex')->name('admin.products.specs');
         Route::get('admin/products/{product}/specs/create', 'SpecsController@create')->name('admin.products.specs.create');
         Route::resource('admin/specs', 'SpecsController', ['as' => 'admin', 'only' => ['index', 'show', 'edit', 'update', 'store', 'destroy']]);
@@ -93,6 +100,9 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
         #轮毂
         Route::post('admin/stock_orders/hubs', 'HubsController@stockOrderStore')->name('admin.stock_orders.hubs.store');
         Route::resource('admin/hubs', 'HubsController', ['as' => 'admin']);
+        #佣金规则
+        Route::get('admin/commission_rules/edit', 'CommissionRulesController@edit')->name('admin.commission_rules.edit');
+        Route::put('admin/commission_rules', 'CommissionRulesController@update')->name('admin.commission_rules.update');
     });
 
 });

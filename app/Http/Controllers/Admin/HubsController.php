@@ -15,17 +15,16 @@ class HubsController extends Controller
 
     public function index(Request $request)
     {
-
         $query = Hub::query()->orderBy('id', 'desc');
 
-        if($request->has('sn') && $request->sn) {
-            $query->where('sn', (string) $request->sn);
+        if ($request->has('sn') && $request->sn) {
+            $query->where('sn', (string)$request->sn);
         }
-        if($request->has('store_id') && $request->store_id) {
-            $query->where('store_id', (int) $request->store_id);
+        if ($request->has('store_id') && $request->store_id) {
+            $query->where('store_id', (int)$request->store_id);
         }
-        if($request->has('status') && $request->status) {
-            $query->where('status', (int) $request->status);
+        if ($request->has('status') && $request->status) {
+            $query->where('status', (int)$request->status);
         }
 
         $hubs = $query->paginate();
@@ -39,15 +38,19 @@ class HubsController extends Controller
     public function stockOrderStore(HubBatchRequest $request, Hub $hub)
     {
         $validator = Validator::make($request->all(), [
-            'sns.*' => 'required|alpha_num|between:15,20',
+            'sns.*' => 'required|alpha_dash',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        if (count($request->sns) != count(array_unique($request->sns))) {
+            return redirect()->back()->with('danger', '上传的sn重复，请检查')->withInput();
+        }
+
         $existing_sns = Hub::whereIn('sn', $request->sns)->pluck('sn')->toArray();
-        if(!empty($existing_sns)) {
+        if (!empty($existing_sns)) {
             $sns_str = implode(',', $existing_sns);
             return redirect()->back()->with('danger', 'sn码为[' . $sns_str . ']的轮毂已经存在，请核实！');
         }
@@ -55,13 +58,12 @@ class HubsController extends Controller
         // 删除旧的订单产品绑定的轮毂sn
         Hub::where('stock_order_product_id', $request->stock_order_product_id)->delete();
 
-
         $stockOrderProduct = StockOrderProduct::where('id', $request->stock_order_product_id)->first();
         $hub->stock_order_product_id = $request->stock_order_product_id;
         $hub->stock_order_id = $stockOrderProduct->stock_order_id;
         $hub->color = $stockOrderProduct->color;
-        foreach($request->sns as $hub_sn) {
-            if(!$hub_sn) {
+        foreach ($request->sns as $hub_sn) {
+            if (!$hub_sn) {
                 continue;
             }
             $hubs[] = [
@@ -74,12 +76,10 @@ class HubsController extends Controller
             ];
         }
 
-
-        if(!empty($hubs) && Hub::insert($hubs)){
-          return redirect()->back()->with('success', 'sn码添加成功！');
+        if (!empty($hubs) && Hub::insert($hubs)) {
+            return redirect()->back()->with('success', 'sn码添加成功！');
         }
         return redirect()->back()->with('danger', 'sn码添加失败，请重新尝试！');
-
     }
 
     public function store()

@@ -7,6 +7,9 @@ namespace App\Observers;
 
 class NodeObserver
 {
-
+    public function saved(Node $node)
+    {
+        Role::refreshNodeTree();
+    }
 
 }

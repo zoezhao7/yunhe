@@ -7,12 +7,13 @@
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品列表</h4> </div>
+            <h4 class="page-title">产品列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
-            <a href="{{ route('admin.products.create') }}" class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品</a>
+            <a href="{{ route('admin.products.create') }}"
+               class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品</a>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.welcome') }}">首页</a></li>
@@ -41,7 +42,8 @@
                         <select class="form-control" name="category_id">
                             <option value="">产品系列</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" @if($request->category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}"
+                                        @if($request->category_id == $category->id) selected @endif>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -60,7 +62,7 @@
                         <th>系列</th>
                         <th>名称</th>
                         <th width="20%">型号尺寸</th>
-                        <th width="25%">简介</th>
+                        <th width="25%">适配品牌</th>
                         <th>在售/下架</th>
                         <th>上架时间</th>
                         <th>操作</th>
@@ -69,32 +71,42 @@
                     <tbody>
 
                     @foreach ($products as $key => $product)
-                    <tr>
-                        <td>{{ $key+1 }}</td>
-                        <td> @if ($product->image) <img src="{{ $product->image }}" alt="iMac" width="50"> @endif </td>
-                        <td> <span class="label label-success font-weight-100">{{ $product->category->name }}</span> </td>
-                        <td><a href="{{ route('admin.products.specs', $product->id) }}">{{ $product->name }}</a></td>
-                        <td style="line-height:28px;">
-                            @foreach ($product->specs as $key=>$spec)
-                                <a href="{{ route('admin.specs.show', $spec->id) }}">
-                                    <span class="label label-info">{{ $spec->size }}</span>
-                                </a>
-                            @endforeach
-                        </td>
-                        <td>{{ $product->intro }}</td>
-                        <td>@if($product->is_sale == 1) <span class="label label-success">在售</span> @else <span class="label label-danger">下架</span> @endif</td>
-                        <td>{{ $product->created_at ? $product->created_at->format('m/d H:i') : '' }}</td>
-                        <td>
-                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-xs btn-outline btn-info">编辑</a>
-                            <form onsubmit="return confirm('确定要删除吗！');" id="delete_form_{{ $product->id }}"
-                                  method="post" action="{{ route('admin.products.destroy', $product->id) }}"
-                                  style="display: inline">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-xs btn-outline btn-danger">删除</button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $key+1 }}</td>
+                            <td> @if ($product->image) <img src="{{ $product->image }}" alt="" width="50"> @endif </td>
+                            <td><span class="label label-success font-weight-100">{{ $product->category->name }}</span>
+                            </td>
+                            <td><a href="{{ route('admin.products.specs', $product->id) }}">{{ $product->name }}</a>
+                            </td>
+                            <td style="line-height:28px;">
+                                @foreach ($product->specs as $key=>$spec)
+                                    <a href="{{ route('admin.specs.show', $spec->id) }}">
+                                        <span class="label label-info">{{ $spec->size }}</span>
+                                    </a>
+                                @endforeach
+                            </td>
+                            <td style="line-height:28px;">
+                                @if(is_array($product->fit_brands))
+                                    @foreach ($product->fit_brands as $key=>$brand)
+                                        <span class="label label-warning">{{ $brand }}</span>
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td>@if($product->is_sale == 1) <span class="label label-success">在售</span> @else <span
+                                        class="label label-danger">下架</span> @endif</td>
+                            <td>{{ $product->created_at ? $product->created_at->format('m/d H:i') : '' }}</td>
+                            <td>
+                                <a href="{{ route('admin.products.edit', $product->id) }}"
+                                   class="btn btn-xs btn-outline btn-info">编辑</a>
+                                <form id="delete_form_{{ $product->id }}"
+                                      method="post" action="{{ route('admin.products.destroy', $product->id) }}"
+                                      style="display: inline">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    <button type="submit" class="btn btn-xs btn-outline btn-danger">删除</button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>

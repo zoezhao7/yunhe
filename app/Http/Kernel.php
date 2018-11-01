@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\AuthApiMiddleware;
+use App\Http\Middleware\Cors;
 use App\Http\Middleware\EnableCrossRequestMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'auth.store' => \App\Http\Middleware\AuthStoreMiddleware::class,
         'auth.api' => \App\Http\Middleware\AuthApiMiddleware::class,
         'auth.member' => \App\Http\Middleware\AuthMemberMiddleware::class,
+        'store.permission' => \App\Http\Middleware\StorePermission::class,
     ];
 }

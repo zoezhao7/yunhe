@@ -23,8 +23,12 @@ class EmployeeObserver
     public function saving(Employee $employee)
     {
         $employee->letter = strtoupper(substr(pinyin_abbr($employee->name), 0, 1));
-        if ($employee->superior_id > 0 && $employee->type == 2) {
-            $employee->type = 3;
+        if ($employee->type == 2) {
+            $employee->superior_id = 0;
+        }
+
+        if(is_array($employee->role_ids)) {
+            $employee->role_ids = json_encode($employee->role_ids);
         }
 
         // 名下有客户的员工禁止调整为离职状态
@@ -37,7 +41,6 @@ class EmployeeObserver
 
     public function saved(Employee $employee)
     {
-        Store::find($employee->store_id)->increment('employee_count');
     }
 
     public function deleting(Employee $employee)
@@ -49,6 +52,5 @@ class EmployeeObserver
 
     public function deleted(Employee $employee)
     {
-        Store::find($employee->store_id)->decrement('employee_count');
     }
 }

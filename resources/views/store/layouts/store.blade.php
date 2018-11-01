@@ -56,13 +56,34 @@
 @yield('script')
 
 <script>
-    function form_check(domm) {
-        $(domm).block({
+    $("form").submit(function (e) {
+        if ($(this).attr('onsubmit') !== undefined) {
+            return true;
+        }
+
+        var inputs = $(this).serialize();
+        if (inputs.indexOf('_method=DELETE') != -1) {
+            if (!confirm("确定要删除吗？")) {
+                return false;
+            }
+        }
+
+        $.blockUI({
             message: '<h4><img src="/admin/plugins/images/busy.gif" /> 提交中...</h4>',
             css: {border: '1px solid #fff'}
         });
+
         return true;
-    }
+    });
+
+    $(document).ajaxStart(function () {
+        $.blockUI({
+            message: '<h4><img src="/admin/plugins/images/busy.gif" /> 提交中...</h4>',
+            css: {border: '1px solid #fff'}
+        });
+    }).ajaxStop(function () {
+        $.unblockUI();
+    });
 </script>
 
 </body>

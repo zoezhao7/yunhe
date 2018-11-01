@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-{{ $page_name = $store->id ? '编辑门店' : '添加门店'  }}
+<?php $page_name = $store->id ? '编辑门店' : '添加门店'; ?>
 
 @section('title', $page_name)
 

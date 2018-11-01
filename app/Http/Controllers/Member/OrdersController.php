@@ -12,7 +12,7 @@ class OrdersController extends Controller
     {
         $member = \Auth::guard('member')->user();
 
-        $orders = $member->orders()->recent()->where('status', 1)->get();
+        $orders = $member->orders()->with('orderProducts.spec.product.category')->recent()->where('status', 1)->get();
 
         return view('member.orders.index', compact('orders'));
     }

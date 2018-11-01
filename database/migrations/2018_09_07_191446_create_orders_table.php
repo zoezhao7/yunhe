@@ -13,8 +13,6 @@ class CreateOrdersTable extends Migration
             $table->integer('employee_id')->index();
             $table->integer('member_id')->index();
             $table->integer('car_id')->index();
-            $table->integer('product_id')->index();
-            $table->integer('spec_id')->index();
             $table->text('parameters')->nullable()->content('交易参数（颜色 json）');
             $table->float('price', 10, 2)->default(0)->content('市场价格');
             $table->float('discount', 3, 2)->default(0)->content('交易折扣');
@@ -24,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->text('remark')->nullable()->content('备注');
             $table->integer('status')->default(0)->content('0待审核1审核通过2审核失败');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

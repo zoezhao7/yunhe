@@ -1,24 +1,24 @@
 @extends('admin.layouts.admin')
 
-@section('title', '产品型号列表')
+@section('title', '产品尺寸列表')
 
 @section('content')
 
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品型号列表</h4></div>
+            <h4 class="page-title">产品尺寸列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 
             <a href="{{ route('admin.products.specs.create', $product->id) }}"
-               class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品型号</a>
+               class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">添加产品尺寸</a>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.welcome') }}">首页</a></li>
                 <li><a href="{{ route('admin.products.index') }}">产品列表</a></li>
-                <li class="active">产品型号列表</li>
+                <li class="active">产品尺寸列表</li>
             </ol>
         </div>
         <!-- /.breadcrumb -->
@@ -65,7 +65,7 @@
                                         </td>
                                         <td align="center">
                                             <a href="{{ route('admin.specs.edit', $spec->id) }}" class="btn btn-xs btn-outline btn-info">编辑</a>
-                                            <form onsubmit="return confirm('确定要删除吗！');" id="delete_form_{{ $spec->id }}"
+                                            <form  id="delete_form_{{ $spec->id }}"
                                                   method="post" action="{{ route('admin.specs.destroy', $spec->id) }}"
                                                   style="display: inline">
                                                 {{ csrf_field() }}

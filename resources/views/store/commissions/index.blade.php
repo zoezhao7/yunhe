@@ -9,6 +9,7 @@
             <h4 class="page-title">佣金记录</h4>
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <a href="{{ route('store.commissions.make') }}" class="btn btn-info pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">生成本月佣金记录</a>
             <ol class="breadcrumb">
                 <li><a href="{{ route('store.welcome') }}">首页</a></li>
                 <li class="active">佣金记录</li>

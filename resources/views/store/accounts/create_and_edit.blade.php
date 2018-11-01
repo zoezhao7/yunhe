@@ -38,7 +38,7 @@
                               enctype="multipart/form-data">
                             {{ method_field('PUT') }}
                             @else
-                                <form onsubmit="return form_check(this);" method="POST" action="{{ route('store.accounts.store') }}">
+                                <form  method="POST" action="{{ route('store.accounts.store') }}">
                                     @endif
                                     {{ csrf_field() }}
 

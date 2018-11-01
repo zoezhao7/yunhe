@@ -11,7 +11,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('category_id')->index()->unsigned();
             $table->string('name')->index();
-            $table->string('intro')->index();
+            $table->string('intro')->index()->default('');
             $table->text('fit_brands')->nullable()->content('适配的品牌，json');
             $table->text('colors')->nullable()->content('色彩图,名称 json');
             $table->text('content')->nullable()->content('产品详情');
@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('is_sale')->unsigned()->default(0)->content('在售状态');
             $table->float('discount')->default(0)->content('折扣');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

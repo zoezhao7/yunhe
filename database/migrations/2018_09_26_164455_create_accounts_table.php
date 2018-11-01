@@ -19,6 +19,7 @@ class CreateAccountsTable extends Migration
             $table->datetime('operated_at')->nullable()->content('发生时间');
             $table->text('remark')->nullable()->content('备注');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

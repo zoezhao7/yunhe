@@ -6,6 +6,12 @@ class Commission extends Model
 {
     protected $fillable = ['employee_id', 'type', 'suboardinate_id', 'order_id', 'money'];
 
+
+    /**
+     * 计算佣金
+     * @param $month
+     * @param Employee $employee
+     */
     public static function calculate($month, Employee $employee)
     {
         $start = $month . '-01';
@@ -18,11 +24,13 @@ class Commission extends Model
             ->get();
 
         $order_count = count($orders);
-        $order_sum = $orders->sum('money');
 
-        $store = Store::find($employee->store_id);
-        $sale_rate = $store->getSaleRate($order_count);
-        $subordinate_rate = $store->subordinate_rate;
+        $commissionRule = CommissionRule::first();
+        $sale_rate = $commissionRule->getSaleRate($order_count);
+        $subordinate_rate = $commissionRule->subordinate_rate;
+
+        //删除已存在的佣金记录
+        Commission::where('month', $month)->delete();
 
         // 订单佣金
         foreach($orders as $order) {

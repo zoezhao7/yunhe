@@ -7,7 +7,7 @@
     <div class="row bg-title">
         <!-- .page title -->
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">产品型号列表</h4></div>
+            <h4 class="page-title">产品尺寸列表</h4></div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -15,7 +15,7 @@
             <ol class="breadcrumb">
                 <li><a href="{{ route('store.welcome') }}">首页</a></li>
                 <li><a href="{{ route('store.products.index') }}">产品列表</a></li>
-                <li class="active">产品型号列表</li>
+                <li class="active">产品尺寸列表</li>
             </ol>
         </div>
         <!-- /.breadcrumb -->

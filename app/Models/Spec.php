@@ -21,19 +21,19 @@ class Spec extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function orders()
+    public function orderProducts()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderProduct::class);
     }
 
-    public function stockOrders()
+    public function stockOrderProducts()
     {
-        return $this->hasMany(StockOrder::class);
+        return $this->hasMany(StockOrderProduct::class);
     }
 
     public function hasOrder()
     {
-        return $this->orders()->count() > 0 || $this->stockOrders()->count() > 0;
+        return $this->orderProducts()->count() > 0 || $this->stockOrderProducts()->count() > 0;
     }
 
     protected function getContentAttribute($value)
@@ -43,11 +43,6 @@ class Spec extends Model
         }
 
         return json_decode($value, true);
-    }
-
-    public function orderProducts()
-    {
-        return $this->hasMany(OrderProduct::class);
     }
 
 }

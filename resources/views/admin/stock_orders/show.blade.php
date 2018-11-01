@@ -150,7 +150,7 @@
                         <tr>
                             <td class="font-500" align="right"><strong>总计：</strong></td>
                             <td class="font-500" align="center"><strong>{{ $number_count }}</strong></td>
-                            <td colspan="5"></td>
+                            <td colspan="6"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -171,7 +171,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">发货单</h4></div>
                     <div class="modal-body">
-                        <form onsubmit="return form_check(this);" id="delivery_form"
+                        <form  id="delivery_form"
                               action="{{ route('admin.stock_orders.delivery', $stockOrder->id) }}"
                               method="post">
                             {{ csrf_field() }}
@@ -208,7 +208,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">填写轮毂SN码</h4></div>
                     <div class="modal-body">
-                        <form onsubmit="return form_check(this);" id="delivery_form"
+                        <form  id="delivery_form"
                               action="{{ route('admin.stock_orders.hubs.store') }}"
                               method="post">
                             {{ csrf_field() }}

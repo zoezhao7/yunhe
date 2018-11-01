@@ -27,7 +27,16 @@ class StockOrderProductRequest extends FormRequest
             'product_id' => 'int',
             'spec_id' => 'required|int',
             'color' => 'required|string',
-            'number' => 'required|int',
+            'number' => [
+                'required',
+                'int',
+                function ($attribute, $value, $fail) {
+                    if($value <= 0) {
+                        return $fail('轮毂备货数量必须大于0！');
+                    }
+                }
+            ],
+            'car_vehicle_id' => 'required|integer',
             'remark' => 'string',
         ];
     }

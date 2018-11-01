@@ -14,6 +14,7 @@ class WelcomeController extends Controller
     {
 
         $manager = \Auth::guard('store')->user();
+
         $store = $manager->store;
 
         $productCount = Product::all()->count();

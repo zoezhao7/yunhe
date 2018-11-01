@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class checkPermission
+class CheckPermission
 {
     /**
      * Handle an incoming request.
@@ -18,13 +18,11 @@ class checkPermission
     {
         $admin = Auth::user();
 
-        if (!$admin->isSuperAdmin() && !in_array(getControllerActionName(), $admin->getNodes())) {
-
+        if (!$admin->checkPermission(getControllerActionName())) {
             if ($request->expectsJson()) {
                 return response('Unauthorized', 403);
             } else {
-                echo "<script type='text/javascript'>alert('您没有权限！'); window.history.back();</script>";
-                exit;
+                denied();
             }
         }
 

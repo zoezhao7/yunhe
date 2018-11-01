@@ -10,8 +10,6 @@ use App\Models\Hub;
 
 class OrdersController extends Controller
 {
-
-
     public function index(Request $request)
     {
         $manager = \Auth::guard('store')->user();

@@ -51,7 +51,7 @@
                         <i data-icon="v" class="mdi mdi-home fa-fw"></i>
                         <span class="hide-menu">门店管理
                             <span class="fa arrow"></span>
-                            <span class="label label-rouded label-purple pull-right">2</span>
+                            <span class="label label-rouded label-purple pull-right">3</span>
                         </span>
                     </a>
                     <ul class="nav nav-second-level">
@@ -66,6 +66,14 @@
                                 <a href="{{ route('admin.employees.index') }}">
                                     <i class="icon-people"></i>
                                     <span class="hide-menu">员工管理</span>
+                                </a>
+                            </li>
+                        @endif
+                        @if (\Auth::user()->checkPermission('commission_rules.edit'))
+                            <li class="@if(request()->route()->named('admin.commission_rules.edit')) active @endif">
+                                <a href="{{ route('admin.commission_rules.edit') }}">
+                                    <i class="mdi mdi-cash-multiple"></i>
+                                    <span class="hide-menu">佣金规则</span>
                                 </a>
                             </li>
                         @endif

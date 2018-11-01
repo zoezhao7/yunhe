@@ -28,17 +28,14 @@
                 <form>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <input type="text" class="form-control" id="" name="spec_idnumber"
-                               value="{{ $request->spec_idnumber }}" placeholder="产品型号ID">
-                    </div>
-                    <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
-                        <input type="text" class="form-control" id="" name="spec_name"
-                               value="{{ $request->spec_name }}" placeholder="产品名称">
+                               value="{{ $request->spec_idnumber }}" placeholder="CID">
                     </div>
                     <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-10">
                         <select class="form-control" name="category_id">
                             <option value="">产品系列</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" @if($request->category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}"
+                                        @if($request->category_id == $category->id) selected @endif>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -55,11 +52,8 @@
                         <th>#</th>
                         <th>CID</th>
                         <th>系列</th>
-                        <th>图片</th>
-                        <th>系列/产品名称</th>
                         <th>尺寸</th>
-                        <th width="20%">参数</th>
-                        <th width="20%">简介</th>
+                        <th width="45%">参数</th>
                         <th>上架日期</th>
                     </tr>
                     </thead>
@@ -68,20 +62,11 @@
                     @foreach ($specs as $key => $spec)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $spec->idnumber }}</td>
-                            <td><span class="label label-success font-weight-100">{{ $spec->category->name }}</span>
-                            <td> @if ($spec->product->image) <img src="{{ $spec->product->image }}" alt="" width="50"> @endif
-                            </td>
-                            <td><span class="label label-success font-weight-100">{{ $spec->category->name }}</span>
-                            </td>
-                            <td><a href="{{ route('store.specs.specs', $spec->id) }}">{{ $spec->name }}</a>
-                            </td>
-                            <td style="line-height: 28px;">
-                                @foreach ($spec->specs as $key=>$spec)
-                                    <a href="{{ route('store.specs.show', $spec->id) }}"><span class="label label-info">{{ $spec->size }}</span></a>
-                                @endforeach
-                            </td>
-                            <td>{{ $spec->intro }}</td>
+                            <td><a href="{{ route('store.specs.show2', $spec->id) }}">{{ $spec->idnumber }}</a></td>
+                            <td><span class="label label-success font-weight-100">{{ $spec->product->category->name }}</span>
+                            <td>{{ $spec->size }}</td>
+                            <td style="line-height: 28px;">@foreach($spec->content as $key=>$content)
+                            <span class="label label-info">{{ $key }}：{{ $content }}</span>@endforeach</td>
                             <td>@if($spec->created_at) {{ $spec->created_at->format('Y-m-d') }} @endif</td>
                         </tr>
                     @endforeach

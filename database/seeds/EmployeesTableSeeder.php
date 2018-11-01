@@ -21,11 +21,6 @@ class EmployeesTableSeeder extends Seeder
 
         foreach($employees as $employee) {
             $stores[$employee->store_id]['id'] = $employee->store_id;
-            if(isset($stores[$employee->store_id]['employee_count'])) {
-                $stores[$employee->store_id]['employee_count']++;
-            } else {
-                $stores[$employee->store_id]['employee_count'] = 0;
-            }
         }
 
 

@@ -24,10 +24,9 @@ class EmployeesController extends Controller
             $employees = Employee::recent()->paginate();
         }
 
-		$employee_count = Employee::count();
-		$stores = Store::all();
+		$stores = Store::withCount('employees')->get();
 
-		return view('admin.employees.index', compact('employees', 'stores', 'employee_count', 'store'));
+		return view('admin.employees.index', compact('employees', 'stores', 'store'));
 	}
 
 	public function storeIndex(Request $request, Store $store)
@@ -38,10 +37,10 @@ class EmployeesController extends Controller
         } else {
             $employees = $store->employees()->recent()->paginate();
         }
+        
+        $stores = Store::withCount('employees')->get();
 
-        $employee_count = Employee::count();
-        $stores = Store::all();
-        return view('admin.employees.index', compact('employees', 'stores', 'employee_count', 'store'));
+        return view('admin.employees.index', compact('employees', 'stores', 'store'));
     }
 
     public function show(Employee $employee)
@@ -82,6 +81,7 @@ class EmployeesController extends Controller
         if($request->has('password') && $request->password) {
             $data['password'] = Hash::make($request->password);
         }
+
         $employee->update($data);
 
 		return redirect()->back()->with('success', '员工编辑成功！');

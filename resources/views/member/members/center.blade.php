@@ -30,20 +30,26 @@
             </a>
 
             @if($order)
-                <div class="content flex bor_b">
-                    <div class="img">
-                        <img src="{{ $order->product->image }}" alt="{{ $order->product->name }}">
+                @foreach($order->orderProducts as $orderProduct)
+                    <div class="content flex bor_b">
+                        <div class="img">
+                            <img src="{{ $orderProduct->spec->product->image }}"
+                                 alt="{{ $orderProduct->spec->product->name }}">
+                        </div>
+                        <div class="name_box">
+                            <div class="name">{{ $orderProduct->spec->product->category->name }} {{ $orderProduct->spec->product->name }}</div>
+                            <p>{{ $orderProduct->spec->size }} | {{ $orderProduct->color }}</p>
+                        </div>
+                        <div class="money">
+                            <b>×{{ $orderProduct->number }}</b>
+                        </div>
                     </div>
-                    <div class="name_box">
-                        <div class="name">{{ $order->product->category->name }} {{ $order->product->name }}</div>
-                        <p>{{ $order->parameters }}</p>
-                    </div>
-                    <div class="money">
-                        <p>￥{{ $order->money }}</p>
-                        <b>&nbsp;×4</b>
-                    </div>
+                @endforeach
+                <div class="time">
+                    <div style="float:left;">{{ date('Y-m-d', strtotime($order->dealt_at)) }}</div>
+                    <h3 style="float:right;">￥{{ $order->money }}</h3>
+                    <div style="clear: both;"></div>
                 </div>
-                <div class="time">{{ date('Y-m-d', strtotime($order->dealt_at)) }}</div>
             @else
                 <div class="content">
                     <p style="text-align:center;font-size: 14px;color: #aaa;">暂无订单</p>

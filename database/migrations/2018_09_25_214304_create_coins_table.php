@@ -17,6 +17,7 @@ class CreateCoinsTable extends Migration
             $table->integer('account_number')->unsigned()->content('账户余额');
             $table->string('remark')->content('备注');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

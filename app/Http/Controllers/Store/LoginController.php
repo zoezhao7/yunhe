@@ -30,7 +30,7 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $authData = ['phone' => $request->phone, 'password' => $request->password, 'type' => 1];
+        $authData = ['phone' => $request->phone, 'password' => $request->password];
         return $this->guard()->attempt($authData, $request->filled('remember'));
     }
 

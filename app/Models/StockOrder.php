@@ -43,4 +43,5 @@ class StockOrder extends Model
     {
         return $this->hasMany(StockOrderProduct::class);
     }
+
 }

@@ -3,36 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Traits\CheckPermission;
 
-class Admin extends Authenticatable
+class Admin extends UserModel
 {
     use Notifiable;
+    use CheckPermission;
 
-    protected $fillable = ['user_name', 'password', 'mobile', 'email', 'real_name', 'role_ids',];
+    protected $fillable = ['user_name', 'password', 'phone', 'email', 'real_name', 'role_ids',];
 
     public function isSuperAdmin()
     {
         return in_array(app(Role::class)->superAdminRoleId, $this->role_ids);
-    }
-
-    // 获取用户的权限节点清单
-    public function getNodes()
-    {
-        $role = app(Role::class);
-
-        $nodes = [];
-
-        foreach ($this->role_ids as $role_id) {
-            $nodes = array_merge($nodes, $role->getRoleNodes($role_id));
-        }
-
-        return array_unique($nodes);
-    }
-
-    public function getRoleIdsAttribute($value)
-    {
-        return is_array($value) ? $value : json_decode($value);
     }
 
     public function scopeRecent($query)
@@ -48,19 +30,6 @@ class Admin extends Authenticatable
     public function orderTasks()
     {
         return StockOrder::with('store', 'employee')->where('status', 0)->recent()->get();
-    }
-
-    public function checkPermission($actionName)
-    {
-        if ($this->isSuperAdmin()) {
-            return true;
-        }
-
-        if ($actionName && in_array((string)$actionName, $this->getNodes())) {
-            return true;
-        }
-
-        return false;
     }
 
 }

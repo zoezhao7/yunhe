@@ -36,6 +36,7 @@ class SpecsController extends Controller
 
     public function create(Spec $spec, Product $product)
     {
+
         return view('admin.specs.create_and_edit', compact('spec', 'product'));
     }
 
@@ -45,13 +46,15 @@ class SpecsController extends Controller
 
         if (!empty($data['param_key'])) {
             foreach ($data['param_key'] as $key => $value) {
-                $content[$value] = isset($data['param_value'][$key]) ? $data['param_value'][$key] : '';
+                if($value) {
+                    $content[$value] = isset($data['param_value'][$key]) ? $data['param_value'][$key] : '';
+                }
             }
             $data['content'] = json_encode($content);
         }
 
         Spec::create($data);
-        return redirect()->route('admin.products.specs', $data['product_id'])->with('success', '产品型号添加成功！');
+        return redirect()->route('admin.products.specs', $data['product_id'])->with('success', '产品尺寸添加成功！');
     }
 
     public function edit(Spec $spec)
@@ -69,14 +72,16 @@ class SpecsController extends Controller
 
         if (!empty($data['param_key'])) {
             foreach ($data['param_key'] as $key => $value) {
-                $content[$value] = isset($data['param_value'][$key]) ? $data['param_value'][$key] : '';
+                if($value) {
+                    $content[$value] = isset($data['param_value'][$key]) ? $data['param_value'][$key] : '';
+                }
             }
             $data['content'] = json_encode($content);
         }
 
         $spec->update($data);
 
-        return redirect()->back()->with('success', '产品型号更新成功！');
+        return redirect()->back()->with('success', '产品尺寸更新成功！');
     }
 
     public function destroy(Spec $spec)
@@ -85,6 +90,6 @@ class SpecsController extends Controller
         $spec->idnumber = $spec->idnumber;
         $spec->delete();
 
-        return redirect()->route('admin.products.specs', $spec->product_id)->with('success', "编号为 [{$spec->idnumber}] 的产品型号删除成功！");
+        return redirect()->route('admin.products.specs', $spec->product_id)->with('success', "编号为 [{$spec->idnumber}] 的产品尺寸删除成功！");
     }
 }

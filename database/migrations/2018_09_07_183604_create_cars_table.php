@@ -19,6 +19,7 @@ class CreateCarsTable extends Migration
             $table->date('buy_date')->nullable()->content('购买日期');
             $table->string('plate_number')->default('')->content('车牌号');
             $table->timestamps();
+            $table->softDeletes();
         });
 	}
 

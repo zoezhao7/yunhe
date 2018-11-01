@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-{{ $page_name = $role->id ? '编辑角色' : '创建角色'  }}
+<?php $page_name = $role->id ? '编辑角色' : '创建角色'; ?>
 
 @section('title', $page_name)
 

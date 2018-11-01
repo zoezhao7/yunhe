@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Car;
+use App\Models\CarBrand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
@@ -49,13 +51,19 @@ class ProductsController extends Controller
     public function create(Product $product)
     {
         $categories = Category::all();
-        return view('admin.products.create_and_edit', compact('product', 'categories'));
+        $carBrands = CarBrand::select('id', 'name')->get();
+        return view('admin.products.create_and_edit', compact('product', 'categories', 'carBrands'));
     }
 
     public function store(ProductRequest $request, ImageUploadHandler $uploader)
     {
         $data = $request->all();
         unset($data['_token']);
+
+        // 适配品牌的名字
+        if($data['fit_brands']) {
+            $data['fit_brands'] = json_encode(explode(',', $data['fit_brands']));
+        }
 
         // 轮毂色彩数组 Json
         $productColors = [];
@@ -89,18 +97,24 @@ class ProductsController extends Controller
     {
         //$this->authorize('update', $product);
         $categories = Category::select('id', 'name')->get();
+        $carBrands = CarBrand::select('id', 'name')->get();
 
-        return view('admin.products.create_and_edit', compact('product', 'categories'));
+        return view('admin.products.create_and_edit', compact('product', 'categories', 'carBrands'));
     }
 
     public function update(ProductRequest $request, Product $product, ImageUploadHandler $uploader)
     {
         //$this->authorize('update', $product);
         $data = $request->all();
-
         $productColors = [];
         $colors = $request->colors;
 
+        // 适配品牌的名字
+        if($data['fit_brands']) {
+            $data['fit_brands'] = json_encode(explode(',', $data['fit_brands']));
+        }
+
+        // 轮毂的色彩名称图片
         if (isset($colors['file'])) {
             foreach ($colors['file'] as $key => $file) {
                 if (is_file($file) && $colors['title'][$key]) {

@@ -57,7 +57,7 @@
                         <th>系列</th>
                         <th>名称</th>
                         <th width="30%">规格尺寸</th>
-                        <th width="30%">简介</th>
+                        <th width="30%">适配品牌</th>
                         <th>上架日期</th>
                     </tr>
                     </thead>
@@ -66,7 +66,7 @@
                     @foreach ($products as $key => $product)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td> @if ($product->image) <img src="{{ $product->image }}" alt="iMac" width="50"> @endif
+                            <td> @if ($product->image) <img src="{{ $product->image }}" width="50"> @endif
                             </td>
                             <td><span class="label label-success font-weight-100">{{ $product->category->name }}</span>
                             </td>
@@ -77,7 +77,13 @@
                                     <a href="{{ route('store.specs.show', $spec->id) }}"><span class="label label-info">{{ $spec->size }}</span></a>
                                 @endforeach
                             </td>
-                            <td>{{ $product->intro }}</td>
+                            <td style="line-height:28px;">
+                                @if(is_array($product->fit_brands))
+                                    @foreach ($product->fit_brands as $key=>$brand)
+                                        <span class="label label-warning">{{ $brand }}</span>
+                                    @endforeach
+                                @endif
+                            </td>
                             <td>@if($product->created_at) {{ $product->created_at->format('Y-m-d') }} @endif</td>
                         </tr>
                     @endforeach

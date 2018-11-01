@@ -21,12 +21,10 @@ class MyController extends Controller
     {
         $manager = \Auth::guard('store')->user();
 
-        if($request->has('password') && $request->password) {
-            if(!$hasher->check($request->password, $manager->password)) {
-                return redirect()->back()->with('danger', '原密码输入错误！');
-            }
-            $manager->password = $hasher->make($request->password);
-        }
+        if(!$hasher->check($request->old_password, $manager->password)) {
+            return redirect()->back()->with('danger', '原密码输入错误！'); 
+        } 
+        $manager->password = $hasher->make($request->password);
         $manager->save();
 
         return redirect()->back()->with('success', '密码修改成功！');

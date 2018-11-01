@@ -63,10 +63,8 @@ class StockOrdersController extends Controller
         }
 
         $data = $request->all();
+        $stockOrder->fill($data);
         $stockOrder->status = 2;
-        $stockOrder->delivery_number = $data['delivery_number'];
-        $stockOrder->delivery_note = $data['delivery_note'];
-        $stockOrder->delivered_at = $data['delivered_at'];
         $stockOrder->save();
 
         return redirect()->back()->with('success', '发货操作成功！');

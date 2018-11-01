@@ -9,11 +9,12 @@
 namespace App\Transformers;
 
 use App\Models\Order;
+use App\Models\OrderProduct;
 use League\Fractal\TransformerAbstract;
 
 class OrderTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['spec', 'member', 'product'];
+    protected $availableIncludes = ['member', 'orderProducts'];
 
     public function transform(Order $order)
     {
@@ -31,14 +32,9 @@ class OrderTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeSpec(Order $order)
+    public function includeOrderProducts(Order $order)
     {
-        return $this->item($order->spec, new SpecTransformer());
-    }
-
-    public function includeProduct(Order $order)
-    {
-        return $this->item($order->product, new ProductTransformer());
+        return $this->collection($order->orderProducts, new OrderProductTransformer());
     }
 
     public function includeMember(Order $order)

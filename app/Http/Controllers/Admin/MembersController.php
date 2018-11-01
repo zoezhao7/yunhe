@@ -18,15 +18,16 @@ class MembersController extends Controller
 	public function index(Request $request)
 	{
 	    $query = Member::query()
-            ->selectRaw('members.id, members.name, members.coin_count, members.phone, members.created_at, employees.name as employee_name, stores.name as store_name')
-            ->leftJoin('employees', 'members.employee_id', '=', 'employees.id')
-            ->leftJoin('stores', 'employees.store_id', '=', 'stores.id');
+            ->selectRaw('members.id, members.name, members.coin_count, members.phone, members.created_at, em1.name as employee_name, em2.name as superior_name, stores.name as store_name')
+            ->leftJoin('employees as em1', 'employee_id', '=', 'em1.id')
+            ->leftJoin('employees as em2', 'em1.superior_id', '=', 'em2.id')
+            ->leftJoin('stores', 'em1.store_id', '=', 'stores.id');
 
         if ($memberName = (string)$request->member_name) {
             $query->where('members.name', 'like', "%{$memberName}%");
         }
         if ($employeeName = (string)$request->employee_name) {
-            $query->where('employees.name', 'like', "%{$employeeName}%");
+            $query->where('em1.name', 'like', "%{$employeeName}%");
         }
         if ($storeId = (string)$request->store_id) {
             $query->where('stores.id', $storeId);

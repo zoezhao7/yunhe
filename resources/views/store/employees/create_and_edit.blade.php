@@ -1,6 +1,6 @@
 @extends('store.layouts.store')
 
-{{ $page_name = $employee->id ? '编辑员工' : '添加员工'  }}
+<?php $page_name = $employee->id ? '编辑员工' : '添加员工'; ?>
 
 @section('title', $page_name)
 
@@ -88,6 +88,24 @@
                                                 <option value="{{ $status['id'] }}" {{ $employee->status == $status['id'] ? 'selected' : '' }}>{{ $status['name'] }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">后台角色</label>
+                                        @foreach($roles as $key => $role)
+                                            <div class="checkbox checkbox-primary ">
+                                                @if ($employee->id)
+                                                    <input id="checkbox{{ $key }}" name="role_ids[]"
+                                                           value="{{ $role->id }}" type="checkbox"
+                                                           @if(!empty($employee['role_ids']) && in_array($role->id, $employee['role_ids'])) checked @endif>
+                                                @else
+                                                    <input id="checkbox{{ $role->name . $key }}" name="role_ids[]"
+                                                           value="{{ $role->id }}" type="checkbox">
+                                                @endif
+
+                                                <label for="checkbox{{ $key }}"> {{ $role->name }} </label>
+                                            </div>
+                                        @endforeach
                                     </div>
 
                                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">提交

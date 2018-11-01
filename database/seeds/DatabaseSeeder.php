@@ -18,14 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminsTableSeeder::class);
 
         $this->call(CategorysTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
-        $this->call(SpecsTableSeeder::class);
+        // $this->call(ProductsTableSeeder::class);
+        // $this->call(SpecsTableSeeder::class);
 
-        $this->call(StoresTableSeeder::class);
-        $this->call(EmployeesTableSeeder::class);
+        // $this->call(StoresTableSeeder::class);
+        // $this->call(EmployeesTableSeeder::class);
 
-        $this->call(MembersTableSeeder::class);
-        $this->call(CarsTableSeeder::class);
+        // $this->call(MembersTableSeeder::class);
+        // $this->call(CarsTableSeeder::class);
 
     }
 }

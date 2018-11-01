@@ -39,6 +39,10 @@ class Order extends Model
 
     public function getParametersAttribute($value)
     {
+        if(!$value) {
+            return '';
+        }
+
         if (!is_array($value)) {
             $value = json_decode($value, true);
         }

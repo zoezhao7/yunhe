@@ -55,6 +55,7 @@ class StockOrdersController extends Controller
         return redirect()->route('store.stock_orders.shopping_cart')->with('success', '成功添加到备货订单中！');
     }
 
+    // 从备货清单中删除产品
     public function destroyProduct(StockOrderProduct $stockOrderProduct)
     {
         $stockOrderProduct->delete();
@@ -64,7 +65,7 @@ class StockOrdersController extends Controller
     // 备货订单购物车
     public function shoppingCart()
     {
-        $products = StockOrderProduct::with('spec.product')->where('stock_order_id', 0)->get();
+        $products = StockOrderProduct::with('spec.product', 'carVehicle.carBrand')->where('stock_order_id', 0)->get();
         return view('store.stock_orders.shopping_cart', compact('products'));
     }
 
@@ -83,6 +84,9 @@ class StockOrdersController extends Controller
 
         foreach($request->numbers as $key=>$value)
         {
+            if($value['number'] <= 0) {
+                return response(['success'=>false, 'message'=>'轮毂备货数量不能为0！']);
+            }
             StockOrderProduct::where('id', $value['id'])->update(['number'=>$value['number']]);
         }
 

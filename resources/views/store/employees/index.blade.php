@@ -44,7 +44,7 @@
                         <select class="form-control" name="employee_status">
                             <option value="">状态</option>
                             @foreach(\App\Models\Employee::$statusMsg as $status)
-                                <option value="{{ $status['id'] }}" @if($request->employee_type == $status['id']) selected @endif>{{ $status['name'] }}</option>
+                                <option value="{{ $status['id'] }}" @if($request->employee_status == $status['id']) selected @endif>{{ $status['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -64,6 +64,7 @@
                         <th>上级</th>
                         <th>电话</th>
                         <th>证件号码</th>
+                        <th>后台角色</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -79,6 +80,7 @@
                             <td>@if($employee->superior_id) {{ $employee->superior->name }} @else -- @endif</td>
                             <td>{{ yc_phone($employee->phone) }}</td>
                             <td>{{ $employee->idnumber }}</td>
+                            <td>{{ $employee->role_names }}</td>
                             <td>
                                 <span class="label {{ \App\Models\Employee::$statusMsg[$employee->status]['label_class'] }}">
                                     {{ \App\Models\Employee::$statusMsg[$employee->status]['name'] }}
@@ -88,7 +90,7 @@
                                 <a href="{{ route('store.employees.edit', $employee->id)  }}" class="text-inverse p-r-10" data-toggle="tooltip" title="编辑"><i class="ti-marker-alt"></i></a>
 
                                 <!--
-                                <form onsubmit="return confirm('确认删除吗？');" id="delete_form" method="post" action="{{ route('store.employees.destroy', $employee->id) }}" style="display: inline">
+                                <form  id="delete_form" method="post" action="{{ route('store.employees.destroy', $employee->id) }}" style="display: inline">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <a href="javascript:void(0);" onclick="document.getElementById('delete_form').submit();" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="ti-trash"></i></a>

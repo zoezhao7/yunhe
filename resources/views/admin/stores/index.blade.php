@@ -34,7 +34,6 @@
                         <th>名称</th>
                         <th>电话</th>
                         <th>地址</th>
-                        <th>员工数</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -47,7 +46,6 @@
                             <td>{{ $store->name }}</td>
                             <td>{{ $store->phone }}</td>
                             <td>{{ $store->address }}</td>
-                            <td>{{ $store->employee_count }}</td>
                             <td>
                                 @if ($store->is_open===1)
                                     <span class="label label-success font-weight-100">营业</span>
@@ -57,7 +55,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.stores.edit', $store->id) }}" class="btn btn-xs btn-outline btn-info">编辑</a>
-                                <form onsubmit="return confirm('确定要删除吗！');" id="delete_form_{{ $store->id }}" method="post" action="{{ route('admin.stores.destroy', $store->id) }}" style="display: inline">
+                                <form  id="delete_form_{{ $store->id }}" method="post" action="{{ route('admin.stores.destroy', $store->id) }}" style="display: inline">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button type="submit" class="btn btn-xs btn-outline btn-danger">删除</button>

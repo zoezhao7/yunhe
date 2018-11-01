@@ -52,7 +52,7 @@
                                             <td>
                                                 <a href="{{ route('admin.nodes.edit', $node->id) }}" class="btn btn-sm btn-outline btn-info m-r-10">编辑</a>
 
-                                                <form onsubmit="return confirm('确认删除吗？')" method="post" action="{{ route('admin.nodes.destroy', $node->id) }}" style="display: inline">
+                                                <form  method="post" action="{{ route('admin.nodes.destroy', $node->id) }}" style="display: inline">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
                                                     <button type="submit"  class="btn btn-sm btn-outline btn-danger">删除</button>

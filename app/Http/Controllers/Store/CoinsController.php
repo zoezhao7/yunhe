@@ -61,10 +61,12 @@ class CoinsController extends Controller
         $data['type'] = 2; // 人工操作
         $data['account_number'] = $member->coin_count + ceil($data['number']);
         $data['employee_id'] = \Auth::guard('store')->user()->id;
-        $coin = Coin::create($data);
 
         $member->coin_count = $member->coin_count + ceil($data['number']);
         $member->save();
+
+
+        $coin = Coin::create($data);
 
         return redirect()->back()->with('success', '积分操作成功');
     }

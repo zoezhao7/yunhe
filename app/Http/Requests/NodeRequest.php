@@ -35,7 +35,7 @@ class NodeRequest extends FormRequest
                     'action' => 'required|string',
                 ];
                 break;
-            default;
+            default:
                 return [];
                 break;
         }

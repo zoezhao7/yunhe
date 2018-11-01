@@ -95,13 +95,14 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th width="10%">CID</th>
-                            <th width="5%">数量</th>
-                            <th width="10">图片</th>
-                            <th width="15%">产品&尺寸</th>
-                            <th width="10%">颜色</th>
-                            <th width="25%">备注</th>
-                            <th width="25%">轮毂sn清单</th>
+                            <th>CID</th>
+                            <th>数量</th>
+                            <th>图片</th>
+                            <th>产品&尺寸</th>
+                            <th>车型</th>
+                            <th>颜色</th>
+                            <th width="20%">备注</th>
+                            <th width="20%">轮毂sn清单</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -117,14 +118,18 @@
                                 <td class="font-500" align="center">{{ $stockOrderProduct->number }}</td>
                                 <td><img src="{{ $stockOrderProduct->spec->product->image }}" alt="" width="80"></td>
                                 <td>
-                                    {{ $stockOrderProduct->spec->product->category->name }}-{{ $stockOrderProduct->spec->product->name }}<br>
+                                    {{ $stockOrderProduct->spec->product->category->name }}
+                                    -{{ $stockOrderProduct->spec->product->name }}<br>
                                     尺寸：{{ $stockOrderProduct->spec->size }}
+                                </td>
+                                <td>
+                                    {{ $stockOrderProduct->car_brand }} - {{ $stockOrderProduct->car_vehicle }}
                                 </td>
                                 <td style="line-height:28px;">
                                     {{ $stockOrderProduct->color }}
                                 </td>
                                 <td class="font-500">{{ $stockOrderProduct->remark }}</td>
-                                <td>
+                                <td style="line-height: 28px;">
                                     @foreach($stockOrderProduct->hubs as $hub)
                                         <span class="label label-info">{{ $hub->sn }}</span>
                                     @endforeach
@@ -134,7 +139,7 @@
                         <tr>
                             <td class="font-500" align="right"><strong>总计：</strong></td>
                             <td class="font-500" align="center"><strong>{{ $number_count }}</strong></td>
-                            <td colspan="5"></td>
+                            <td colspan="6"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -159,121 +164,38 @@
     <script>
         $('#btn-received').click(function () {
 
-/*            $('html').block({
-                message: '<h4><img src="/store/plugins/images/busy.gif" /> 确认收货中...</h4>',
-                css: {border: '1px solid #fff'}
-            });*/
-
-            $.post(
-                "/store/stock_orders/{{ $stockOrder->id }}/received",
-                {
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                }, function (data) {
-                    // $('html').unblock();
-                    if (data.success) {
-                        swal({
-                            title: '成功确认收货！',
-                            text: '',
-                            type: 'success',
-                            showConfirmButton: false,
+            swal({
+                title: '确定提交订单吗？',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '确定收货！',
+                cancelButtonText: '取消',
+            }).then(function (data) {
+                if (data.value) {
+                    $.post(
+                        "/store/stock_orders/{{ $stockOrder->id }}/received",
+                        {
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        function (data) {
+                            if (data.success) {
+                                swal({
+                                    title: '成功确认收货！',
+                                    text: '',
+                                    type: 'success',
+                                    showConfirmButton: false,
+                                });
+                                setTimeout("location.reload()", 3000);
+                                return true;
+                            } else {
+                                swal("操作失败！", data.message, "error");
+                                return false;
+                            }
                         });
-                        setTimeout("location.reload()", 3000);
-                        return true;
-                    } else {
-                        swal("操作失败！", data.message, "error");
-                        return false;
-                    }
-                });
-
+                }
+            });
         });
-
-
-        !function ($) {
-            "use strict";
-            var SweetAlert = function () {
-            };
-            SweetAlert.prototype.init = function () {
-
-                //Basic
-                $('#sa-basic').click(function () {
-                    swal("Here's a message!");
-                });
-
-                //A title with a text under
-                $('#sa-title').click(function () {
-                    swal("Here's a message!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.")
-                });
-
-                //Success Message
-                $('#sa-success').click(function () {
-                    swal("接单成功！", "", "success")
-                });
-
-                //Warning Message
-                $('#sa-warning').click(function () {
-                    swal({
-                        title: "Are you sure?",
-                        text: "You will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        closeOnConfirm: false
-                    }, function () {
-                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                    });
-                });
-
-                //Parameter
-                $('#sa-params').click(function () {
-                    swal({
-                        title: "Are you sure?",
-                        text: "You will not be able to recover this imaginary file!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, delete it!",
-                        cancelButtonText: "No, cancel plx!",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    }, function (isConfirm) {
-                        if (isConfirm) {
-                            swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                        } else {
-                            swal("Cancelled", "Your imaginary file is safe :)", "error");
-                        }
-                    });
-                });
-
-                //Custom Image
-                $('#sa-image').click(function () {
-                    swal({
-                        title: "Govinda!",
-                        text: "Recently joined twitter",
-                        imageUrl: "../plugins/images/users/agent2.jpg"
-                    });
-                });
-
-                //Auto Close Timer
-                $('#sa-close').click(function () {
-                    swal({
-                        title: "Auto close alert!",
-                        text: "I will close in 2 seconds.",
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                });
-
-
-            },
-                //init
-                $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert
-        }(window.jQuery),
-
-//initializing
-            function ($) {
-                "use strict";
-                $.SweetAlert.init()
-            }(window.jQuery);
     </script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('store.layouts.store')
 
-{{ $page_name = '积分操作'  }}
+<?php $page_name = '积分操作'; ?>
 
 @section('title', $page_name)
 
@@ -44,13 +44,12 @@
 
                         <div class="form-group">
                             <label for="number">积分变动</label>
-                            <input type="text" class="form-control" name="number" value="" placeholder="100 或者 -100">
+                            <input type="text" class="form-control" name="number" value=" {{ old('coin_count') }}" placeholder="100 或者 -100">
                         </div>
 
                         <div class="form-group">
                             <label for="remark">原因</label>
-                            <input type="text" class="form-control" name="remark"
-                                   value="{{ old('remark', $coin->remark) }}" placeholder="请输入操作说明">
+                            <input type="text" class="form-control" name="remark" value="{{ old('remark') }}" placeholder="请输入操作说明">
                         </div>
 
 

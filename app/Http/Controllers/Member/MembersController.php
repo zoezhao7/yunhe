@@ -15,7 +15,7 @@ class MembersController extends Controller
     {
         $member = \Auth::guard('member')->user();
 
-        $order = $member->orders()->recent()->where('status', 1)->first();
+        $order = $member->orders()->with('orderProducts.spec.product.category')->recent()->where('status', 1)->first();
 
         return view('member.members.center', compact('member', 'order'));
     }

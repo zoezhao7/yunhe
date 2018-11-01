@@ -15,6 +15,10 @@ class MemberObserver
     public function saving(Member $member)
     {
         $member->letter = strtoupper(substr(pinyin_abbr($member->name), 0, 1));
+
+        if($member->coin_count < 0) {
+            denied('客户积分不能小于0！');
+        }
     }
 
     public function deleting(Member $member)

@@ -6,6 +6,8 @@
 
 @section('style')
     <link rel="stylesheet" href="/admin/simditor/css/simditor.css"/>
+    <link href="/admin/plugins/bower_components/custom-select/dist/css/select2.min.css" rel="stylesheet"
+          type="text/css"/>
 @endsection
 
 @section('content')
@@ -33,14 +35,17 @@
             <div class="row">
                 <div class="col-sm-12 col-xs-12">
                     @if ($product->id)
-                        <form method="POST" action="{{ route('admin.products.update', $product->id) }}"
+                        <form onsubmit="submit_form(this);" method="POST"
+                              action="{{ route('admin.products.update', $product->id) }}"
                               enctype="multipart/form-data">
                             {{ method_field('PUT') }}
                             @else
-                                <form method="POST" action="{{ route('admin.products.store') }}"
+                                <form onsubmit="submit_form(this);" method="POST"
+                                      action="{{ route('admin.products.store') }}"
                                       enctype="multipart/form-data">
                                     @endif
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="fit_brands" value="">
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -66,16 +71,42 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label><strong>适配品牌</strong></label>
+                                            <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                                                <select name='' class="select2 m-b-10 select2-multiple"
+                                                        multiple="multiple"
+                                                        data-placeholder="Choose" style="width: 100%;">
+                                                    @foreach($carBrands as $brand)
+                                                        <option value="{{ $brand->name }}">{{ $brand->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label><strong>产品折扣</strong></label>
                                             <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
                                                 <select class="form-control" name="discount" required>
-                                                    <option value="0" {{ $product->discount == 0 ? 'selected' : '' }}>无折扣</option>
-                                                    <option value="0.5" {{ $product->discount == 5 ? 'selected' : '' }}>5折</option>
-                                                    <option value="0.8" {{ $product->discount == 8 ? 'selected' : '' }}>8折</option>
-                                                    <option value="0.85" {{ $product->discount == 8.5 ? 'selected' : '' }}>8.5折</option>
-                                                    <option value="0.9" {{ $product->discount == 9 ? 'selected' : '' }}>9折</option>
-                                                    <option value="0.95" {{ $product->discount == 9.5 ? 'selected' : '' }}>9.5折</option>
+                                                    <option value="0" {{ $product->discount == 0 ? 'selected' : '' }}>
+                                                        无折扣
+                                                    </option>
+                                                    <option value="0.5" {{ $product->discount == 5 ? 'selected' : '' }}>
+                                                        5折
+                                                    </option>
+                                                    <option value="0.8" {{ $product->discount == 8 ? 'selected' : '' }}>
+                                                        8折
+                                                    </option>
+                                                    <option value="0.85" {{ $product->discount == 8.5 ? 'selected' : '' }}>
+                                                        8.5折
+                                                    </option>
+                                                    <option value="0.9" {{ $product->discount == 9 ? 'selected' : '' }}>
+                                                        9折
+                                                    </option>
+                                                    <option value="0.95" {{ $product->discount == 9.5 ? 'selected' : '' }}>
+                                                        9.5折
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -93,7 +124,7 @@
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">提交
+                                        <button type="submit" class="btn btn-info waves-effect waves-light m-r-10">提交
                                         </button>
                                     </div>
 
@@ -158,6 +189,8 @@
     <script type="text/javascript" src="{{ asset('admin/simditor/js/hotkeys.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/simditor/js/uploader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/simditor/js/simditor.js') }}"></script>
+    <script src="/admin/plugins/bower_components/custom-select/dist/js/select2.full.min.js"
+            type="text/javascript"></script>
 
     <script>
         $(document).ready(function () {
@@ -195,6 +228,25 @@
         function deleteBox(el) {
             $(el).parents('.more_upload_box').remove();
         }
+
+        function submit_form(form) {
+            $("input[name='fit_brands']").val($(".select2").val());
+            return true;
+        }
+
+        $(function () {
+            // For select 2
+            var sobj = $(".select2").select2({
+                placeholder: '请选择适配的汽车品牌'
+            });
+            $('#getVal').click(function () {
+                console.log($(".select2").val());
+            });
+
+            @if($product->fit_brands)
+            sobj.val([@foreach($product->fit_brands as $brand) "{{ $brand }}", @endforeach]).trigger("change");
+            @endif
+        });
     </script>
 
 @endsection

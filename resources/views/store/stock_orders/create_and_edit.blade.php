@@ -59,12 +59,12 @@
                             <div class="table-responsive">
                                 <div class="col-sm-6 col-xs-6">
                                     @if ($stockOrderProduct->id)
-                                        <form onsubmit="return form_check(this);" method="POST"
+                                        <form  method="POST"
                                               action="{{ route('store.stock_orders.update', $stockOrderProduct->id) }}"
                                               enctype="multipart/form-data">
                                             {{ method_field('PUT') }}
                                             @else
-                                                <form onsubmit="return form_check(this);" method="POST" action="{{ route('store.stock_orders.add_product') }}">
+                                                <form  method="POST" action="{{ route('store.stock_orders.add_product') }}">
                                                     @endif
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="product_id" value="{{ $product->id }}"/>

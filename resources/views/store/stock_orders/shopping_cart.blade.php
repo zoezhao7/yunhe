@@ -37,10 +37,11 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th width="10%">CID</th>
-                                <th width="20%">轮毂图片</th>
-                                <th width="25%">产品&型号&尺寸</th>
-                                <th width="10%">色彩</th>
+                                <th>CID</th>
+                                <th>轮毂图片</th>
+                                <th>产品&型号&尺寸</th>
+                                <th>车型</th>
+                                <th>色彩</th>
                                 <th width="5%">数量</th>
                                 <th width="25%">备注</th>
                                 <th width="15%">操作</th>
@@ -62,31 +63,38 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th width="10%">CID</th>
-                                <th width="20%">轮毂图片</th>
-                                <th width="20%">产品&型号&尺寸</th>
-                                <th width="10%">色彩</th>
-                                <th width="10%">数量</th>
+                                <th>CID</th>
+                                <th>轮毂图片</th>
+                                <th>产品&型号&尺寸</th>
+                                <th>车型</th>
+                                <th>色彩</th>
+                                <th width="8%">数量</th>
                                 <th width="25%">备注</th>
-                                <th width="15%">操作</th>
+                                <th width="10%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($products as $key=>$product)
                                 <tr>
-                                    <td><a href="{{ route('store.specs.show', $product->spec->id) }}">{{ $product->spec->idnumber }}</a></td>
-                                    <td><img src="{{ $product->spec->product->image }}" alt="iMac" width="80"></td>
+                                    <td>
+                                        <a href="{{ route('store.specs.show', $product->spec->id) }}">{{ $product->spec->idnumber }}</a>
+                                    </td>
+                                    <td><img src="{{ $product->spec->product->image }}" alt="" width="80"></td>
                                     <td>
                                         型号：{{ $product->spec->product->category->name }}<br>
                                         产品：{{ $product->spec->product->name }}<br>
                                         尺寸：{{ $product->spec->size }}<br>
                                     </td>
+                                    <td>
+                                        {{ $product->carVehicle->carBrand->name }} - {{ $product->carVehicle->name }}
+                                    </td>
                                     <td style="line-height:28px;">
                                         {{ $product->color }}
                                     </td>
                                     <td>
-                                        <input type="hidden" class="sop_id" value="{{ $product->id }}" >
-                                        <input type="text" class="form-control sop_number" value="{{ $product->number }}">
+                                        <input type="hidden" class="sop_id" value="{{ $product->id }}">
+                                        <input type="text" class="form-control sop_number"
+                                               value="{{ $product->number }}">
                                     </td>
                                     <td>{{ $product->remark }}</td>
                                     <td>
@@ -102,14 +110,13 @@
                             @endforeach
                             <tr>
                                 <td colspan="1" style="text-align:right;">备注：</td>
-                                <td colspan="6"><textarea id="remark" name="remark" class="form-control" rows="5"></textarea></td>
+                                <td colspan="7"><textarea id="remark" name="remark" class="form-control"
+                                                          rows="5"></textarea></td>
                             </tr>
                             </tbody>
-
                         </table>
-                        <button onclick="submitOrder();" class="btn btn-danger pull-right"><i
-                                    class="fa fa fa-shopping-cart"></i>
-                            提交订单
+                        <button onclick="submitOrder();" class="btn btn-danger pull-right">
+                            <i class="fa fa fa-shopping-cart"></i> 提交订单
                         </button>
                         <a href="{{ route('store.products.index') }}">
                             <button class="btn btn-default btn-outline"><i class="fa fa-arrow-left"></i> 继续添加产品</button>
@@ -127,30 +134,27 @@
     <script src="/admin/plugins/bower_components/blockUI/jquery.blockUI.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.21.1/sweetalert2.all.min.js"></script>
     <script>
-
         function submitOrder() {
-            /*            swal({
-                            title: '确定提交订单吗？',
-                            text: '',
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: '确定提交！',
-                            cancelButtonText: '取消',
-                        }).then(function(data){
-                            if(data.value) {
-                                swal(
-                                    '订单提交成功',
-                                    '你的文件已经被删除。',
-                                    'success'
-                                );
-                            }
+            swal({
+                title: '确定提交订单吗？',
+                text: '',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '确定提交！',
+                cancelButtonText: '取消',
+            }).then(function (data) {
+                if (data.value) {
+                    orderSubmit();
+                }
 
-                        });
-                        return false;*/
+            });
+        }
+
+        function orderSubmit() {
             var number_data = [];
-            $(".sop_id").each(function(i, c){
+            $(".sop_id").each(function (i, c) {
                 number_data.push({
                     id: $(".sop_id")[i].value,
                     number: $(".sop_number")[i].value,
@@ -171,7 +175,7 @@
                             type: 'success',
                             showConfirmButton: false,
                         });
-                        setTimeout(function(){
+                        setTimeout(function () {
                             window.location.href = '/store/stock_orders/' + data.data.stock_order_id;
                         }, 3000);
                         return true;
@@ -181,13 +185,6 @@
                     }
                 });
         }
-
-
-        /*            $('html').block({
-                        message: '<h4><img src="/store/plugins/images/busy.gif" /> 确认收货中...</h4>',
-                        css: {border: '1px solid #fff'}
-                    });*/
-
 
     </script>
 @endsection

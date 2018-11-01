@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\Order;
+use App\Models\Role;
 use Carbon\Carbon;
 
 class WelcomeController extends Controller
@@ -13,6 +14,7 @@ class WelcomeController extends Controller
     public function index()
     {
         $admin = \Auth::guard('admin')->user();
+
         $storeCount = Store::count();
         // $orderCount = Order::where('status', 1)->count();
         $orderSum = Order::where('status', 1)->sum('money');

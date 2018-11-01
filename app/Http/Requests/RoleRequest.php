@@ -26,7 +26,7 @@ class RoleRequest extends FormRequest
         switch ($this->method()){
             case 'POST':
                 return [
-                    //'name' => 'required|max:20|unique:admin_roles,name',
+                    'name' => 'required|unique:admin_roles,name',
                     'node_ids' => 'required|array'
                 ];
                 break;
@@ -34,7 +34,7 @@ class RoleRequest extends FormRequest
             case 'PATCH':
                 $id = $this->route('role')->id;
                 return [
-                    //'name' => 'required|max:20|unique:admin_roles,name,' . $id,
+                    'name' => 'required|unique:admin_roles,name,' . $id,
                     'node_ids' => 'required|array'
                 ];
             break;
@@ -48,7 +48,7 @@ class RoleRequest extends FormRequest
     public function messages()
     {
         return [
-          //'name.required' => '角色名称不能为空',
+          'name.required' => '角色名称不能为空',
           'node_ids.required' => '角色权限不能为空',
         ];
     }
