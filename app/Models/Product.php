@@ -23,7 +23,7 @@ class Product extends Model
 
     public function stockOrderProducts()
     {
-        return $this->hasMany(StockOrderProduct::class, Spec::class);
+        return $this->hasManyThrough(StockOrderProduct::class, Spec::class);
     }
 
     public function hasOrder()

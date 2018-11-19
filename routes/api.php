@@ -97,6 +97,9 @@ $api->version('v1', [
             $api->get('employees/center', 'EmployeesController@center');
             $api->put('employees/intro', 'EmployeesController@updateIntro');
             $api->put('employees/reset_password', 'EmployeesController@resetPassword');
+            #车辆轮毂演示
+            $api->get('car_demos/cars', 'CarDemosController@cars');
+            $api->get('car_demos/hubs', 'CarDemosController@hubs');
         });
     });
 });

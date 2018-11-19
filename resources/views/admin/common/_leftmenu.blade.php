@@ -43,6 +43,14 @@
                 </li>
             @endif
 
+            @if (\Auth::user()->checkPermission('car_demos.index'))
+                <li class="nav @if(str_contains(request()->route()->getName(), ['car_demos'])) active @endif">
+                    <a href="{{ route('admin.car_demos.index') }}" class="waves-effect">
+                        <i class="mdi mdi-car fa-fw" data-icon="v"></i>
+                        <span class="hide-menu">轮毂演示</span></a>
+                </li>
+            @endif
+
 
             @if (\Auth::user()->checkPermission('stores.index'))
                 <li>

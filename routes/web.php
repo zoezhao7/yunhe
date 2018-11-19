@@ -103,6 +103,9 @@ Route::namespace('Admin')->middleware(['clean.form'])->group(function () {
         #佣金规则
         Route::get('admin/commission_rules/edit', 'CommissionRulesController@edit')->name('admin.commission_rules.edit');
         Route::put('admin/commission_rules', 'CommissionRulesController@update')->name('admin.commission_rules.update');
+        #汽车轮毂演示
+        Route::post('admin/car_demos/upload', 'CarDemosController@upload')->name('admin.car_demos.upload');
+        Route::resource('admin/car_demos', 'CarDemosController', ['as' => 'admin']);
     });
 
 });
@@ -128,4 +131,12 @@ Route::namespace('Member')->middleware(['clean.form'])->group(function () {
         Route::get('member/coins', 'CoinsController@index')->name('member.coins');
     });
 });
+
+
+Route::namespace('Tools')->middleware(['clean.form'])->group(function () {
+    Route::get('tools/car_demos', 'CarDemosController@index')->name('tools.car_demos.index');
+    Route::get('tools/car_demos/cars', 'CarDemosController@cars')->name('tools.car_demos.cars');
+    Route::get('tools/car_demos/hubs', 'CarDemosController@hubs')->name('tools.car_demos.hubs');
+});
+
 

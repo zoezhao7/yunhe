@@ -1,0 +1,150 @@
+@r:75rem;
+.bor-t(@borderTop:#eee){
+	position: relative;
+	&:after{
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		top: 0;
+		border-bottom: 1px solid @borderTop;
+		-webkit-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scaleY(.5);
+		transform: scaleY(.5)
+	}
+}
+.bor-b(@borderBottom:#eee){
+	position: relative;
+	&:after{
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		bottom: 0;
+		border-bottom: 1px solid @borderBottom;
+		-webkit-transform-origin: 0 100%;
+		transform-origin: 0 100%;
+		-webkit-transform: scaleY(.5);
+		transform: scaleY(.5);
+	}
+}
+.text-os(@lines:2){
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @lines;
+    overflow: hidden;
+}
+
+.transform(@transform){
+    -webkit-transform: @transform;
+    transform: @transform;
+}
+.transition(@transition){
+    -webkit-transition: @transition;
+    transition: @transition;
+}
+
+/* start */
+html, body {
+  position: relative;
+  height: 100%;
+}
+body {
+  background: #333;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color:#000;
+  margin: 0;
+  padding: 0;
+}
+.pageIndex{
+	width: 100%;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #333;
+    width: 900px;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.car_swiper_container {
+    background: #333;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow:hidden;
+    .swiper_box{
+        cursor: pointer;
+        .bg_car{
+            width: 100%;
+        }
+        span{
+            background-color: #fff;
+            position: relative;
+            .wheel_box1{
+                width: 10.27%;
+                position: absolute;
+                top:61%;
+                left:13.18%;
+                img{
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .wheel_box2{
+                width: 10%;
+                position: absolute;
+                top:61.66%;
+                left:72.09%;
+                img{
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}
+
+.wheel_swiper_container {
+    background: #333;
+    margin-top: 40px;
+    .swiper-slide {
+        width: 140px;
+    }
+    .swiper_box{
+        span{
+            padding:0;
+            display: inline-block;
+            width:130px;
+            padding: 4px;
+            border-radius: 4px;
+            border:1px solid #333;
+            cursor: pointer;
+        }
+        &.on{
+            span{
+                border:1px solid #999;
+            }
+        }
+        img{
+            width:100%;
+            display: block;
+        }
+    }
+}

@@ -18,7 +18,7 @@ class OperationLog
         // 查询操作不记录
         if(getActionName() !== 'index' && getActionName() !== 'show') {
             $data= [
-                'route' => $request->route()->getName();
+                'route' => $request->route()->getName(),
             ];
         }
         var_dump($request->url());

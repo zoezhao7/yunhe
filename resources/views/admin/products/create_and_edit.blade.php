@@ -130,7 +130,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label><strong>产品图片</strong></label>
+                                            <label><strong>产品图片</strong>（500*500，背景图透明，轮毂与图片无边距）</label>
                                             <div class="form-group">
                                                 @if ($product->image)
                                                     <img src="{{ $product->image }}" width="200"

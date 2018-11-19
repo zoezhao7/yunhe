@@ -12,8 +12,7 @@
             </a>
         </div>
         <!-- /Logo -->
-
-
+        
         <ul class="nav navbar-top-links navbar-left">
             <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i class="ti-close ti-menu"></i></a></li>
             <?php $taskOrders = \Auth::guard('admin')->user()->orderTasks(); ?>
